@@ -86,9 +86,11 @@ godot --path game/
 # Run the game directly
 godot --path game/ scenes/main/SplashScreen.tscn
 
-# Run headless test suite (7/7 tests verify all systems)
+# Run headless test suite (11/11 tests verify offline-first systems, network, auth, sync, and telemetry)
 godot --headless --path game/ -s tests/RunTests.gd
 ```
+
+See [docs/integration.md](file:///home/calvin/Desktop/mekatilili-game-starter/docs/integration.md) for complete details on offline saves, cloud synchronization, and telemetry.
 
 ### 2. Backend (Node.js + Express + PostgreSQL)
 ```bash

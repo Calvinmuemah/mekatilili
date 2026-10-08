@@ -11,16 +11,24 @@ async function seedDatabase() {
 
     // 1. Seed Admins
     console.log('Seeding Admins...');
-    const superAdminHash = await bcrypt.hash('AdminPass123!', 10);
-    const editorHash = await bcrypt.hash('EditorPass123!', 10);
+    const isProduction = process.env.NODE_ENV === 'production';
+    const adminPassword = process.env.ADMIN_INITIAL_PASSWORD || (isProduction ? null : 'AdminPass123!');
+    const editorPassword = process.env.EDITOR_INITIAL_PASSWORD || (isProduction ? null : 'EditorPass123!');
 
-    await client.query(`
-      INSERT INTO admins (email, password_hash, name, role)
-      VALUES 
-        ('admin@mekatilili.org', $1, 'Lead Administrator', 'SUPER_ADMIN'),
-        ('editor@mekatilili.org', $2, 'Historical Content Editor', 'CONTENT_EDITOR')
-      ON CONFLICT (email) DO NOTHING;
-    `, [superAdminHash, editorHash]);
+    if (!adminPassword) {
+      console.warn('⚠️  PRODUCTION WARNING: ADMIN_INITIAL_PASSWORD not set in environment. Skipping default admin seeding for security.');
+    } else {
+      const superAdminHash = await bcrypt.hash(adminPassword, 10);
+      const editorHash = editorPassword ? await bcrypt.hash(editorPassword, 10) : superAdminHash;
+
+      await client.query(`
+        INSERT INTO admins (email, password_hash, name, role)
+        VALUES 
+          ('admin@mekatilili.org', $1, 'Lead Administrator', 'SUPER_ADMIN'),
+          ('editor@mekatilili.org', $2, 'Historical Content Editor', 'CONTENT_EDITOR')
+        ON CONFLICT (email) DO NOTHING;
+      `, [superAdminHash, editorHash]);
+    }
 
     // 2. Seed Chapter 1 from Godot JSON
     console.log('Seeding Chapter 1...');

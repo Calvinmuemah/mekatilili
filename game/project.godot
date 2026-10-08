@@ -24,6 +24,12 @@ AudioManager="*res://autoload/AudioManager.gd"
 StoryManager="*res://autoload/StoryManager.gd"
 DialogueManager="*res://autoload/DialogueManager.gd"
 QuestManager="*res://autoload/QuestManager.gd"
+ApiClient="*res://autoload/ApiClient.gd"
+NetworkManager="*res://autoload/NetworkManager.gd"
+AuthManager="*res://autoload/AuthManager.gd"
+SyncManager="*res://autoload/SyncManager.gd"
+ContentSyncManager="*res://autoload/ContentSyncManager.gd"
+TelemetryManager="*res://autoload/TelemetryManager.gd"
 
 [display]
 

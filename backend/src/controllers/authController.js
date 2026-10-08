@@ -4,8 +4,13 @@ const { success, error } = require('../utils/response');
 class AuthController {
   async register(req, res, next) {
     try {
-      const { email, username, password, displayName } = req.body;
-      const result = await authService.register({ email, username, password, displayName });
+      const { email, username, password, displayName, display_name } = req.body;
+      const result = await authService.register({
+        email,
+        username,
+        password,
+        displayName: displayName || display_name || username,
+      });
       return success(res, result, 201);
     } catch (err) {
       if (err.statusCode) {

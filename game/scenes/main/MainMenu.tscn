@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/MainMenu.gd" id="1_menu"]
 [ext_resource type="Texture2D" path="res://assets/ui/menu_background.png" id="2_bg"]
 [ext_resource type="Script" path="res://scripts/ui/SettingsMenu.gd" id="3_sett"]
+[ext_resource type="PackedScene" path="res://scenes/ui/AuthDialog.tscn" id="4_auth"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -75,10 +76,48 @@ custom_minimum_size = Vector2(240, 48)
 layout_mode = 2
 text = "SETTINGS"
 
+[node name="AccountBtn" type="Button" parent="CenterVBox/Buttons"]
+custom_minimum_size = Vector2(240, 48)
+layout_mode = 2
+text = "ACCOUNT & SYNC"
+
 [node name="AboutBtn" type="Button" parent="CenterVBox/Buttons"]
 custom_minimum_size = Vector2(240, 48)
 layout_mode = 2
 text = "ABOUT"
+
+[node name="TopStatusBar" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -280.0
+offset_top = 20.0
+offset_right = -24.0
+offset_bottom = 56.0
+grow_horizontal = 0
+theme_override_constants/separation = 12
+alignment = 2
+
+[node name="ProfilePill" type="Button" parent="TopStatusBar"]
+visible = false
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+text = "Player"
+
+[node name="NetworkIndicator" type="HBoxContainer" parent="TopStatusBar"]
+layout_mode = 2
+theme_override_constants/separation = 6
+alignment = 2
+
+[node name="StatusDot" type="Label" parent="TopStatusBar/NetworkIndicator"]
+layout_mode = 2
+text = "●"
+
+[node name="StatusText" type="Label" parent="TopStatusBar/NetworkIndicator"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Offline"
 
 [node name="Footer" type="Label" parent="."]
 layout_mode = 1
@@ -95,6 +134,9 @@ grow_horizontal = 2
 grow_vertical = 0
 horizontal_alignment = 1
 text = "v1.0.0 — Based on the 1913 Giriama Anti-Colonial Resistance"
+
+[node name="AuthDialog" parent="." instance=ExtResource("4_auth")]
+visible = false
 
 [node name="ConfirmDialog" type="Control" parent="."]
 visible = false

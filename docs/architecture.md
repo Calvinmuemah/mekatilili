@@ -156,3 +156,15 @@ The admin dashboard provides a content management workspace for writers, histori
 9. **Player Progress:** User accounts, community unity scores, and chapter progress.
 10. **Telemetry & Analytics:** Real-time event ingestion stream and frequency analytics.
 
+---
+
+## 7. Godot ↔ Backend Integration & Offline-First Sync
+
+For full integration specifications, see [docs/integration.md](file:///home/calvin/Desktop/mekatilili-game-starter/docs/integration.md).
+
+- **Offline-First Authority:** Local storage (`user://save_game.json`) is always authoritative. Gameplay never pauses or blocks waiting for server network responses.
+- **Save Versioning & Conflict Resolution:** Save schema version 2 includes `last_modified_at`, `sync_status`, and `device_id`. If cloud progress is further in narrative, a local backup (`user://save_game.bak`) is created before updating.
+- **Fail-Safe Content Over-the-Air Updates:** Content bundles downloaded from `/content/bundle` are validated against strict schema rules before activation. Corrupt or unreachable servers silently fallback to bundled GDScript data.
+- **Privacy Telemetry Queue:** Gameplay events are queued in `user://telemetry_queue.json` and flushed in non-blocking batches when connection is detected. Zero PII is stored or transmitted.
+
+

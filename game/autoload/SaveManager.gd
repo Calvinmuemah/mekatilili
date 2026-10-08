@@ -1,10 +1,13 @@
 extends Node
 
 const SAVE_FILE_PATH := "user://save_game.json"
-const SAVE_VERSION := 1
+const BACKUP_FILE_PATH := "user://save_game.bak"
+const DEVICE_ID_PATH := "user://device_id.txt"
+const SAVE_VERSION := 2
 
 signal save_completed(success: bool)
 signal load_completed(success: bool)
+signal save_written(save_data: Dictionary)
 
 var default_settings: Dictionary = {
 	"master_volume": 1.0,
@@ -17,12 +20,69 @@ var default_settings: Dictionary = {
 }
 
 var current_settings: Dictionary = default_settings.duplicate()
+var cached_device_id: String = ""
 
 func _ready() -> void:
 	load_settings()
+	_init_device_id()
+
+func _init_device_id() -> void:
+	if FileAccess.file_exists(DEVICE_ID_PATH):
+		var file := FileAccess.open(DEVICE_ID_PATH, FileAccess.READ)
+		if file != null:
+			cached_device_id = file.get_as_text().strip_edges()
+			file.close()
+	if cached_device_id == "":
+		cached_device_id = "dev_" + str(Time.get_unix_time_from_system()) + "_" + str(randi() % 10000)
+		var file := FileAccess.open(DEVICE_ID_PATH, FileAccess.WRITE)
+		if file != null:
+			file.store_string(cached_device_id)
+			file.close()
+
+func get_device_id() -> String:
+	if cached_device_id == "":
+		_init_device_id()
+	return cached_device_id
 
 func has_save_file() -> bool:
 	return FileAccess.file_exists(SAVE_FILE_PATH)
+
+func has_backup_file() -> bool:
+	return FileAccess.file_exists(BACKUP_FILE_PATH)
+
+func create_backup() -> bool:
+	if not has_save_file():
+		return false
+	var source := FileAccess.open(SAVE_FILE_PATH, FileAccess.READ)
+	if source == null:
+		return false
+	var content := source.get_as_text()
+	source.close()
+	
+	var dest := FileAccess.open(BACKUP_FILE_PATH, FileAccess.WRITE)
+	if dest == null:
+		return false
+	dest.store_string(content)
+	dest.close()
+	print("SaveManager: Local save backup created at ", BACKUP_FILE_PATH)
+	return true
+
+func restore_from_backup() -> bool:
+	if not has_backup_file():
+		return false
+	var source := FileAccess.open(BACKUP_FILE_PATH, FileAccess.READ)
+	if source == null:
+		return false
+	var content := source.get_as_text()
+	source.close()
+	
+	var dest := FileAccess.open(SAVE_FILE_PATH, FileAccess.WRITE)
+	if dest == null:
+		return false
+	dest.store_string(content)
+	dest.close()
+	print("SaveManager: Save restored from backup.")
+	return true
 
 func get_save_data_summary() -> Dictionary:
 	if not has_save_file():
@@ -36,14 +96,34 @@ func get_save_data_summary() -> Dictionary:
 		return test_json.data
 	return {}
 
+func update_sync_status(new_status: String, synced_at: String = "") -> void:
+	if not has_save_file():
+		return
+	var summary := get_save_data_summary()
+	if summary.is_empty():
+		return
+	summary["sync_status"] = new_status
+	if synced_at != "":
+		summary["last_synced_at"] = synced_at
+	var file := FileAccess.open(SAVE_FILE_PATH, FileAccess.WRITE)
+	if file != null:
+		file.store_string(JSON.stringify(summary, "\t"))
+		file.close()
+
 func save_game(custom_data: Dictionary = {}) -> bool:
 	var player_pos := Vector2.ZERO
 	if GameManager.player_node != null and is_instance_valid(GameManager.player_node):
 		player_pos = GameManager.player_node.global_position
 	
+	var now_iso := Time.get_datetime_string_from_system()
+	
 	var save_dict: Dictionary = {
 		"version": SAVE_VERSION,
-		"timestamp": Time.get_datetime_string_from_system(),
+		"timestamp": now_iso,
+		"last_modified_at": now_iso,
+		"last_synced_at": custom_data.get("last_synced_at", ""),
+		"sync_status": custom_data.get("sync_status", "PENDING"),
+		"device_id": get_device_id(),
 		"chapter": GameManager.current_chapter,
 		"scene": GameManager.current_scene_path,
 		"player_position": {
@@ -71,8 +151,15 @@ func save_game(custom_data: Dictionary = {}) -> bool:
 	var json_string := JSON.stringify(save_dict, "\t")
 	file.store_string(json_string)
 	file.close()
-	print("SaveManager: Game saved successfully.")
+	print("SaveManager: Game saved locally (Offline-authoritative).")
 	save_completed.emit(true)
+	save_written.emit(save_dict)
+	
+	# Trigger cloud sync if online and authenticated
+	var sync_mgr = get_node_or_null("/root/SyncManager")
+	if sync_mgr != null and sync_mgr.has_method("on_local_save_created"):
+		sync_mgr.on_local_save_created(save_dict)
+		
 	return true
 
 func load_game() -> bool:
@@ -100,7 +187,16 @@ func load_game() -> bool:
 	var data: Dictionary = json.data
 	# Version migration check
 	var version: int = data.get("version", 1)
-	if version > SAVE_VERSION:
+	if version < SAVE_VERSION:
+		print("SaveManager: Migrating save from version ", version, " to version ", SAVE_VERSION)
+		data["version"] = SAVE_VERSION
+		if not data.has("last_modified_at"):
+			data["last_modified_at"] = data.get("timestamp", Time.get_datetime_string_from_system())
+		if not data.has("sync_status"):
+			data["sync_status"] = "PENDING"
+		if not data.has("device_id"):
+			data["device_id"] = get_device_id()
+	elif version > SAVE_VERSION:
 		push_warning("SaveManager: Save data is from a newer version.")
 	
 	# Restore state

@@ -1,7 +1,6 @@
 # Godot
 game/.godot/
 game/export.cfg
-game/export_presets.cfg
 *.tmp
 *.import
 

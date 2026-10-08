@@ -28,12 +28,31 @@ class ContentService {
   }
 
   async updateChapter(id, data) {
-    await this.getChapterById(id);
+    const existing = await this.getChapterById(id);
+    const targetStatus = data.status || existing.status;
+    if (targetStatus === 'PUBLISHED') {
+      const title = data.title !== undefined ? data.title : existing.title;
+      const chapterNumber = data.chapter_number !== undefined ? data.chapter_number : (data.chapterNumber !== undefined ? data.chapterNumber : existing.chapter_number);
+      if (!title || !chapterNumber) {
+        const err = new Error('Cannot publish chapter: title and chapter number are required');
+        err.code = 'VALIDATION_ERROR';
+        err.statusCode = 400;
+        throw err;
+      }
+    }
     return chapterRepository.update(id, data);
   }
 
   async setChapterStatus(id, status) {
-    await this.getChapterById(id);
+    const existing = await this.getChapterById(id);
+    if (status === 'PUBLISHED') {
+      if (!existing.title || !existing.chapter_number) {
+        const err = new Error('Cannot publish chapter: title and chapter number are required');
+        err.code = 'VALIDATION_ERROR';
+        err.statusCode = 400;
+        throw err;
+      }
+    }
     return chapterRepository.update(id, { status });
   }
 
@@ -146,7 +165,18 @@ class ContentService {
   }
 
   async updateDialogue(id, data) {
-    await this.getDialogueById(id);
+    const existing = await this.getDialogueById(id);
+    const targetStatus = data.status || existing.status;
+    if (targetStatus === 'PUBLISHED') {
+      const startNodeId = data.start_node_id || data.startNodeId || existing.start_node_id;
+      const rawNodes = data.raw_nodes || data.rawNodes || existing.raw_nodes;
+      if (!startNodeId || typeof rawNodes !== 'object' || !rawNodes[startNodeId]) {
+        const err = new Error(`Cannot publish dialogue: start node '${startNodeId}' is missing from raw nodes.`);
+        err.code = 'VALIDATION_ERROR';
+        err.statusCode = 400;
+        throw err;
+      }
+    }
     return dialogueRepository.update(id, data);
   }
 
