@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: mekatilili_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: mekatilili_user
+      POSTGRES_PASSWORD: mekatilili_password
+      POSTGRES_DB: mekatilili_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    container_name: mekatilili_backend
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    environment:
+      PORT: 5000
+      NODE_ENV: production
+      DATABASE_URL: postgresql://mekatilili_user:mekatilili_password@postgres:5432/mekatilili_db
+      JWT_SECRET: super_secret_mekatilili_jwt_key_2026
+      CORS_ORIGIN: "*"
+    ports:
+      - "5000:5000"
+
+volumes:
+  pgdata:

@@ -55,36 +55,77 @@ Built with **Godot 4.3 (GDScript)** with an Android-first design and desktop cro
 ## Project Structure
 ```
 mekatilili-game/
-├── game/                    # Godot 4 project
+├── game/                    # Godot 4 project (100% offline-playable)
 │   ├── assets/              # Sprites, UI elements, audio, palettes
 │   ├── autoload/            # Global singletons (GameManager, SaveManager, etc.)
 │   ├── data/                # JSON data for dialogue, quests, chapters, journal
 │   ├── scenes/              # Game scenes (main, player, npcs, environments, ui)
 │   ├── scripts/             # Modular GDScript code
 │   └── project.godot        # Godot project definition
-├── docs/                    # Design, Story, Architecture, Historical documentation
-│   ├── game-design-document.md
-│   ├── story.md
-│   ├── architecture.md
-│   └── historical-references.md
-├── backend/                 # Prepared for future Node/Express API
-├── admin/                   # Prepared for future React dashboard
-└── README.md
+├── backend/                 # Node.js + Express + PostgreSQL API
+│   ├── src/                 # Controllers, Services, Repositories (pg parameterized SQL)
+│   ├── database/            # 13 SQL migrations + seeds
+│   └── tests/               # Jest test suite (16 tests)
+├── admin/                   # React + TypeScript + Vite CMS Dashboard
+│   ├── src/                 # Chapters, Quests, NPCs, Dialogue Editor, Collectibles, Analytics
+│   └── dist/                # Production build
+├── docs/                    # Game Design, Story, Architecture, API documentation
+└── docker-compose.yml       # PostgreSQL database & optional services container
 ```
 
 ---
 
 ## How to Run & Test
-### Running with Godot 4.3:
+
+### 1. Godot 4.3 Client (Playable Offline Game)
+The game runs 100% offline with zero cloud dependency.
 ```bash
 # Open in Godot 4 Editor
 godot --path game/
 
 # Run the game directly
 godot --path game/ scenes/main/SplashScreen.tscn
-```
 
-### Headless Verification / Tests:
-```bash
+# Run headless test suite (7/7 tests verify all systems)
 godot --headless --path game/ -s tests/RunTests.gd
 ```
+
+### 2. Backend (Node.js + Express + PostgreSQL)
+```bash
+cd backend
+
+# Install dependencies
+npm install
+
+# Run database migrations
+npm run migrate
+
+# Seed initial admin & Chapter 1 content
+npm run seed
+
+# Run automated test suite (16 tests)
+npm test
+
+# Start API server (port 5000)
+npm run dev
+```
+
+**Default Admin Credentials:**
+- Email: `admin@mekatilili.org`
+- Password: `AdminPass123!`
+
+### 3. Admin Dashboard (React + TypeScript + Vite)
+```bash
+cd admin
+
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build production bundle
+npm run build
+```
+The dashboard will run at `http://localhost:5173` and connect to the backend at `http://localhost:5000/api/v1`.
+

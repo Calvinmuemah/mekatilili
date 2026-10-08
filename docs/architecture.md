@@ -92,3 +92,67 @@ game/
 - **Class Names:** Use PascalCase for custom classes (`class_name Interactable extends Area2D`).
 - **Signal Decoupling:** Components emit signals rather than calling tight parent methods.
 - **Fail-Safe & Defensive:** Always check `FileAccess.file_exists()` before opening, provide fallback strings/textures if missing, and print descriptive warnings without crashing.
+
+---
+
+## 5. Backend Architecture (Node.js + Express + PostgreSQL)
+
+The backend provides content management, cloud save syncing, and telemetry without compromising offline playability.
+
+### Layered Flow
+```
+Incoming HTTP Request
+   │
+   ▼
+Routes (/api/v1/...) ──► Middleware (JWT, Roles, Validation)
+   │
+   ▼
+Controllers (Extract and shape request data)
+   │
+   ▼
+Services (Business logic, hashing, rule enforcement)
+   │
+   ▼
+Repositories (Direct parameterized SQL queries via 'pg')
+   │
+   ▼
+PostgreSQL Database
+```
+
+### Key Principles
+- **No ORM:** All SQL is written as parameterized queries through `pg` for performance, predictability, and complete query control.
+- **Offline-First Contract:** The Godot client never blocks or depends on the backend for local gameplay. The backend is an optional enhancement for content updates, telemetry, and cross-device sync.
+- **Role-Based Access Control:** Dual auth systems separate players (`users` table) from system operators (`admins` table with `SUPER_ADMIN`, `CONTENT_EDITOR`, `ANALYST` roles).
+
+---
+
+## 6. Admin Frontend Architecture (React + TypeScript + Vite)
+
+The admin dashboard provides a content management workspace for writers, historians, and designers.
+
+### Tech Stack
+- React 18 + TypeScript + Vite
+- TanStack Query (React Query) for server state caching and optimistic updates
+- React Router DOM v6 for authenticated page routing
+- Lucide React for consistent icons
+- Historical color system reflecting coastal Kenyan palette:
+  - Deep Earth (`#3B2416`)
+  - Terracotta (`#B85C38`)
+  - Warm Gold (`#D9A441`)
+  - Forest Green (`#315C3A`)
+  - Sand (`#E8D3A8`)
+  - Ivory (`#F7F0DE`)
+  - Charcoal (`#211C18`)
+
+### Key Admin Modules
+1. **Dashboard:** High-level metrics, active players, and recent telemetry events.
+2. **Chapters:** Chapter lifecycle management (`DRAFT`, `PUBLISHED`, `ARCHIVED`).
+3. **Quests & Objectives:** Narrative quests, objective types (`TALK_TO_NPC`, `COLLECT_ITEM`, etc.).
+4. **NPC Cast:** Elders, villagers, advisors, and historical personas.
+5. **Interactive Dialogue Editor:** Node-tree graph editor with live in-game dialogue simulator.
+6. **Cultural Collectibles:** Sacred artifacts, regalia, and Giriama cultural context.
+7. **Lore Codex / Journal:** Story codex, historical biographies, and oral traditions.
+8. **Historical Citations:** Archival sources and academic reference verification.
+9. **Player Progress:** User accounts, community unity scores, and chapter progress.
+10. **Telemetry & Analytics:** Real-time event ingestion stream and frequency analytics.
+
