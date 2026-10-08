@@ -1,0 +1,50 @@
+{
+  "id": "dialogue_charo",
+  "title": "The Restless Youth",
+  "nodes": {
+    "start": {
+      "speaker": "Warrior Charo",
+      "portrait": "res://assets/characters/portraits/charo.png",
+      "text": "Mekatilili! I have sharpened my hunting arrows. Why do we wait while foreign soldiers march on our paths? Let us strike them in the thickets!",
+      "choices": [
+        {
+          "text": "A lone spark burns a bush, but a united fire clears the forest. We need all nine clans.",
+          "next": "node_wisdom",
+          "events": [
+            { "action": "add_support", "value": 15 },
+            { "action": "set_flag", "target": "charo_guided", "value": true }
+          ]
+        },
+        {
+          "text": "Discipline, young warrior. Anger without council leads to slaughter.",
+          "next": "node_discipline",
+          "events": [
+            { "action": "add_support", "value": 10 },
+            { "action": "set_flag", "target": "charo_guided", "value": true }
+          ]
+        }
+      ]
+    },
+    "node_wisdom": {
+      "speaker": "Warrior Charo",
+      "portrait": "res://assets/characters/portraits/charo.png",
+      "text": "You speak the truth, mother. If only a few fight, the British will isolate us. But if all Giriama stand together under the sacred oaths, they cannot move us.",
+      "next": "node_end"
+    },
+    "node_discipline": {
+      "speaker": "Warrior Charo",
+      "portrait": "res://assets/characters/portraits/charo.png",
+      "text": "Forgive my haste, elder mother. My blood boils at their arrogance. I will await the words of Mzee Fondo and Kaya Fungo.",
+      "next": "node_end"
+    },
+    "node_end": {
+      "speaker": "Mekatilili wa Menza",
+      "portrait": "res://assets/characters/portraits/mekatilili.png",
+      "text": "Keep your bow ready, Charo, but keep your ears open to the elders. Our unity is our greatest spear.",
+      "events": [
+        { "action": "journal_entry", "target": "The Warriors' Resolve", "value": "Young warrior Charo has agreed to heed the elders and coordinate with the community resistance." }
+      ],
+      "next": ""
+    }
+  }
+}

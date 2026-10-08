@@ -1,0 +1,63 @@
+{
+  "id": "dialogue_wanje",
+  "title": "Alliance of the Kaya",
+  "nodes": {
+    "start": {
+      "speaker": "Wanje wa Mwadorikola",
+      "portrait": "res://assets/characters/portraits/wanje.png",
+      "text": "Greetings, Mekatilili. I felt your presence before you reached the sacred clearing. The colonial agents have cast their shadow across the land.",
+      "next": "node_warning"
+    },
+    "node_warning": {
+      "speaker": "Wanje wa Mwadorikola",
+      "portrait": "res://assets/characters/portraits/wanje.png",
+      "text": "They are watching you closely. Commissioner Champion's spies report every word spoken in the market.",
+      "choices": [
+        {
+          "text": "Let them watch. The Giriama have nothing to hide when defending their own soil.",
+          "next": "node_arrest_threat",
+          "events": [
+            { "action": "add_support", "value": 25 },
+            { "action": "set_flag", "target": "wanje_allied", "value": true }
+          ]
+        },
+        {
+          "text": "We must move quietly until the people are united.",
+          "next": "node_counsel",
+          "events": [
+            { "action": "add_support", "value": 20 },
+            { "action": "set_flag", "target": "wanje_allied", "value": true }
+          ]
+        }
+      ]
+    },
+    "node_arrest_threat": {
+      "speaker": "Wanje wa Mwadorikola",
+      "portrait": "res://assets/characters/portraits/wanje.png",
+      "text": "They may arrest you, Mekatilili. They have chains, and prisons far to the west.",
+      "next": "node_ready"
+    },
+    "node_counsel": {
+      "speaker": "Wanje wa Mwadorikola",
+      "portrait": "res://assets/characters/portraits/wanje.png",
+      "text": "Silence will not save us now. The colonial decree demands our submission within days.",
+      "next": "node_ready"
+    },
+    "node_ready": {
+      "speaker": "Mekatilili wa Menza",
+      "portrait": "res://assets/characters/portraits/mekatilili.png",
+      "text": "Then we must be ready! If they come for one, they must face all of us. Wanje, sound the council call. Let the sacred fire be lit in the village center!",
+      "next": "node_pledge"
+    },
+    "node_pledge": {
+      "speaker": "Wanje wa Mwadorikola",
+      "portrait": "res://assets/characters/portraits/wanje.png",
+      "text": "It shall be done. The Kifudu dance will begin tonight. Go to the central council fire, Mekatilili; the whole village is gathering to hear you speak!",
+      "events": [
+        { "action": "complete_objective", "target": "quest_chapter_1", "value": 3 },
+        { "action": "journal_entry", "target": "Alliance with Wanje", "value": "Wanje wa Mwadorikola has pledged his full spiritual support to organize the Kifudu gathering and resist colonial recruitment." }
+      ],
+      "next": ""
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "chapter_1",
+  "number": 1,
+  "title": "Whispers in the Palms",
+  "subtitle": "The village of Ulungu wakes to colonial unrest",
+  "scene": "res://scenes/environments/VillageLevel.tscn",
+  "quest_id": "quest_chapter_1",
+  "description": "In 1913 coastal Kenya, the Giriama homeland faces escalating pressure as colonial administrators demand hut taxes and conscript forced laborers for foreign plantations. In the peaceful village of Ulungu, Mekatilili wa Menza listens to the cries of her people and resolves that they will not bow.",
+  "historical_note": "British Assistant District Commissioner Arthur Champion entered Giriama territory in 1912-1913, demanding 2,000 laborers and levying taxes. The Giriama responded with unanimous refusal, sparking one of the most significant anti-colonial resistance movements in Kenyan history."
+}

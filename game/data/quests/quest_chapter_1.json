@@ -1,0 +1,36 @@
+{
+  "id": "quest_chapter_1",
+  "title": "Echoes of the Homeland",
+  "chapter": 1,
+  "description": "Colonial messengers have posted demands across the territory. Mekatilili must inspect the village shamba, consult Elder Mzee Fondo, and unite with Kaya elder Wanje wa Mwadorikola.",
+  "state": 1,
+  "current_objective_index": 0,
+  "objectives": [
+    {
+      "id": "talk_nyevu",
+      "description": "Speak with Villager Nyevu about the colonial tax notice.",
+      "completed": false
+    },
+    {
+      "id": "inspect_crops",
+      "description": "Check the village Shamba and harvest cassava for the community.",
+      "completed": false
+    },
+    {
+      "id": "consult_mzee_fondo",
+      "description": "Consult Elder Mzee Fondo at the Sacred Council Baobab.",
+      "completed": false
+    },
+    {
+      "id": "find_wanje",
+      "description": "Seek out Wanje wa Mwadorikola near the Kaya boundary.",
+      "completed": false
+    },
+    {
+      "id": "gather_community",
+      "description": "Address the village gathering at the council fire and pledge resistance.",
+      "completed": false
+    }
+  ],
+  "reward_text": "The people of Ulungu are united. Community support reached 100%."
+}

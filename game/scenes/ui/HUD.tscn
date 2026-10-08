@@ -1,0 +1,445 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/HUD.gd" id="1_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/TouchControls.tscn" id="2_touch"]
+[ext_resource type="PackedScene" path="res://scenes/ui/DialogueBox.tscn" id="3_dlg"]
+[ext_resource type="Script" path="res://scripts/ui/JournalUI.gd" id="4_jrn"]
+[ext_resource type="Script" path="res://scripts/ui/PauseMenu.gd" id="5_pause"]
+[ext_resource type="Script" path="res://scripts/ui/SettingsMenu.gd" id="6_sett"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_hud")
+
+[node name="TopLeft" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 320.0
+offset_bottom = 110.0
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="TopLeft"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="TopLeft/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 8.0
+offset_right = -12.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CharLabel" type="Label" parent="TopLeft/Panel/VBox"]
+layout_mode = 2
+text = "MEKATILILI WA MENZA"
+
+[node name="SupportBar" type="ProgressBar" parent="TopLeft/Panel/VBox"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+max_value = 100.0
+step = 1.0
+show_percentage = false
+
+[node name="SupportLabel" type="Label" parent="TopLeft/Panel/VBox"]
+layout_mode = 2
+text = "Community Unity: 0%"
+
+[node name="TopRight" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -380.0
+offset_top = 70.0
+offset_right = -24.0
+offset_bottom = 170.0
+grow_horizontal = 0
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="TopRight"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="TopRight/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 8.0
+offset_right = -12.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="TopRight/Panel/VBox"]
+layout_mode = 2
+text = "CURRENT OBJECTIVE"
+
+[node name="DescLabel" type="Label" parent="TopRight/Panel/VBox"]
+layout_mode = 2
+autowrap_mode = 2
+text = "Explore the village of Ulungu."
+
+[node name="TopCenter" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -280.0
+offset_top = 24.0
+offset_right = 280.0
+offset_bottom = 114.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="BannerPanel" type="Panel" parent="TopCenter"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="TopCenter/BannerPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = -16.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="BannerTitle" type="Label" parent="TopCenter/BannerPanel/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+text = "NOTIFICATION"
+
+[node name="BannerDesc" type="Label" parent="TopCenter/BannerPanel/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+text = "Description text here."
+
+[node name="BottomCenter" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -80.0
+offset_right = 200.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="PromptPanel" type="Panel" parent="BottomCenter"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PromptLabel" type="Label" parent="BottomCenter/PromptPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "[E / TAP] Interact"
+
+[node name="TouchControls" parent="." instance=ExtResource("2_touch")]
+
+[node name="DialogueBox" parent="." instance=ExtResource("3_dlg")]
+
+[node name="JournalOverlay" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_jrn")
+
+[node name="Panel" type="Panel" parent="JournalOverlay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -460.0
+offset_top = -280.0
+offset_right = 460.0
+offset_bottom = 280.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="JournalOverlay/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 16.0
+offset_right = 200.0
+offset_bottom = 54.0
+grow_horizontal = 2
+horizontal_alignment = 1
+text = "THE JOURNAL OF MEKATILILI"
+
+[node name="CloseBtn" type="Button" parent="JournalOverlay/Panel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -90.0
+offset_top = 14.0
+offset_right = -20.0
+offset_bottom = 50.0
+grow_horizontal = 0
+text = "CLOSE"
+
+[node name="TabBar" type="HBoxContainer" parent="JournalOverlay/Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 32.0
+offset_top = 64.0
+offset_right = -32.0
+offset_bottom = 108.0
+grow_horizontal = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="StoryTab" type="Button" parent="JournalOverlay/Panel/TabBar"]
+layout_mode = 2
+text = "STORY"
+
+[node name="QuestsTab" type="Button" parent="JournalOverlay/Panel/TabBar"]
+layout_mode = 2
+text = "QUESTS"
+
+[node name="HistoryTab" type="Button" parent="JournalOverlay/Panel/TabBar"]
+layout_mode = 2
+text = "HISTORY"
+
+[node name="CollectiblesTab" type="Button" parent="JournalOverlay/Panel/TabBar"]
+layout_mode = 2
+text = "COLLECTIBLES"
+
+[node name="ContentScroll" type="ScrollContainer" parent="JournalOverlay/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = 120.0
+offset_right = -32.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ContentText" type="RichTextLabel" parent="JournalOverlay/Panel/ContentScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Content details..."
+
+[node name="PauseOverlay" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_pause")
+
+[node name="Panel" type="Panel" parent="PauseOverlay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -220.0
+offset_right = 220.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="PauseOverlay/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = 24.0
+offset_right = -32.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="PauseOverlay/Panel/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+text = "GAME PAUSED"
+
+[node name="StatusLabel" type="Label" parent="PauseOverlay/Panel/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="ResumeBtn" type="Button" parent="PauseOverlay/Panel/VBox"]
+layout_mode = 2
+text = "RESUME"
+
+[node name="JournalBtn" type="Button" parent="PauseOverlay/Panel/VBox"]
+layout_mode = 2
+text = "JOURNAL"
+
+[node name="SettingsBtn" type="Button" parent="PauseOverlay/Panel/VBox"]
+layout_mode = 2
+text = "SETTINGS"
+
+[node name="SaveBtn" type="Button" parent="PauseOverlay/Panel/VBox"]
+layout_mode = 2
+text = "SAVE GAME"
+
+[node name="MenuBtn" type="Button" parent="PauseOverlay/Panel/VBox"]
+layout_mode = 2
+text = "MAIN MENU"
+
+[node name="SettingsMenu" type="Control" parent="." groups=["settings_menu"]]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_sett")
+
+[node name="Panel" type="Panel" parent="SettingsMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -240.0
+offset_right = 260.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CloseBtn" type="Button" parent="SettingsMenu/Panel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -84.0
+offset_top = 14.0
+offset_right = -16.0
+offset_bottom = 48.0
+grow_horizontal = 0
+text = "BACK"
+
+[node name="VBox" type="VBoxContainer" parent="SettingsMenu/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = 48.0
+offset_right = -32.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="HeaderLabel" type="Label" parent="SettingsMenu/Panel/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+text = "SETTINGS"
+
+[node name="MasterRow" type="HBoxContainer" parent="SettingsMenu/Panel/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsMenu/Panel/VBox/MasterRow"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "Master Volume"
+
+[node name="MasterSlider" type="HSlider" parent="SettingsMenu/Panel/VBox/MasterRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MusicRow" type="HBoxContainer" parent="SettingsMenu/Panel/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsMenu/Panel/VBox/MusicRow"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "Music Volume"
+
+[node name="MusicSlider" type="HSlider" parent="SettingsMenu/Panel/VBox/MusicRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SfxRow" type="HBoxContainer" parent="SettingsMenu/Panel/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsMenu/Panel/VBox/SfxRow"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "SFX Volume"
+
+[node name="SfxSlider" type="HSlider" parent="SettingsMenu/Panel/VBox/SfxRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TutorialRow" type="HBoxContainer" parent="SettingsMenu/Panel/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsMenu/Panel/VBox/TutorialRow"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "Show Tutorials"
+
+[node name="TutorialCheck" type="CheckButton" parent="SettingsMenu/Panel/VBox/TutorialRow"]
+layout_mode = 2
+
+[node name="ResetBtn" type="Button" parent="SettingsMenu/Panel/VBox"]
+layout_mode = 2
+text = "RESET PROGRESS"

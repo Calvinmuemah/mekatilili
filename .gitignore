@@ -1,0 +1,21 @@
+# Godot
+game/.godot/
+game/export.cfg
+game/export_presets.cfg
+*.tmp
+*.import
+
+# Node
+backend/node_modules/
+backend/dist/
+backend/.env
+backend/coverage/
+
+# Admin
+admin/node_modules/
+admin/dist/
+admin/.env
+
+# OS
+.DS_Store
+Thumbs.db

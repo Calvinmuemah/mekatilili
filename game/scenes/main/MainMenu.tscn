@@ -1,0 +1,324 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/MainMenu.gd" id="1_menu"]
+[ext_resource type="Texture2D" path="res://assets/ui/menu_background.png" id="2_bg"]
+[ext_resource type="Script" path="res://scripts/ui/SettingsMenu.gd" id="3_sett"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="CenterVBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -240.0
+offset_right = 260.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 36
+alignment = 1
+
+[node name="Header" type="VBoxContainer" parent="CenterVBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="CenterVBox/Header"]
+layout_mode = 2
+horizontal_alignment = 1
+text = "MEKATILILI WA MENZA"
+
+[node name="SubtitleLabel" type="Label" parent="CenterVBox/Header"]
+layout_mode = 2
+horizontal_alignment = 1
+text = "A Kenyan Historical Adventure"
+
+[node name="Buttons" type="VBoxContainer" parent="CenterVBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 14
+
+[node name="ContinueBtn" type="Button" parent="CenterVBox/Buttons"]
+custom_minimum_size = Vector2(240, 48)
+layout_mode = 2
+text = "CONTINUE"
+
+[node name="NewGameBtn" type="Button" parent="CenterVBox/Buttons"]
+custom_minimum_size = Vector2(240, 48)
+layout_mode = 2
+text = "NEW GAME"
+
+[node name="SettingsBtn" type="Button" parent="CenterVBox/Buttons"]
+custom_minimum_size = Vector2(240, 48)
+layout_mode = 2
+text = "SETTINGS"
+
+[node name="AboutBtn" type="Button" parent="CenterVBox/Buttons"]
+custom_minimum_size = Vector2(240, 48)
+layout_mode = 2
+text = "ABOUT"
+
+[node name="Footer" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -40.0
+offset_right = 200.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+horizontal_alignment = 1
+text = "v1.0.0 — Based on the 1913 Giriama Anti-Colonial Resistance"
+
+[node name="ConfirmDialog" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="ConfirmDialog"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -100.0
+offset_right = 220.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="ConfirmDialog/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Label" type="Label" parent="ConfirmDialog/Panel/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+text = "Begin Mekatilili's journey?"
+
+[node name="HBox" type="HBoxContainer" parent="ConfirmDialog/Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="BeginBtn" type="Button" parent="ConfirmDialog/Panel/VBox/HBox"]
+custom_minimum_size = Vector2(160, 44)
+layout_mode = 2
+text = "BEGIN JOURNEY"
+
+[node name="BackBtn" type="Button" parent="ConfirmDialog/Panel/VBox/HBox"]
+custom_minimum_size = Vector2(100, 44)
+layout_mode = 2
+text = "BACK"
+
+[node name="AboutDialog" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="AboutDialog"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -340.0
+offset_top = -220.0
+offset_right = 340.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CloseBtn" type="Button" parent="AboutDialog/Panel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -80.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = 50.0
+grow_horizontal = 0
+text = "CLOSE"
+
+[node name="VBox" type="VBoxContainer" parent="AboutDialog/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = 28.0
+offset_right = -32.0
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="AboutDialog/Panel/VBox"]
+layout_mode = 2
+text = "ABOUT THE GAME"
+
+[node name="Desc" type="RichTextLabel" parent="AboutDialog/Panel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[b]Mekatilili wa Menza: A Kenyan Historical Adventure[/b]
+
+This game is dedicated to honoring the courage and memory of [b]Mekatilili wa Menza[/b] and the Agiriama people who defended their land, cultural freedom, and people against British colonial subjugation in 1913–1914.
+
+[color=#D9A441]Principles:[/color]
+• Authentic Kenyan coastal history
+• Preservation of sacred Kaya traditions
+• Community solidarity and resilience"
+
+[node name="SettingsMenu" type="Control" parent="." groups=["settings_menu"]]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_sett")
+
+[node name="Panel" type="Panel" parent="SettingsMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -240.0
+offset_right = 260.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CloseBtn" type="Button" parent="SettingsMenu/Panel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -84.0
+offset_top = 14.0
+offset_right = -16.0
+offset_bottom = 48.0
+grow_horizontal = 0
+text = "BACK"
+
+[node name="VBox" type="VBoxContainer" parent="SettingsMenu/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = 48.0
+offset_right = -32.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="HeaderLabel" type="Label" parent="SettingsMenu/Panel/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+text = "SETTINGS"
+
+[node name="MasterRow" type="HBoxContainer" parent="SettingsMenu/Panel/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsMenu/Panel/VBox/MasterRow"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "Master Volume"
+
+[node name="MasterSlider" type="HSlider" parent="SettingsMenu/Panel/VBox/MasterRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MusicRow" type="HBoxContainer" parent="SettingsMenu/Panel/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsMenu/Panel/VBox/MusicRow"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "Music Volume"
+
+[node name="MusicSlider" type="HSlider" parent="SettingsMenu/Panel/VBox/MusicRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SfxRow" type="HBoxContainer" parent="SettingsMenu/Panel/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsMenu/Panel/VBox/SfxRow"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "SFX Volume"
+
+[node name="SfxSlider" type="HSlider" parent="SettingsMenu/Panel/VBox/SfxRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TutorialRow" type="HBoxContainer" parent="SettingsMenu/Panel/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsMenu/Panel/VBox/TutorialRow"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "Show Tutorials"
+
+[node name="TutorialCheck" type="CheckButton" parent="SettingsMenu/Panel/VBox/TutorialRow"]
+layout_mode = 2
+
+[node name="ResetBtn" type="Button" parent="SettingsMenu/Panel/VBox"]
+layout_mode = 2
+text = "RESET PROGRESS"

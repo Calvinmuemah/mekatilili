@@ -1,0 +1,57 @@
+{
+  "id": "dialogue_nyevu",
+  "title": "Concern in the Village",
+  "nodes": {
+    "start": {
+      "speaker": "Villager Nyevu",
+      "portrait": "res://assets/characters/portraits/nyevu.png",
+      "text": "Mekatilili! Greetings, mother. The colonial soldiers arrived before sunrise. They posted foreign papers upon the granary trees!",
+      "next": "node_explanation"
+    },
+    "node_explanation": {
+      "speaker": "Villager Nyevu",
+      "portrait": "res://assets/characters/portraits/nyevu.png",
+      "text": "They say each household must pay coins we do not possess... or surrender our sons to work the European plantations along the coast!",
+      "choices": [
+        {
+          "text": "Our sons belong to the Giriama. We shall surrender no one.",
+          "next": "node_resolve",
+          "events": [
+            { "action": "add_support", "value": 15 },
+            { "action": "set_flag", "target": "nyevu_reassured", "value": true }
+          ]
+        },
+        {
+          "text": "Where did the tax collectors travel next?",
+          "next": "node_inquire",
+          "events": [
+            { "action": "add_support", "value": 10 },
+            { "action": "set_flag", "target": "nyevu_reassured", "value": true }
+          ]
+        }
+      ]
+    },
+    "node_resolve": {
+      "speaker": "Mekatilili wa Menza",
+      "portrait": "res://assets/characters/portraits/mekatilili.png",
+      "text": "Take heart, Nyevu. Fear is the chain the stranger wraps around our minds. We shall consult Mzee Fondo and Wanje. But first, let us ensure the granary and crops are tended.",
+      "next": "node_finish"
+    },
+    "node_inquire": {
+      "speaker": "Villager Nyevu",
+      "portrait": "res://assets/characters/portraits/nyevu.png",
+      "text": "They rode toward the administrative post near Kwa Junda. But the elders are troubled. Mzee Fondo is seated beneath the ancient council baobab.",
+      "next": "node_finish"
+    },
+    "node_finish": {
+      "speaker": "Villager Nyevu",
+      "portrait": "res://assets/characters/portraits/nyevu.png",
+      "text": "Thank you, Mekatilili. When you speak, courage returns to our hearths.",
+      "events": [
+        { "action": "complete_objective", "target": "quest_chapter_1", "value": 0 },
+        { "action": "journal_entry", "target": "Colonial Demands", "value": "Colonial officials have posted hut tax demands in Ulungu, threatening forced plantation recruitment." }
+      ],
+      "next": ""
+    }
+  }
+}

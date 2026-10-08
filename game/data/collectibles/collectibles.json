@@ -1,0 +1,23 @@
+[
+  {
+    "id": "calabash_palm",
+    "name": "Traditional Palm Calabash (Kibuyu)",
+    "description": "A dried and polished gourd traditionally used for carrying fresh water and mnazi (palm sap) during village gatherings.",
+    "icon": "res://assets/icons/calabash.png",
+    "historical_note": "Palm wine tapping (mnazi) was central to Giriama hospitality and ritual economy. The British attempted to suppress it to force the population into wage labor."
+  },
+  {
+    "id": "kaya_herbs",
+    "name": "Kaya Medicinal Pouch",
+    "description": "A fragrant bundle of coastal coastal wild roots gathered from the sacred forest of Kaya Fungo.",
+    "icon": "res://assets/icons/herb_pouch.png",
+    "historical_note": "Kaya elders used sacred botanicals for ritual purification, healing, and preparing warriors and councils before major communal decisions."
+  },
+  {
+    "id": "colonial_notice",
+    "name": "British Colonial Labor Decree",
+    "description": "A printed notice stamped with the British East Africa Protectorate seal, demanding hut taxes and male labor recruits.",
+    "icon": "res://assets/icons/colonial_decree.png",
+    "historical_note": "In 1913, Assistant District Commissioner Arthur Champion enforced harsh poll taxes and labor quotas, prompting Mekatilili wa Menza's direct defiance."
+  }
+]

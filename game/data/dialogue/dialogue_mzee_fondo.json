@@ -1,0 +1,57 @@
+{
+  "id": "dialogue_mzee_fondo",
+  "title": "Council at the Sacred Baobab",
+  "nodes": {
+    "start": {
+      "speaker": "Elder Mzee Fondo",
+      "portrait": "res://assets/characters/portraits/mzee_fondo.png",
+      "text": "Welcome, Mekatilili. The wind carries bitter news today. The British commissioner Champion demands two thousand of our young men for his plantations, and coins from every thatch.",
+      "choices": [
+        {
+          "text": "If we pay their tax today, tomorrow they will take our land north of the Sabaki River.",
+          "next": "node_defiance",
+          "events": [
+            { "action": "add_support", "value": 20 },
+            { "action": "set_flag", "target": "fondo_agreed", "value": true }
+          ]
+        },
+        {
+          "text": "What do the council of wazee advise?",
+          "next": "node_council",
+          "events": [
+            { "action": "add_support", "value": 15 },
+            { "action": "set_flag", "target": "fondo_agreed", "value": true }
+          ]
+        }
+      ]
+    },
+    "node_defiance": {
+      "speaker": "Elder Mzee Fondo",
+      "portrait": "res://assets/characters/portraits/mzee_fondo.png",
+      "text": "You see clearly, daughter of Menza. Some among the elders trembled at the thought of Maxim guns, but a people without land and dignity are already dead.",
+      "next": "node_wanje_direction"
+    },
+    "node_council": {
+      "speaker": "Elder Mzee Fondo",
+      "portrait": "res://assets/characters/portraits/mzee_fondo.png",
+      "text": "The council is divided. Some wish to negotiate, but Champion will hear nothing except complete submission. We need spiritual guidance and moral unity.",
+      "next": "node_wanje_direction"
+    },
+    "node_wanje_direction": {
+      "speaker": "Elder Mzee Fondo",
+      "portrait": "res://assets/characters/portraits/mzee_fondo.png",
+      "text": "You must go to the forest edge and find Wanje wa Mwadorikola. He has returned from Kaya Fungo with sacred herbs and the memory of the ancient oaths. If he stands with you, the entire Giriama nation will follow.",
+      "events": [
+        { "action": "complete_objective", "target": "quest_chapter_1", "value": 2 },
+        { "action": "journal_entry", "target": "Elder Fondo's Blessing", "value": "Mzee Fondo has endorsed resisting colonial taxation and directed Mekatilili to ally with Wanje wa Mwadorikola." }
+      ],
+      "next": "node_end"
+    },
+    "node_end": {
+      "speaker": "Mekatilili wa Menza",
+      "portrait": "res://assets/characters/portraits/mekatilili.png",
+      "text": "I will seek Wanje immediately. Together, we shall rekindle the ancestral fire.",
+      "next": ""
+    }
+  }
+}
