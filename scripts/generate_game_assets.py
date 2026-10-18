@@ -348,85 +348,181 @@ def create_environment_assets():
     fire.save(os.path.join(ASSETS_DIR, "environments", "fire_pit.png"))
 
 def create_items_and_icons():
+    import math
     # 1. Calabash / Sacred Gourd 64x64
     calabash = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
     d = ImageDraw.Draw(calabash)
-    d.ellipse([16, 50, 48, 60], fill=(33, 28, 24, 90))
+    d.ellipse([14, 48, 50, 60], fill=(33, 28, 24, 110))
     # Bottom bowl
-    d.ellipse([18, 26, 46, 54], fill=C_WARM_GOLD, outline=C_DEEP_EARTH, width=2)
+    d.ellipse([16, 24, 48, 54], fill=C_WARM_GOLD, outline=C_DEEP_EARTH, width=3)
     # Waist & top bowl
-    d.ellipse([24, 14, 40, 32], fill=C_WARM_GOLD, outline=C_DEEP_EARTH, width=2)
+    d.ellipse([22, 12, 42, 32], fill=C_WARM_GOLD, outline=C_DEEP_EARTH, width=3)
     # Stopper & cord
-    d.rectangle([29, 8, 35, 14], fill=C_TERRACOTTA)
-    d.line([(22, 30), (42, 30)], fill=C_IVORY, width=2)
+    d.rectangle([28, 6, 36, 12], fill=C_TERRACOTTA, outline=C_DEEP_EARTH, width=1)
+    d.line([(20, 28), (44, 28)], fill=C_IVORY, width=3)
     calabash.save(os.path.join(ASSETS_DIR, "icons", "calabash.png"))
     
     # 2. Kaya Herb Pouch 64x64
     pouch = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
     d = ImageDraw.Draw(pouch)
-    d.ellipse([16, 50, 48, 60], fill=(33, 28, 24, 90))
-    d.rounded_rectangle([18, 22, 46, 52], radius=10, fill=C_TERRACOTTA, outline=C_DEEP_EARTH, width=2)
-    d.line([(20, 26), (44, 26)], fill=C_WARM_GOLD, width=3)
+    d.ellipse([14, 48, 50, 60], fill=(33, 28, 24, 110))
+    d.rounded_rectangle([16, 20, 48, 52], radius=10, fill=C_TERRACOTTA, outline=C_DEEP_EARTH, width=3)
+    d.line([(18, 26), (46, 26)], fill=C_WARM_GOLD, width=3)
     # Medicinal sprig poking out
-    d.line([(28, 24), (24, 12)], fill=C_FOREST_GREEN, width=3)
-    d.ellipse([20, 10, 26, 16], fill=C_FOREST_GREEN)
-    d.ellipse([34, 12, 40, 18], fill=C_FOREST_GREEN)
+    d.line([(28, 22), (22, 10)], fill=C_FOREST_GREEN, width=4)
+    d.ellipse([18, 8, 26, 16], fill=C_FOREST_GREEN, outline=C_DEEP_EARTH, width=1)
+    d.ellipse([34, 10, 42, 18], fill=C_FOREST_GREEN, outline=C_DEEP_EARTH, width=1)
     pouch.save(os.path.join(ASSETS_DIR, "icons", "herb_pouch.png"))
     
     # 3. Colonial Tax Decree 64x64
     decree = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
     d = ImageDraw.Draw(decree)
-    d.rectangle([14, 10, 50, 54], fill=C_IVORY, outline=C_DEEP_EARTH, width=2)
+    d.rectangle([12, 8, 52, 56], fill=C_IVORY, outline=C_DEEP_EARTH, width=3)
     # Colonial red seal
-    d.ellipse([27, 40, 37, 50], fill=C_TERRACOTTA)
+    d.ellipse([26, 38, 38, 50], fill=C_TERRACOTTA, outline=C_DEEP_EARTH, width=2)
     # Decree text lines
-    for y in [18, 24, 30, 36]:
+    for y in [16, 22, 28, 34]:
         d.line([(18, y), (46, y)], fill=C_CHARCOAL, width=2)
     decree.save(os.path.join(ASSETS_DIR, "icons", "colonial_decree.png"))
     
-    # 4. Quest & UI markers
-    # Quest marker 48x48
-    qm = Image.new("RGBA", (48, 48), (0, 0, 0, 0))
+    # 4. Quest & UI markers (64x64 for maximum clarity and visibility)
+    # Quest marker 64x64
+    qm = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
     d = ImageDraw.Draw(qm)
-    d.ellipse([6, 6, 42, 42], fill=C_WARM_GOLD, outline=C_DEEP_EARTH, width=2)
-    d.rectangle([22, 12, 26, 26], fill=C_DEEP_EARTH)
-    d.rectangle([22, 30, 26, 34], fill=C_DEEP_EARTH)
+    # Drop shadow
+    d.ellipse([8, 10, 56, 58], fill=(33, 28, 24, 120))
+    # Golden badge disc
+    d.ellipse([6, 6, 58, 58], fill=C_WARM_GOLD, outline=C_DEEP_EARTH, width=3)
+    # Inner gold filigree ring
+    d.ellipse([12, 12, 52, 52], outline=(247, 240, 222, 180), width=2)
+    # Exclamation mark
+    d.rounded_rectangle([28, 16, 36, 36], radius=3, fill=C_TERRACOTTA, outline=C_DEEP_EARTH, width=2)
+    d.ellipse([28, 42, 36, 50], fill=C_TERRACOTTA, outline=C_DEEP_EARTH, width=2)
     qm.save(os.path.join(ASSETS_DIR, "icons", "quest_marker.png"))
     
-    # Talk marker 48x48
-    tm = Image.new("RGBA", (48, 48), (0, 0, 0, 0))
+    # Talk marker 64x64
+    tm = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
     d = ImageDraw.Draw(tm)
-    d.rounded_rectangle([6, 8, 42, 34], radius=6, fill=C_SAND, outline=C_DEEP_EARTH, width=2)
-    d.polygon([(16, 34), (24, 34), (16, 42)], fill=C_SAND)
-    d.line([(16, 34), (16, 42), (24, 34)], fill=C_DEEP_EARTH, width=2)
-    for x in [14, 24, 34]:
-        d.ellipse([x - 2, 19, x + 2, 23], fill=C_DEEP_EARTH)
+    # Drop shadow
+    d.rounded_rectangle([8, 8, 58, 48], radius=10, fill=(33, 28, 24, 110))
+    # Main bubble
+    d.rounded_rectangle([6, 6, 56, 44], radius=10, fill=C_IVORY, outline=C_DEEP_EARTH, width=3)
+    # Inner gold rim
+    d.rounded_rectangle([10, 10, 52, 40], radius=7, outline=(217, 164, 65, 140), width=2)
+    # Bubble tail
+    d.polygon([(18, 44), (30, 44), (18, 56)], fill=C_IVORY)
+    d.line([(18, 44), (18, 56), (30, 44)], fill=C_DEEP_EARTH, width=3)
+    # Three speech dots
+    for x in [20, 31, 42]:
+        d.ellipse([x - 3, 22, x + 3, 28], fill=C_DEEP_EARTH)
     tm.save(os.path.join(ASSETS_DIR, "icons", "talk_marker.png"))
 
 def create_ui_assets():
-    # 1. Main Menu Background (1280x720)
+    import math
+    # 1. Main Menu Background (1280x720) with Grand Golden Sun Medallion
     bg = Image.new("RGBA", (1280, 720), (0, 0, 0, 255))
     d = ImageDraw.Draw(bg)
-    # Sunset gradient from Warm Gold / Terracotta to Deep Earth
+    
+    # Sunset twilight gradient (Twilight Purple -> Royal Terracotta -> Sunset Gold)
     for y in range(720):
         t = y / 720.0
-        # Sky: Terracotta -> Warm Gold -> Deep Sand -> Earth
-        r = int(184 * (1 - t*0.5) + 59 * (t*0.5))
-        g = int(92 * (1 - t*0.6) + 36 * (t*0.6))
-        b = int(56 * (1 - t*0.8) + 22 * (t*0.8))
+        if t < 0.38:
+            nt = t / 0.38
+            r = int(34 * (1 - nt) + 135 * nt)
+            g = int(20 * (1 - nt) + 52 * nt)
+            b = int(40 * (1 - nt) + 32 * nt)
+        elif t < 0.68:
+            nt = (t - 0.38) / 0.30
+            r = int(135 * (1 - nt) + 215 * nt)
+            g = int(52 * (1 - nt) + 110 * nt)
+            b = int(32 * (1 - nt) + 36 * nt)
+        else:
+            nt = (t - 0.68) / 0.32
+            r = int(215 * (1 - nt) + 238 * nt)
+            g = int(110 * (1 - nt) + 155 * nt)
+            b = int(36 * (1 - nt) + 60 * nt)
         d.line([(0, y), (1280, y)], fill=(r, g, b, 255))
         
-    # Large warm sun on horizon
-    d.ellipse([540, 220, 740, 420], fill=(247, 210, 110, 180))
+    # Far distant Shimba Hills & Coastal bluffs (atmospheric depth)
+    d.polygon([(0, 480), (180, 445), (420, 470), (680, 435), (950, 460), (1280, 425), (1280, 720), (0, 720)], fill=(58, 32, 45, 190))
+    d.polygon([(0, 520), (260, 485), (560, 525), (840, 495), (1120, 520), (1280, 490), (1280, 720), (0, 720)], fill=(50, 26, 22, 220))
     
-    # Silhouetted coastal hills and palms
-    d.polygon([(0, 520), (320, 460), (740, 510), (1280, 470), (1280, 720), (0, 720)], fill=(45, 28, 18, 255))
-    d.polygon([(0, 570), (450, 530), (920, 560), (1280, 540), (1280, 720), (0, 720)], fill=C_DEEP_EARTH)
+    cx, cy = 640, 396
+    r_sun = 236
     
-    # Silhouetted Baobab on the right
-    d.polygon([(1000, 720), (1050, 500), (1030, 420), (1080, 410), (1070, 720)], fill=C_CHARCOAL)
-    for bx, by, br in [(980, 420, 60), (1050, 390, 70), (1110, 430, 55)]:
-        d.ellipse([bx - br, by - br, bx + br, by + br], fill=C_CHARCOAL)
+    # Main Golden Sun Disc Core (Rich Warm Amber Gold)
+    d.ellipse([cx - r_sun, cy - r_sun, cx + r_sun, cy + r_sun], fill=(238, 176, 68, 255))
+    
+    # Concentric inner warm pedestal tones
+    d.ellipse([cx - 215, cy - 215, cx + 215, cy + 215], fill=(245, 192, 85, 255))
+    d.ellipse([cx - 185, cy - 185, cx + 185, cy + 185], fill=(248, 204, 102, 255))
+    
+    # Outer African Kaya Sunburst Ray Notches
+    for angle_deg in range(0, 360, 6):
+        rad = math.radians(angle_deg)
+        length = 12 if angle_deg % 24 == 0 else (8 if angle_deg % 12 == 0 else 5)
+        width = 3 if angle_deg % 24 == 0 else 2
+        x1 = cx + (r_sun - 2) * math.cos(rad)
+        y1 = cy + (r_sun - 2) * math.sin(rad)
+        x2 = cx + (r_sun + length) * math.cos(rad)
+        y2 = cy + (r_sun + length) * math.sin(rad)
+        d.line([(x1, y1), (x2, y2)], fill=(217, 164, 65, 255), width=width)
+        
+    # Outer gold rim
+    d.ellipse([cx - r_sun, cy - r_sun, cx + r_sun, cy + r_sun], outline=(195, 142, 45, 255), width=5)
+    
+    # Concentric inner filigree rings
+    d.ellipse([cx - 227, cy - 227, cx + 227, cy + 227], outline=(175, 82, 42, 255), width=2)
+    d.ellipse([cx - 221, cy - 221, cx + 221, cy + 221], outline=(247, 235, 200, 255), width=1)
+    d.ellipse([cx - 195, cy - 195, cx + 195, cy + 195], outline=(195, 142, 45, 200), width=1)
+    
+    # Indian Ocean horizon with sun reflection
+    d.rectangle([0, 624, 1280, 642], fill=(38, 20, 14, 255))
+    for rx in range(440, 840, 24):
+        d.line([(rx - 12, 626), (rx + 12, 626)], fill=(225, 165, 65, 200), width=2)
+        d.line([(rx - 8, 630), (rx + 8, 630)], fill=(245, 195, 85, 220), width=2)
+        d.line([(rx - 4, 634), (rx + 4, 634)], fill=(255, 215, 110, 200), width=2)
+        
+    # Left Coastal Cliff Headland
+    d.polygon([(0, 480), (160, 510), (320, 580), (0, 635), (0, 720)], fill=(28, 16, 10, 255))
+    # Right Bluff Headland
+    d.polygon([(960, 585), (1120, 510), (1280, 470), (1280, 720), (960, 720)], fill=(28, 16, 10, 255))
+    
+    # Dark Earth Ground Shoreline
+    d.polygon([(0, 636), (320, 642), (640, 645), (960, 642), (1280, 636), (1280, 720), (0, 720)], fill=(20, 12, 6, 255))
+    d.rectangle([0, 645, 1280, 720], fill=(20, 12, 6, 255))
+    
+    # Silhouetted Coastal Coconut Palms
+    trunk_1 = [(110, 645), (114, 575), (126, 515), (150, 460), (180, 420)]
+    for i in range(len(trunk_1) - 1):
+        d.line([trunk_1[i], trunk_1[i+1]], fill=(14, 8, 4, 255), width=8 - i)
+    px, py = 180, 420
+    for dx, dy in [(-55, -20), (-45, -45), (-15, -60), (22, -55), (55, -35), (65, -10), (50, 20), (-40, 15)]:
+        d.line([(px, py), (px + dx, py + dy)], fill=(14, 8, 4, 255), width=3)
+        for f in [0.35, 0.6, 0.85]:
+            lx, ly = px + dx * f, py + dy * f
+            d.line([(lx, ly), (lx - 7, ly + 9)], fill=(14, 8, 4, 255), width=2)
+            d.line([(lx, ly), (lx + 6, ly + 8)], fill=(14, 8, 4, 255), width=2)
+    for cx_c, cy_c in [(176, 428), (183, 427), (180, 433)]:
+        d.ellipse([cx_c - 4, cy_c - 4, cx_c + 4, cy_c + 4], fill=(14, 8, 4, 255))
+        
+    trunk_2 = [(75, 645), (78, 590), (90, 545), (110, 505)]
+    for i in range(len(trunk_2) - 1):
+        d.line([trunk_2[i], trunk_2[i+1]], fill=(14, 8, 4, 255), width=6 - i)
+    px2, py2 = 110, 505
+    for dx, dy in [(-40, -15), (-30, -38), (-10, -45), (18, -40), (42, -25), (48, -5), (35, 15)]:
+        d.line([(px2, py2), (px2 + dx, py2 + dy)], fill=(14, 8, 4, 255), width=2)
+        
+    # Silhouetted Ancient Baobab Tree
+    d.polygon([(1045, 720), (1075, 520), (1055, 430), (1095, 420), (1085, 720)], fill=(14, 8, 4, 255))
+    d.line([(1065, 440), (1015, 395)], fill=(14, 8, 4, 255), width=10)
+    d.line([(1075, 430), (1075, 370)], fill=(14, 8, 4, 255), width=10)
+    d.line([(1085, 435), (1135, 395)], fill=(14, 8, 4, 255), width=9)
+    for bx, by, brx, bry in [
+        (1005, 395, 58, 48), (1070, 365, 68, 54), (1135, 395, 54, 45),
+        (975, 415, 38, 32), (1165, 415, 36, 30), (1070, 335, 48, 38)
+    ]:
+        d.ellipse([bx - brx, by - bry, bx + brx, by + bry], fill=(14, 8, 4, 255))
         
     bg.save(os.path.join(ASSETS_DIR, "ui", "menu_background.png"))
     

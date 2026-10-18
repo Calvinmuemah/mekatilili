@@ -1,0 +1,47 @@
+{
+  "id": "dialogue_colonial_notice",
+  "title": "Colonial Decree at the Border",
+  "nodes": {
+    "start": {
+      "speaker": "Mekatilili wa Menza",
+      "portrait": "res://assets/characters/portraits/mekatilili.png",
+      "text": "A fresh notice has been driven into the wood with iron nails. Bearing the royal seal of the British crown.",
+      "next": "node_read"
+    },
+    "node_read": {
+      "speaker": "Narrator",
+      "portrait": "",
+      "text": "\"PROCLAMATION: By order of District Commissioner Arthur Champion. All Giriama men aged 16 to 35 shall register at the coastal administration stations for plantation labor. Failure to comply will incur seizure of livestock and punitive burning of homesteads.\"",
+      "choices": [
+        {
+          "text": "Tear down the paper. The Giriama do not yield to threats nailed to a tree.",
+          "next": "node_tear",
+          "events": [
+            { "action": "set_flag", "target": "notice_inspected", "value": true },
+            { "action": "complete_objective", "target": "quest_level_2", "value": 0 }
+          ]
+        },
+        {
+          "text": "Study the signature. Arthur Champion will answer for this.",
+          "next": "node_study",
+          "events": [
+            { "action": "set_flag", "target": "notice_inspected", "value": true },
+            { "action": "complete_objective", "target": "quest_level_2", "value": 0 }
+          ]
+        }
+      ]
+    },
+    "node_tear": {
+      "speaker": "Mekatilili wa Menza",
+      "portrait": "res://assets/characters/portraits/mekatilili.png",
+      "text": "Paper burns, but our soil remains. The colonial messenger standing down the path is watching. Let us confront him.",
+      "next": ""
+    },
+    "node_study": {
+      "speaker": "Mekatilili wa Menza",
+      "portrait": "res://assets/characters/portraits/mekatilili.png",
+      "text": "He thinks fear will empty our villages into his sisal fields. I must speak to that messenger by the road.",
+      "next": ""
+    }
+  }
+}

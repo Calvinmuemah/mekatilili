@@ -18,43 +18,65 @@ func _ready() -> void:
 	if AudioManager != null:
 		AudioManager.play_sfx("sfx_quest_complete")
 
+	if SaveManager != null and SaveManager.has_signal("settings_changed"):
+		SaveManager.settings_changed.connect(_style_screen)
+
 func _style_screen() -> void:
 	var style := GamePalette.create_panel_style(GamePalette.COLOR_SAND, GamePalette.COLOR_WARM_GOLD, 14, 4)
 	panel.add_theme_stylebox_override("panel", style)
 	
 	title_label.add_theme_color_override("font_color", GamePalette.COLOR_TERRACOTTA)
-	title_label.add_theme_font_size_override("font_size", GamePalette.FONT_SIZE_H1)
+	title_label.add_theme_font_size_override("font_size", GamePalette.get_scaled_font_size(GamePalette.FONT_SIZE_H1))
 	
 	chapter_label.add_theme_color_override("font_color", GamePalette.COLOR_DEEP_EARTH)
-	chapter_label.add_theme_font_size_override("font_size", GamePalette.FONT_SIZE_CHAPTER)
+	chapter_label.add_theme_font_size_override("font_size", GamePalette.get_scaled_font_size(GamePalette.FONT_SIZE_CHAPTER))
 	
 	summary_text.add_theme_color_override("default_color", GamePalette.COLOR_CHARCOAL)
-	summary_text.add_theme_font_size_override("normal_font_size", GamePalette.FONT_SIZE_BODY)
+	summary_text.add_theme_font_size_override("normal_font_size", GamePalette.get_scaled_font_size(GamePalette.FONT_SIZE_BODY))
 	
-	GamePalette.apply_button_theme(continue_btn, GamePalette.COLOR_TERRACOTTA)
-	GamePalette.apply_button_theme(menu_btn, GamePalette.COLOR_DEEP_EARTH)
+	GamePalette.apply_button_theme(continue_btn, GamePalette.COLOR_TERRACOTTA, GamePalette.FONT_SIZE_BUTTON)
+	GamePalette.apply_button_theme(menu_btn, GamePalette.COLOR_DEEP_EARTH, GamePalette.FONT_SIZE_BUTTON)
 
 func _populate_summary() -> void:
 	var num_collectibles := 0
 	if StoryManager != null:
 		num_collectibles = StoryManager.collectibles.size()
 		
+	var lvl := GameManager.current_level if GameManager != null else 1
 	var bb := ""
-	bb += "[b]Chapter I: Whispers in the Palms — COMPLETED![/b]\n\n"
-	bb += "✓ [b]Community Support:[/b] 100% (The village of Ulungu stands united)\n"
-	bb += "✓ [b]Allies Joined:[/b] Mzee Fondo, Wanje wa Mwadorikola, Warrior Charo, Villager Nyevu\n"
-	bb += "✓ [b]Cultural Artifacts Discovered:[/b] " + str(num_collectibles) + " / 3\n\n"
-	bb += "[color=#315C3A][b]Historical Reflection:[/b][/color]\n"
-	bb += "In 1913, Mekatilili wa Menza's organizing in the coastal hinterlands set into motion an unprecedented coalition. Rejecting forced labor recruitment and unfair poll taxes, she demonstrated that community unity was stronger than imperial mandates.\n\n"
-	bb += "[i]Next Chapter: The Fire of Kifudu & The Kwa Junda Confrontation...[/i]"
+	
+	if lvl >= 8:
+		title_label.text = "CHAPTER II COMPLETED"
+		chapter_label.text = "The Fire of Kifudu & The Kwa Junda Escape"
+		bb += "[b]Chapter II: The Gathering & Confrontation — COMPLETED![/b]\n\n"
+		bb += "✓ [b]Resistance Circuit Completed:[/b] Bungale, Vitengeni, and Kaya Fungo clusters united\n"
+		bb += "✓ [b]The Kifudu Gathering:[/b] Delivered the historic address (\"We are not powerless\")\n"
+		bb += "✓ [b]The Hen and Chicks Parable:[/b] Openly defied District Commissioner Arthur Champion\n"
+		bb += "✓ [b]Compound Escape:[/b] Evaded colonial sentries and secured freedom in the hinterlands\n\n"
+		bb += "[color=#315C3A][b]Historical Reflection:[/b][/color]\n"
+		bb += "Mekatilili's fearless confrontation at Kwa Junda became legendary across Kenya. Her parable of maternal protection mobilized the entire Giriama nation into active civil resistance.\n\n"
+		bb += "[i]Coming Next in Sprint 6: Act III — Banishment & The Thousand-Kilometer Walk Home...[/i]"
+	else:
+		bb += "[b]Chapter I: Whispers in the Palms — COMPLETED![/b]\n\n"
+		bb += "✓ [b]Community Support:[/b] 100% (The village of Ulungu stands united)\n"
+		bb += "✓ [b]Allies Joined:[/b] Mzee Fondo, Wanje wa Mwadorikola, Warrior Charo, Villager Nyevu\n"
+		bb += "✓ [b]Cultural Artifacts Discovered:[/b] " + str(num_collectibles) + " / 3\n\n"
+		bb += "[color=#315C3A][b]Historical Reflection:[/b][/color]\n"
+		bb += "In 1913, Mekatilili wa Menza's organizing in the coastal hinterlands set into motion an unprecedented coalition. Rejecting forced labor recruitment and unfair poll taxes, she demonstrated that community unity was stronger than imperial mandates.\n\n"
+		bb += "[i]Next: Level 2 & 3 — Colonial Shift & The Wanje Alliance...[/i]"
 	
 	summary_text.text = bb
 
 func _on_continue_pressed() -> void:
-	# Save progress and return to menu or replay
+	var lvl := GameManager.current_level if GameManager != null else 1
 	if SaveManager != null:
-		SaveManager.save_game({"chapter": 1, "completed": true})
-	SceneManager.change_scene("res://scenes/main/MainMenu.tscn")
+		SaveManager.save_game({"chapter": 2 if lvl >= 8 else 1, "level": lvl, "completed": true})
+		
+	if lvl == 2:
+		# Proceed straight to Level 2 in the Village
+		SceneManager.change_scene("res://scenes/environments/VillageLevel.tscn")
+	else:
+		SceneManager.change_scene("res://scenes/main/MainMenu.tscn")
 
 func _on_menu_pressed() -> void:
 	SceneManager.change_scene("res://scenes/main/MainMenu.tscn")

@@ -24,15 +24,20 @@ func change_scene(scene_path: String, fade_time: float = 0.4) -> void:
 	is_transitioning = true
 	transition_started.emit(scene_path)
 	
-	# Block input
+	# Ensure tree is unpaused so scene transitions never hang
+	get_tree().paused = false
+	
+	# Block input during transition
 	overlay.mouse_filter = Control.MOUSE_FILTER_STOP
 	
-	var tween := create_tween()
+	var tween := create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tween.tween_property(overlay, "modulate:a", 1.0, fade_time)
 	tween.tween_callback(func():
 		var err := get_tree().change_scene_to_file(scene_path)
 		if err != OK:
 			push_error("SceneManager: Failed to load scene at " + scene_path)
+			overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			is_transitioning = false
 		scene_loaded.emit(scene_path)
 		if GameManager != null:
 			GameManager.current_scene_path = scene_path

@@ -5,7 +5,7 @@
     "start": {
       "speaker": "Wanje wa Mwadorikola",
       "portrait": "res://assets/characters/portraits/wanje.png",
-      "text": "Greetings, Mekatilili. I felt your presence before you reached the sacred clearing. The colonial agents have cast their shadow across the land.",
+      "text": "Greetings, Mekatilili. As elder and medicine keeper of our sacred Kaya, I have watched the colonial collectors encroaching upon Ulungu. The ancestors whisper of dark trials ahead.",
       "next": "node_warning"
     },
     "node_warning": {

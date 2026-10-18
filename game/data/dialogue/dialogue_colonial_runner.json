@@ -1,0 +1,56 @@
+{
+  "id": "dialogue_colonial_runner",
+  "title": "Confronting the Colonial Runner",
+  "nodes": {
+    "start": {
+      "speaker": "Colonial Runner",
+      "portrait": "res://assets/characters/portraits/champion.png",
+      "text": "Stand aside, old woman! I carry dispatches under authority of the British Crown and Commissioner Champion at Kwa Junda.",
+      "choices": [
+        {
+          "text": "Whose land do your boots stand upon, messenger?",
+          "next": "node_reproach",
+          "events": [
+            { "action": "set_flag", "target": "runner_confronted", "value": true },
+            { "action": "complete_objective", "target": "quest_level_2", "value": 1 }
+          ]
+        },
+        {
+          "text": "Take a message back to your master. The Giriama will not work his fields.",
+          "next": "node_defiance",
+          "events": [
+            { "action": "set_flag", "target": "runner_confronted", "value": true },
+            { "action": "complete_objective", "target": "quest_level_2", "value": 1 }
+          ]
+        }
+      ]
+    },
+    "node_reproach": {
+      "speaker": "Colonial Runner",
+      "portrait": "res://assets/characters/portraits/champion.png",
+      "text": "You do not understand power! The King has gunboats in Mombasa and armed askaris marching through Rabai. You cannot stop the railway or the taxes!",
+      "next": "node_reply"
+    },
+    "node_defiance": {
+      "speaker": "Colonial Runner",
+      "portrait": "res://assets/characters/portraits/champion.png",
+      "text": "Hah! Commissioner Champion anticipated this stubbornness. If your youth do not report by month's end, the King's African Rifles will take them by force!",
+      "next": "node_reply"
+    },
+    "node_reply": {
+      "speaker": "Mekatilili wa Menza",
+      "portrait": "res://assets/characters/portraits/mekatilili.png",
+      "text": "A bird does not surrender its nest because a leopard growls below the branch. Go, tell Champion that Mekatilili wa Menza is calling the council of the Kayas!",
+      "next": "node_end"
+    },
+    "node_end": {
+      "speaker": "Colonial Runner",
+      "portrait": "res://assets/characters/portraits/champion.png",
+      "text": "You are courting destruction, woman... I will tell him every word!",
+      "events": [
+        { "action": "journal_entry", "target": "The Runner Rebuked", "value": "Confronted Champion's runner at the boundary path. Word will reach Kwa Junda that the Giriama refuse forced labor." }
+      ],
+      "next": ""
+    }
+  }
+}

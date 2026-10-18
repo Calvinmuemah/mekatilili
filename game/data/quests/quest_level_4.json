@@ -1,0 +1,26 @@
+{
+  "id": "quest_level_4",
+  "title": "The Resistance Circuit",
+  "chapter": 2,
+  "description": "Travel across the three settlement clusters — Bungale, Vitengeni, and Kaya Fungo — to unite the elders and mobilize 100% community support.",
+  "state": 1,
+  "current_objective_index": 0,
+  "objectives": [
+    {
+      "id": "rally_bungale",
+      "description": "Rally the Bungale farmers cluster against forced plantation labor (+35% Support).",
+      "completed": false
+    },
+    {
+      "id": "secure_vitengeni",
+      "description": "Secure the Vitengeni elders cluster to reject colonial poll taxes (+35% Support).",
+      "completed": false
+    },
+    {
+      "id": "convene_kayafungo",
+      "description": "Convene with the Kaya Fungo delegates at the sacred threshold (+30% Support).",
+      "completed": false
+    }
+  ],
+  "reward_text": "Community Support has reached 100%! The Kifudu Gathering commences at Kaya Fungo."
+}

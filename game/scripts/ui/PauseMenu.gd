@@ -26,21 +26,24 @@ func _ready() -> void:
 			visible = is_paused
 			status_label.text = ""
 		)
+		
+	if SaveManager != null and SaveManager.has_signal("settings_changed"):
+		SaveManager.settings_changed.connect(_style_pause_menu)
 
 func _style_pause_menu() -> void:
 	var style := GamePalette.create_panel_style(GamePalette.COLOR_SAND, GamePalette.COLOR_WARM_GOLD, 12, 3)
 	panel.add_theme_stylebox_override("panel", style)
 	
 	title_label.add_theme_color_override("font_color", GamePalette.COLOR_DEEP_EARTH)
-	title_label.add_theme_font_size_override("font_size", GamePalette.FONT_SIZE_H1)
+	title_label.add_theme_font_size_override("font_size", GamePalette.get_scaled_font_size(GamePalette.FONT_SIZE_H1))
 	status_label.add_theme_color_override("font_color", GamePalette.COLOR_FOREST_GREEN)
-	status_label.add_theme_font_size_override("font_size", GamePalette.FONT_SIZE_CAPTION)
+	status_label.add_theme_font_size_override("font_size", GamePalette.get_scaled_font_size(GamePalette.FONT_SIZE_CAPTION))
 	
-	GamePalette.apply_button_theme(resume_btn, GamePalette.COLOR_TERRACOTTA)
-	GamePalette.apply_button_theme(journal_btn, GamePalette.COLOR_FOREST_GREEN)
-	GamePalette.apply_button_theme(settings_btn, GamePalette.COLOR_DEEP_EARTH)
-	GamePalette.apply_button_theme(save_btn, GamePalette.COLOR_WARM_GOLD)
-	GamePalette.apply_button_theme(menu_btn, GamePalette.COLOR_CHARCOAL)
+	GamePalette.apply_button_theme(resume_btn, GamePalette.COLOR_TERRACOTTA, GamePalette.FONT_SIZE_BODY)
+	GamePalette.apply_button_theme(journal_btn, GamePalette.COLOR_FOREST_GREEN, GamePalette.FONT_SIZE_BODY)
+	GamePalette.apply_button_theme(settings_btn, GamePalette.COLOR_DEEP_EARTH, GamePalette.FONT_SIZE_BODY)
+	GamePalette.apply_button_theme(save_btn, GamePalette.COLOR_WARM_GOLD, GamePalette.FONT_SIZE_BODY)
+	GamePalette.apply_button_theme(menu_btn, GamePalette.COLOR_CHARCOAL, GamePalette.FONT_SIZE_BODY)
 
 func _on_resume_pressed() -> void:
 	if GameManager != null:

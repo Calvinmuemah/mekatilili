@@ -1,0 +1,60 @@
+{
+  "id": "dialogue_wanje_level2",
+  "title": "Planning the Resistance Circuit",
+  "nodes": {
+    "start": {
+      "speaker": "Wanje wa Mwadorikola",
+      "portrait": "res://assets/characters/portraits/wanje.png",
+      "text": "Mekatilili! I saw you confront the runner. News travels quickly—Champion's tax patrols are already moving between the ridges.",
+      "next": "node_plan"
+    },
+    "node_plan": {
+      "speaker": "Wanje wa Mwadorikola",
+      "portrait": "res://assets/characters/portraits/wanje.png",
+      "text": "If Ulungu stands alone, the British can isolate us. But if we organize a circuit through Bungale, Vitengeni, and to our sacred Kaya Fungo, no force can divide the Giriama.",
+      "choices": [
+        {
+          "text": "We will walk the circuit together, Wanje. Every homestead must hear our call.",
+          "next": "node_circuit_agree",
+          "events": [
+            { "action": "complete_objective", "target": "quest_level_2", "value": 2 },
+            { "action": "set_support", "value": 0 },
+            { "action": "start_quest", "target": "quest_level_4" },
+            { "action": "set_flag", "target": "circuit_active", "value": true }
+          ]
+        },
+        {
+          "text": "What will we tell the elders who fear colonial rifles?",
+          "next": "node_courage",
+          "events": [
+            { "action": "complete_objective", "target": "quest_level_2", "value": 2 },
+            { "action": "set_support", "value": 0 },
+            { "action": "start_quest", "target": "quest_level_4" },
+            { "action": "set_flag", "target": "circuit_active", "value": true }
+          ]
+        }
+      ]
+    },
+    "node_circuit_agree": {
+      "speaker": "Wanje wa Mwadorikola",
+      "portrait": "res://assets/characters/portraits/wanje.png",
+      "text": "Wise words! First, we must secure the farmers of Bungale. Then, unite with the elders of Vitengeni to refuse the hut tax. Once community support reaches 100%, we convene the great Kifudu gathering!",
+      "next": "node_finish"
+    },
+    "node_courage": {
+      "speaker": "Wanje wa Mwadorikola",
+      "portrait": "res://assets/characters/portraits/wanje.png",
+      "text": "We will remind them of who we are. Our ancestors did not preserve the sacred Kayas for us to become wage slaves in coastal swamps. The circuit begins now!",
+      "next": "node_finish"
+    },
+    "node_finish": {
+      "speaker": "Mekatilili wa Menza",
+      "portrait": "res://assets/characters/portraits/mekatilili.png",
+      "text": "Let us proceed. The three clusters await our counsel.",
+      "events": [
+        { "action": "journal_entry", "target": "The Resistance Circuit", "value": "Wanje and Mekatilili have mapped the resistance circuit across Bungale, Vitengeni, and Kaya Fungo to mobilize full community support." }
+      ],
+      "next": ""
+    }
+  }
+}

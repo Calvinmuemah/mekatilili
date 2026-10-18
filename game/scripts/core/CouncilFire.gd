@@ -39,4 +39,5 @@ func _on_interacted(_interactor: Node2D) -> void:
 	
 	# Complete Chapter 1 and transition to Chapter Complete Screen!
 	if GameManager != null:
+		GameManager.current_level = 2
 		GameManager.complete_current_chapter()

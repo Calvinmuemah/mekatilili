@@ -1,0 +1,180 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://scripts/levels/KifuduGathering.gd" id="1_kg"]
+[ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/ui/HUD.tscn" id="3_hud"]
+[ext_resource type="Texture2D" path="res://assets/environments/baobab_tree.png" id="4_baobab"]
+[ext_resource type="Texture2D" path="res://assets/environments/palm_tree.png" id="5_palm"]
+[ext_resource type="Texture2D" path="res://assets/environments/kifudu_crowd.png" id="6_crowd"]
+[ext_resource type="Texture2D" path="res://assets/environments/drum.png" id="7_drum"]
+[ext_resource type="PackedScene" path="res://scenes/npcs/NPC.tscn" id="8_npc"]
+[ext_resource type="Texture2D" path="res://assets/characters/wanje.png" id="9_wanje"]
+[ext_resource type="Texture2D" path="res://assets/characters/mzee_fondo.png" id="10_fondo"]
+[ext_resource type="Script" path="res://scripts/core/Interactable.gd" id="11_interact"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_stone"]
+radius = 32.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_stone_interact"]
+radius = 55.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_road"]
+size = Vector2(120, 80)
+
+[node name="KifuduGathering" type="Node2D"]
+script = ExtResource("1_kg")
+
+[node name="Ground" type="ColorRect" parent="."]
+offset_right = 1280.0
+offset_bottom = 800.0
+color = Color(0.25, 0.35, 0.18, 1)
+
+[node name="ClearingCircle" type="ColorRect" parent="."]
+offset_left = 340.0
+offset_top = 180.0
+offset_right = 940.0
+offset_bottom = 620.0
+color = Color(0.38, 0.44, 0.22, 0.5)
+
+[node name="Trees" type="Node2D" parent="."]
+
+[node name="BaobabLeft" type="Sprite2D" parent="Trees"]
+position = Vector2(220, 240)
+texture = ExtResource("4_baobab")
+
+[node name="BaobabRight" type="Sprite2D" parent="Trees"]
+position = Vector2(1060, 250)
+texture = ExtResource("4_baobab")
+
+[node name="BaobabNorth" type="Sprite2D" parent="Trees"]
+position = Vector2(640, 100)
+texture = ExtResource("4_baobab")
+
+[node name="Palm1" type="Sprite2D" parent="Trees"]
+position = Vector2(100, 480)
+texture = ExtResource("5_palm")
+
+[node name="Palm2" type="Sprite2D" parent="Trees"]
+position = Vector2(1180, 490)
+texture = ExtResource("5_palm")
+
+[node name="Crowds" type="Node2D" parent="."]
+
+[node name="CrowdTopLeft" type="Sprite2D" parent="Crowds"]
+position = Vector2(400, 260)
+texture = ExtResource("6_crowd")
+
+[node name="CrowdTopRight" type="Sprite2D" parent="Crowds"]
+position = Vector2(880, 260)
+texture = ExtResource("6_crowd")
+
+[node name="CrowdBottomLeft" type="Sprite2D" parent="Crowds"]
+position = Vector2(360, 520)
+texture = ExtResource("6_crowd")
+
+[node name="CrowdBottomRight" type="Sprite2D" parent="Crowds"]
+position = Vector2(920, 520)
+texture = ExtResource("6_crowd")
+
+[node name="Drums" type="Node2D" parent="."]
+
+[node name="DrumLeft" type="Sprite2D" parent="Drums"]
+position = Vector2(560, 360)
+texture = ExtResource("7_drum")
+
+[node name="DrumRight" type="Sprite2D" parent="Drums"]
+position = Vector2(720, 360)
+texture = ExtResource("7_drum")
+
+[node name="CouncilStone" type="StaticBody2D" parent="."]
+position = Vector2(640, 360)
+
+[node name="StoneVisual" type="ColorRect" parent="CouncilStone"]
+offset_left = -30.0
+offset_top = -20.0
+offset_right = 30.0
+offset_bottom = 20.0
+color = Color(0.45, 0.42, 0.38, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CouncilStone"]
+shape = SubResource("CircleShape2D_stone")
+
+[node name="Interactable" type="Area2D" parent="CouncilStone"]
+script = ExtResource("11_interact")
+prompt_message = "Address the Assembly"
+marker_type = "quest"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CouncilStone/Interactable"]
+shape = SubResource("CircleShape2D_stone_interact")
+
+[node name="Allies" type="Node2D" parent="."]
+
+[node name="Wanje" parent="Allies" instance=ExtResource("8_npc")]
+position = Vector2(590, 320)
+npc_name = "Wanje wa Mwadorikola"
+dialogue_id = "dialogue_kifudu_speech"
+sprite_sheet = ExtResource("9_wanje")
+
+[node name="MzeeFondo" parent="Allies" instance=ExtResource("8_npc")]
+position = Vector2(690, 320)
+npc_name = "Elder Mzee Fondo"
+dialogue_id = "dialogue_kifudu_speech"
+sprite_sheet = ExtResource("10_fondo")
+
+[node name="DepartureCaravan" type="Node2D" parent="."]
+position = Vector2(640, 720)
+
+[node name="RoadVisual" type="ColorRect" parent="DepartureCaravan"]
+offset_left = -60.0
+offset_top = -30.0
+offset_right = 60.0
+offset_bottom = 30.0
+color = Color(0.68, 0.48, 0.30, 0.7)
+
+[node name="Interactable" type="Area2D" parent="DepartureCaravan"]
+script = ExtResource("11_interact")
+prompt_message = "March to Kwa Junda"
+marker_type = "quest"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DepartureCaravan/Interactable"]
+shape = SubResource("RectangleShape2D_road")
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(640, 440)
+
+[node name="DrumTimer" type="Timer" parent="."]
+
+[node name="HUD" parent="." instance=ExtResource("3_hud")]
+
+[node name="ChapterIntroPanel" type="Panel" parent="HUD"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -80.0
+offset_right = 320.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="HUD/ChapterIntroPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Title" type="Label" parent="HUD/ChapterIntroPanel/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+text = "LEVEL 5"
+
+[node name="Subtitle" type="Label" parent="HUD/ChapterIntroPanel/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+text = "The Kifudu Gathering at Kaya Fungo"

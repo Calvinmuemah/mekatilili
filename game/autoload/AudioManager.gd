@@ -34,7 +34,8 @@ func _ready() -> void:
 func _preload_audio() -> void:
 	var sfx_list := [
 		"sfx_click", "sfx_dialogue_blip", "sfx_quest_start",
-		"sfx_quest_complete", "sfx_item_collect", "sfx_footstep"
+		"sfx_quest_complete", "sfx_item_collect", "sfx_footstep",
+		"sfx_drum", "sfx_hen", "sfx_whistle"
 	]
 	for sfx_item: String in sfx_list:
 		var path: String = "res://assets/audio/" + sfx_item + ".wav"
@@ -128,3 +129,67 @@ func _update_volumes() -> void:
 		music_player.volume_db = linear_to_db(music_volume * master_volume)
 	if ambient_player != null:
 		ambient_player.volume_db = linear_to_db(0.6 * music_volume * master_volume)
+
+# --- Accessibility Voiceover / TTS System ---
+
+var bbcode_regex: RegEx = null
+
+func is_voiceover_enabled() -> bool:
+	if SaveManager != null:
+		return SaveManager.current_settings.get("voiceover_enabled", true)
+	return true
+
+func speak_text(text: String, speaker_name: String = "") -> void:
+	if not is_voiceover_enabled():
+		return
+		
+	stop_voiceover()
+	
+	if bbcode_regex == null:
+		bbcode_regex = RegEx.new()
+		bbcode_regex.compile("\\[[^\\]]*\\]")
+	var clean_text := bbcode_regex.sub(text, "", true).strip_edges()
+	if clean_text.is_empty():
+		return
+		
+	var utterance := clean_text
+	if speaker_name != "" and speaker_name != "...":
+		utterance = speaker_name + ": " + clean_text
+		
+	var pitch := _get_character_pitch(speaker_name)
+	var vol_pct := int(clampf(master_volume * 100.0, 10.0, 100.0))
+	
+	var voice_id: String = ""
+	var en_voices := DisplayServer.tts_get_voices_for_language("en")
+	if not en_voices.is_empty():
+		voice_id = en_voices[0]
+	else:
+		var all_voices := DisplayServer.tts_get_voices()
+		if not all_voices.is_empty():
+			voice_id = all_voices[0].get("id", "")
+		
+	print("[AudioManager] TTS speaking: '", utterance.substr(0, 30), "...' (voice: '", voice_id, "', pitch: ", pitch, ", vol: ", vol_pct, ")")
+	DisplayServer.tts_speak(utterance, voice_id, vol_pct, pitch, 1.0, 0, true)
+
+func stop_voiceover() -> void:
+	DisplayServer.tts_stop()
+
+func _get_character_pitch(speaker_name: String) -> float:
+	var lower := speaker_name.to_lower()
+	if "mzee" in lower or "fondo" in lower:
+		return 0.85
+	elif "wanje" in lower:
+		return 0.90
+	elif "charo" in lower:
+		return 1.15
+	elif "nyevu" in lower:
+		return 1.10
+	elif "champion" in lower or "arthur" in lower:
+		return 0.78
+	elif "sentry" in lower or "guard" in lower or "runner" in lower or "askari" in lower:
+		return 0.82
+	elif "narrator" in lower:
+		return 0.95
+	elif "mekatilili" in lower:
+		return 1.02
+	return 1.0

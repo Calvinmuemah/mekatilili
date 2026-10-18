@@ -8,6 +8,7 @@ const SAVE_VERSION := 2
 signal save_completed(success: bool)
 signal load_completed(success: bool)
 signal save_written(save_data: Dictionary)
+signal settings_changed
 
 var default_settings: Dictionary = {
 	"master_volume": 1.0,
@@ -16,7 +17,11 @@ var default_settings: Dictionary = {
 	"text_speed": 1.0,
 	"show_tutorials": true,
 	"text_size_multiplier": 1.0,
-	"touch_controls_visible": true
+	"touch_controls_visible": true,
+	"large_text": true,
+	"instant_dialogue": false,
+	"high_contrast": false,
+	"voiceover_enabled": true
 }
 
 var current_settings: Dictionary = default_settings.duplicate()
@@ -125,6 +130,7 @@ func save_game(custom_data: Dictionary = {}) -> bool:
 		"sync_status": custom_data.get("sync_status", "PENDING"),
 		"device_id": get_device_id(),
 		"chapter": GameManager.current_chapter,
+		"level": GameManager.current_level,
 		"scene": GameManager.current_scene_path,
 		"player_position": {
 			"x": player_pos.x,
@@ -224,6 +230,7 @@ func load_game() -> bool:
 	)
 	
 	GameManager.current_chapter = data.get("chapter", 1)
+	GameManager.current_level = data.get("level", 1)
 	GameManager.saved_player_position = target_pos
 	
 	SceneManager.change_scene(target_scene)
@@ -262,3 +269,4 @@ func apply_settings() -> void:
 		AudioManager.set_master_volume(current_settings.get("master_volume", 1.0))
 		AudioManager.set_music_volume(current_settings.get("music_volume", 0.8))
 		AudioManager.set_sfx_volume(current_settings.get("sfx_volume", 0.9))
+	settings_changed.emit()

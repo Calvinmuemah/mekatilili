@@ -31,15 +31,19 @@ SyncManager="*res://autoload/SyncManager.gd"
 ContentSyncManager="*res://autoload/ContentSyncManager.gd"
 TelemetryManager="*res://autoload/TelemetryManager.gd"
 
+[audio]
+
+general/text_to_speech=true
+
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
-window/size/mode=0
+window/size/mode="fullscreen"
 window/size/resizable=true
 window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
-window/handheld/orientation=6
+window/stretch/aspect="keep_height"
+window/handheld/orientation="sensor_landscape"
 
 [input]
 
@@ -74,6 +78,7 @@ pause={
 
 [rendering]
 
+textures/vram_compression/import_etc2_astc=true
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 environment/defaults/default_clear_color=Color(0.231373, 0.141176, 0.086275, 1)

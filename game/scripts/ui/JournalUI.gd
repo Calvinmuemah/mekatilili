@@ -23,22 +23,25 @@ func _ready() -> void:
 	tab_quests.pressed.connect(func(): _switch_tab("quests"))
 	tab_history.pressed.connect(func(): _switch_tab("history"))
 	tab_collectibles.pressed.connect(func(): _switch_tab("collectibles"))
+	
+	if SaveManager != null and SaveManager.has_signal("settings_changed"):
+		SaveManager.settings_changed.connect(_style_journal)
 
 func _style_journal() -> void:
 	var style := GamePalette.create_panel_style(GamePalette.COLOR_SAND, GamePalette.COLOR_WARM_GOLD, 12, 3)
 	panel.add_theme_stylebox_override("panel", style)
 	
 	title_label.add_theme_color_override("font_color", GamePalette.COLOR_DEEP_EARTH)
-	title_label.add_theme_font_size_override("font_size", GamePalette.FONT_SIZE_H1)
+	title_label.add_theme_font_size_override("font_size", GamePalette.get_scaled_font_size(GamePalette.FONT_SIZE_H1))
 	
-	GamePalette.apply_button_theme(close_btn, GamePalette.COLOR_DEEP_EARTH)
-	GamePalette.apply_button_theme(tab_story, GamePalette.COLOR_TERRACOTTA)
-	GamePalette.apply_button_theme(tab_quests, GamePalette.COLOR_TERRACOTTA)
-	GamePalette.apply_button_theme(tab_history, GamePalette.COLOR_TERRACOTTA)
-	GamePalette.apply_button_theme(tab_collectibles, GamePalette.COLOR_TERRACOTTA)
+	GamePalette.apply_button_theme(close_btn, GamePalette.COLOR_DEEP_EARTH, GamePalette.FONT_SIZE_BODY)
+	GamePalette.apply_button_theme(tab_story, GamePalette.COLOR_TERRACOTTA, GamePalette.FONT_SIZE_BODY)
+	GamePalette.apply_button_theme(tab_quests, GamePalette.COLOR_TERRACOTTA, GamePalette.FONT_SIZE_BODY)
+	GamePalette.apply_button_theme(tab_history, GamePalette.COLOR_TERRACOTTA, GamePalette.FONT_SIZE_BODY)
+	GamePalette.apply_button_theme(tab_collectibles, GamePalette.COLOR_TERRACOTTA, GamePalette.FONT_SIZE_BODY)
 	
 	content_text.add_theme_color_override("default_color", GamePalette.COLOR_CHARCOAL)
-	content_text.add_theme_font_size_override("normal_font_size", GamePalette.FONT_SIZE_BODY)
+	content_text.add_theme_font_size_override("normal_font_size", GamePalette.get_scaled_font_size(GamePalette.FONT_SIZE_BODY))
 
 func refresh() -> void:
 	_switch_tab(current_tab)

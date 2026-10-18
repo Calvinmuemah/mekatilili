@@ -117,9 +117,9 @@ This document describes the integration between the **Godot 4.3 Android game cli
 
 ## 7. Configuring the Backend API Endpoint
 
-By default, the Godot client targets:
+By default, the Godot client targets the hosted production API:
 ```
-http://localhost:5000/api/v1
+https://mekatilili.vercel.app/api/v1
 ```
 
 To configure custom endpoints (e.g., local LAN IP for physical Android testing or production server):

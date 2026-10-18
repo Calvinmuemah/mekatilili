@@ -37,16 +37,28 @@ func _ready() -> void:
 		interaction_detector.area_entered.connect(_on_interaction_area_entered)
 		interaction_detector.area_exited.connect(_on_interaction_area_exited)
 
+var nav_target_position: Vector2 = Vector2.ZERO
+var is_navigating: bool = false
+
+func navigate_to(target_pos: Vector2) -> void:
+	nav_target_position = target_pos
+	is_navigating = true
+
+func cancel_navigation() -> void:
+	is_navigating = false
+
 func set_can_move(val: bool) -> void:
 	can_move = val
 	if not val:
 		velocity = Vector2.ZERO
 		is_moving = false
+		is_navigating = false
 		_update_sprite_frame(0)
 
 func _physics_process(delta: float) -> void:
 	if not can_move or (DialogueManager != null and DialogueManager.is_active):
 		velocity = Vector2.ZERO
+		is_navigating = false
 		_update_sprite_frame(0)
 		move_and_slide()
 		return
@@ -85,6 +97,16 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact"):
 		trigger_interaction()
 
+func _unhandled_input(event: InputEvent) -> void:
+	if not can_move or (DialogueManager != null and DialogueManager.is_active):
+		return
+	if event is InputEventScreenTouch and event.pressed:
+		var world_pos: Vector2 = get_canvas_transform().affine_inverse() * event.position
+		navigate_to(world_pos)
+	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		var world_pos: Vector2 = get_canvas_transform().affine_inverse() * event.position
+		navigate_to(world_pos)
+
 func trigger_interaction() -> void:
 	if not can_move and (DialogueManager == null or not DialogueManager.is_active):
 		return
@@ -96,6 +118,7 @@ func trigger_interaction() -> void:
 
 func _get_movement_vector() -> Vector2:
 	if joystick_direction.length_squared() > 0.05:
+		is_navigating = false
 		return joystick_direction
 		
 	var vec := Vector2.ZERO
@@ -107,7 +130,19 @@ func _get_movement_vector() -> Vector2:
 		vec.y -= 1.0
 	if Input.is_action_pressed("move_down"):
 		vec.y += 1.0
-	return vec
+		
+	if vec.length_squared() > 0.01:
+		is_navigating = false
+		return vec
+
+	if is_navigating:
+		var diff := nav_target_position - global_position
+		if diff.length() < 16.0:
+			is_navigating = false
+			return Vector2.ZERO
+		return diff.normalized()
+
+	return Vector2.ZERO
 
 func _update_facing(dir: Vector2) -> void:
 	if abs(dir.x) > abs(dir.y):

@@ -59,51 +59,73 @@ layout_mode = 3
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -380.0
-offset_top = 70.0
+offset_left = -390.0
+offset_top = 20.0
 offset_right = -24.0
-offset_bottom = 170.0
+offset_bottom = 200.0
 grow_horizontal = 0
 mouse_filter = 2
 
-[node name="Panel" type="Panel" parent="TopRight"]
+[node name="VBox" type="VBoxContainer" parent="TopRight"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 8
 
-[node name="VBox" type="VBoxContainer" parent="TopRight/Panel"]
+[node name="ButtonsHBox" type="HBoxContainer" parent="TopRight/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 2
+
+[node name="JournalBtn" type="Button" parent="TopRight/VBox/ButtonsHBox"]
+custom_minimum_size = Vector2(130, 44)
+layout_mode = 2
+text = "📖 JOURNAL"
+
+[node name="PauseBtn" type="Button" parent="TopRight/VBox/ButtonsHBox"]
+custom_minimum_size = Vector2(110, 44)
+layout_mode = 2
+text = "⏸ PAUSE"
+
+[node name="ObjectivePanel" type="Panel" parent="TopRight/VBox"]
+custom_minimum_size = Vector2(0, 92)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBox" type="VBoxContainer" parent="TopRight/VBox/ObjectivePanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 12.0
+offset_left = 14.0
 offset_top = 8.0
-offset_right = -12.0
+offset_right = -14.0
 offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 4
 
-[node name="TitleLabel" type="Label" parent="TopRight/Panel/VBox"]
+[node name="TitleLabel" type="Label" parent="TopRight/VBox/ObjectivePanel/VBox"]
 layout_mode = 2
-text = "CURRENT OBJECTIVE"
+text = "✦ CURRENT OBJECTIVE"
 
-[node name="DescLabel" type="Label" parent="TopRight/Panel/VBox"]
+[node name="DescLabel" type="Label" parent="TopRight/VBox/ObjectivePanel/VBox"]
 layout_mode = 2
 autowrap_mode = 2
-text = "Explore the village of Ulungu."
+text = "Walk around the village, speak with the elders, and help a fellow villager."
 
 [node name="TopCenter" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -280.0
-offset_top = 24.0
-offset_right = 280.0
-offset_bottom = 114.0
+offset_left = -230.0
+offset_top = -90.0
+offset_right = 230.0
+offset_bottom = -10.0
 grow_horizontal = 2
 mouse_filter = 2
 
@@ -131,12 +153,12 @@ alignment = 1
 [node name="BannerTitle" type="Label" parent="TopCenter/BannerPanel/VBox"]
 layout_mode = 2
 horizontal_alignment = 1
-text = "NOTIFICATION"
+text = "OBJECTIVE UPDATED"
 
 [node name="BannerDesc" type="Label" parent="TopCenter/BannerPanel/VBox"]
 layout_mode = 2
 horizontal_alignment = 1
-text = "Description text here."
+text = "Walk around the village, speak with the elders, and help a fellow villager."
 
 [node name="BottomCenter" type="Control" parent="."]
 layout_mode = 3
@@ -145,10 +167,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -200.0
-offset_top = -80.0
-offset_right = 200.0
-offset_bottom = -24.0
+offset_left = -180.0
+offset_top = -75.0
+offset_right = 180.0
+offset_bottom = -25.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
@@ -349,97 +371,118 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("6_sett")
 
+[node name="Backdrop" type="ColorRect" parent="SettingsMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.12, 0.08, 0.05, 0.78)
+
 [node name="Panel" type="Panel" parent="SettingsMenu"]
+custom_minimum_size = Vector2(560, 480)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -260.0
+offset_left = -280.0
 offset_top = -240.0
-offset_right = 260.0
+offset_right = 280.0
 offset_bottom = 240.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CloseBtn" type="Button" parent="SettingsMenu/Panel"]
+[node name="HeaderHBox" type="HBoxContainer" parent="SettingsMenu/Panel"]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
+anchors_preset = 10
 anchor_right = 1.0
-offset_left = -84.0
-offset_top = 14.0
-offset_right = -16.0
-offset_bottom = 48.0
-grow_horizontal = 0
-text = "BACK"
+offset_left = 28.0
+offset_top = 16.0
+offset_right = -20.0
+offset_bottom = 54.0
+grow_horizontal = 2
+theme_override_constants/separation = 12
 
-[node name="VBox" type="VBoxContainer" parent="SettingsMenu/Panel"]
+[node name="HeaderLabel" type="Label" parent="SettingsMenu/Panel/HeaderHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SETTINGS & ACCESSIBILITY"
+
+[node name="CloseBtn" type="Button" parent="SettingsMenu/Panel/HeaderHBox"]
+custom_minimum_size = Vector2(100, 38)
+layout_mode = 2
+text = "✕  BACK"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SettingsMenu/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 32.0
-offset_top = 48.0
-offset_right = -32.0
-offset_bottom = -24.0
+offset_left = 28.0
+offset_top = 62.0
+offset_right = -20.0
+offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 16
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 1
 
-[node name="HeaderLabel" type="Label" parent="SettingsMenu/Panel/VBox"]
+[node name="VBox" type="VBoxContainer" parent="SettingsMenu/Panel/ScrollContainer"]
 layout_mode = 2
-horizontal_alignment = 1
-text = "SETTINGS"
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
 
-[node name="MasterRow" type="HBoxContainer" parent="SettingsMenu/Panel/VBox"]
+[node name="MasterRow" type="HBoxContainer" parent="SettingsMenu/Panel/ScrollContainer/VBox"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SettingsMenu/Panel/VBox/MasterRow"]
-custom_minimum_size = Vector2(130, 0)
+[node name="Label" type="Label" parent="SettingsMenu/Panel/ScrollContainer/VBox/MasterRow"]
+custom_minimum_size = Vector2(170, 0)
 layout_mode = 2
 text = "Master Volume"
 
-[node name="MasterSlider" type="HSlider" parent="SettingsMenu/Panel/VBox/MasterRow"]
+[node name="MasterSlider" type="HSlider" parent="SettingsMenu/Panel/ScrollContainer/VBox/MasterRow"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MusicRow" type="HBoxContainer" parent="SettingsMenu/Panel/VBox"]
+[node name="MusicRow" type="HBoxContainer" parent="SettingsMenu/Panel/ScrollContainer/VBox"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SettingsMenu/Panel/VBox/MusicRow"]
-custom_minimum_size = Vector2(130, 0)
+[node name="Label" type="Label" parent="SettingsMenu/Panel/ScrollContainer/VBox/MusicRow"]
+custom_minimum_size = Vector2(170, 0)
 layout_mode = 2
 text = "Music Volume"
 
-[node name="MusicSlider" type="HSlider" parent="SettingsMenu/Panel/VBox/MusicRow"]
+[node name="MusicSlider" type="HSlider" parent="SettingsMenu/Panel/ScrollContainer/VBox/MusicRow"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="SfxRow" type="HBoxContainer" parent="SettingsMenu/Panel/VBox"]
+[node name="SfxRow" type="HBoxContainer" parent="SettingsMenu/Panel/ScrollContainer/VBox"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SettingsMenu/Panel/VBox/SfxRow"]
-custom_minimum_size = Vector2(130, 0)
+[node name="Label" type="Label" parent="SettingsMenu/Panel/ScrollContainer/VBox/SfxRow"]
+custom_minimum_size = Vector2(170, 0)
 layout_mode = 2
 text = "SFX Volume"
 
-[node name="SfxSlider" type="HSlider" parent="SettingsMenu/Panel/VBox/SfxRow"]
+[node name="SfxSlider" type="HSlider" parent="SettingsMenu/Panel/ScrollContainer/VBox/SfxRow"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TutorialRow" type="HBoxContainer" parent="SettingsMenu/Panel/VBox"]
+[node name="TutorialRow" type="HBoxContainer" parent="SettingsMenu/Panel/ScrollContainer/VBox"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SettingsMenu/Panel/VBox/TutorialRow"]
-custom_minimum_size = Vector2(130, 0)
+[node name="Label" type="Label" parent="SettingsMenu/Panel/ScrollContainer/VBox/TutorialRow"]
+custom_minimum_size = Vector2(170, 0)
 layout_mode = 2
 text = "Show Tutorials"
 
-[node name="TutorialCheck" type="CheckButton" parent="SettingsMenu/Panel/VBox/TutorialRow"]
+[node name="TutorialCheck" type="CheckButton" parent="SettingsMenu/Panel/ScrollContainer/VBox/TutorialRow"]
 layout_mode = 2
 
-[node name="ResetBtn" type="Button" parent="SettingsMenu/Panel/VBox"]
+[node name="ResetBtn" type="Button" parent="SettingsMenu/Panel/ScrollContainer/VBox"]
+custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
-text = "RESET PROGRESS"
+text = "↺  RESET PROGRESS"

@@ -1,0 +1,26 @@
+{
+  "id": "quest_level_2",
+  "title": "Colonial Shift & The Alliance",
+  "chapter": 1,
+  "description": "British notices have been nailed near the village boundaries. Mekatilili must inspect the proclamation, confront the colonial runner, and plan the resistance circuit with Wanje wa Mwadorikola.",
+  "state": 1,
+  "current_objective_index": 0,
+  "objectives": [
+    {
+      "id": "inspect_notice",
+      "description": "Inspect the colonial proclamation notice posted at the village entry path.",
+      "completed": false
+    },
+    {
+      "id": "confront_runner",
+      "description": "Confront the colonial runner waiting along the boundary path.",
+      "completed": false
+    },
+    {
+      "id": "plan_circuit_wanje",
+      "description": "Meet with Kaya elder Wanje wa Mwadorikola to plan the resistance circuit.",
+      "completed": false
+    }
+  ],
+  "reward_text": "Alliance forged and resistance circuit agreed upon across the Giriama settlements."
+}

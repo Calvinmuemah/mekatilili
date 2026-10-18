@@ -18,204 +18,294 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.129412, 0.109804, 0.0941176, 0.75)
+color = Color(0.12, 0.08, 0.05, 0.78)
 
 [node name="Panel" type="Panel" parent="."]
-custom_minimum_size = Vector2(480, 460)
+custom_minimum_size = Vector2(580, 480)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -240.0
-offset_top = -230.0
-offset_right = 240.0
-offset_bottom = 230.0
+offset_left = -290.0
+offset_top = -240.0
+offset_right = 290.0
+offset_bottom = 240.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CloseBtn" type="Button" parent="Panel"]
-custom_minimum_size = Vector2(36, 36)
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -48.0
-offset_top = 12.0
-offset_right = -12.0
-offset_bottom = 48.0
-grow_horizontal = 0
-text = "✕"
-
-[node name="VBox" type="VBoxContainer" parent="Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 28.0
-offset_top = 24.0
-offset_right = -28.0
-offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 12
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
 
-[node name="Title" type="Label" parent="Panel/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.231373, 0.141176, 0.086275, 1)
-theme_override_font_sizes/font_size = 20
-text = "PLAYER IDENTITY & CLOUD SYNC"
-horizontal_alignment = 1
-
-[node name="Notice" type="Label" parent="Panel/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.18, 0.35, 0.22, 1)
-theme_override_font_sizes/font_size = 12
-text = "You can play without an account. Progress is saved locally."
-horizontal_alignment = 1
-autowrap_mode = 2
-
-[node name="TabButtons" type="HBoxContainer" parent="Panel/VBox"]
-layout_mode = 2
-theme_override_constants/separation = 8
-alignment = 1
-
-[node name="LoginTabBtn" type="Button" parent="Panel/VBox/TabButtons"]
-custom_minimum_size = Vector2(120, 36)
-layout_mode = 2
-text = "SIGN IN"
-
-[node name="RegisterTabBtn" type="Button" parent="Panel/VBox/TabButtons"]
-custom_minimum_size = Vector2(130, 36)
-layout_mode = 2
-text = "CREATE ACCOUNT"
-
-[node name="GuestTabBtn" type="Button" parent="Panel/VBox/TabButtons"]
-custom_minimum_size = Vector2(120, 36)
-layout_mode = 2
-text = "OFFLINE"
-
-[node name="LoginContainer" type="VBoxContainer" parent="Panel/VBox"]
+[node name="VBox" type="VBoxContainer" parent="Panel/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="UserLbl" type="Label" parent="Panel/VBox/LoginContainer"]
+[node name="HeaderHBox" type="HBoxContainer" parent="Panel/MarginContainer/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.231373, 0.141176, 0.086275, 1)
-theme_override_font_sizes/font_size = 13
-text = "Username or Email:"
+theme_override_constants/separation = 12
 
-[node name="UserEdit" type="LineEdit" parent="Panel/VBox/LoginContainer"]
-custom_minimum_size = Vector2(0, 36)
+[node name="Title" type="Label" parent="Panel/MarginContainer/VBox/HeaderHBox"]
 layout_mode = 2
-placeholder_text = "Enter email or username..."
+size_flags_horizontal = 3
+text = "PLAYER IDENTITY & CLOUD ARCHIVE"
 
-[node name="PassLbl" type="Label" parent="Panel/VBox/LoginContainer"]
+[node name="CloseBtn" type="Button" parent="Panel/MarginContainer/VBox/HeaderHBox"]
+custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.231373, 0.141176, 0.086275, 1)
-theme_override_font_sizes/font_size = 13
-text = "Password:"
+text = "✕"
 
-[node name="PassEdit" type="LineEdit" parent="Panel/VBox/LoginContainer"]
-custom_minimum_size = Vector2(0, 36)
+[node name="Notice" type="Label" parent="Panel/MarginContainer/VBox"]
 layout_mode = 2
-secret = true
-placeholder_text = "Enter password..."
+text = "Create an account to backup your resistance journey across devices, or play 100% offline."
+autowrap_mode = 2
 
-[node name="StatusLbl" type="Label" parent="Panel/VBox/LoginContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.721569, 0.360784, 0.219608, 1)
-theme_override_font_sizes/font_size = 12
-horizontal_alignment = 1
-
-[node name="SubmitBtn" type="Button" parent="Panel/VBox/LoginContainer"]
-custom_minimum_size = Vector2(160, 40)
-layout_mode = 2
-size_flags_horizontal = 4
-text = "SIGN IN"
-
-[node name="RegisterContainer" type="VBoxContainer" parent="Panel/VBox"]
-visible = false
+[node name="TabButtons" type="HBoxContainer" parent="Panel/MarginContainer/VBox"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="EmailLbl" type="Label" parent="Panel/VBox/RegisterContainer"]
+[node name="LoginTabBtn" type="Button" parent="Panel/MarginContainer/VBox/TabButtons"]
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.231373, 0.141176, 0.086275, 1)
-theme_override_font_sizes/font_size = 12
-text = "Email Address:"
+size_flags_horizontal = 3
+text = "SIGN IN"
 
-[node name="EmailEdit" type="LineEdit" parent="Panel/VBox/RegisterContainer"]
-custom_minimum_size = Vector2(0, 32)
+[node name="RegisterTabBtn" type="Button" parent="Panel/MarginContainer/VBox/TabButtons"]
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
-placeholder_text = "player@example.com"
+size_flags_horizontal = 3
+text = "REGISTER"
 
-[node name="UserLbl" type="Label" parent="Panel/VBox/RegisterContainer"]
+[node name="GuestTabBtn" type="Button" parent="Panel/MarginContainer/VBox/TabButtons"]
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.231373, 0.141176, 0.086275, 1)
-theme_override_font_sizes/font_size = 12
-text = "Username:"
+size_flags_horizontal = 3
+text = "OFFLINE PLAY"
 
-[node name="UserEdit" type="LineEdit" parent="Panel/VBox/RegisterContainer"]
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 2
-placeholder_text = "e.g. GiriamaHero"
-
-[node name="PassLbl" type="Label" parent="Panel/VBox/RegisterContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.231373, 0.141176, 0.086275, 1)
-theme_override_font_sizes/font_size = 12
-text = "Password (min 6 chars):"
-
-[node name="PassEdit" type="LineEdit" parent="Panel/VBox/RegisterContainer"]
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 2
-secret = true
-placeholder_text = "••••••••"
-
-[node name="NameLbl" type="Label" parent="Panel/VBox/RegisterContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.231373, 0.141176, 0.086275, 1)
-theme_override_font_sizes/font_size = 12
-text = "Display Name (optional):"
-
-[node name="NameEdit" type="LineEdit" parent="Panel/VBox/RegisterContainer"]
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 2
-placeholder_text = "Mekatilili"
-
-[node name="StatusLbl" type="Label" parent="Panel/VBox/RegisterContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.721569, 0.360784, 0.219608, 1)
-theme_override_font_sizes/font_size = 12
-horizontal_alignment = 1
-
-[node name="SubmitBtn" type="Button" parent="Panel/VBox/RegisterContainer"]
-custom_minimum_size = Vector2(160, 38)
-layout_mode = 2
-size_flags_horizontal = 4
-text = "CREATE ACCOUNT"
-
-[node name="GuestContainer" type="VBoxContainer" parent="Panel/VBox"]
+[node name="ProfileTabBtn" type="Button" parent="Panel/MarginContainer/VBox/TabButtons"]
 visible = false
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
-theme_override_constants/separation = 16
+size_flags_horizontal = 3
+text = "MY ACCOUNT"
 
-[node name="GuestInfo" type="Label" parent="Panel/VBox/GuestContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.231373, 0.141176, 0.086275, 1)
-theme_override_font_sizes/font_size = 14
-text = "No account is required to experience Mekatilili wa Menza.
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 1
 
-All chapters, quests, dialogs, and collectibles are stored locally on your device in standard JSON format.
+[node name="FormsContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBox/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 8
 
-If you create an account later, your progress can be synced to the cloud."
+[node name="LoginContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="UserLbl" type="Label" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/LoginContainer"]
+layout_mode = 2
+text = "Username or Email Address:"
+
+[node name="UserEdit" type="LineEdit" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/LoginContainer"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Enter email or username..."
+
+[node name="PassLbl" type="Label" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/LoginContainer"]
+layout_mode = 2
+text = "Password:"
+
+[node name="PassEdit" type="LineEdit" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/LoginContainer"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+size_flags_horizontal = 3
+secret = true
+placeholder_text = "Enter your password..."
+
+[node name="StatusLbl" type="Label" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/LoginContainer"]
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="ContinueGuestBtn" type="Button" parent="Panel/VBox/GuestContainer"]
-custom_minimum_size = Vector2(180, 44)
+[node name="SubmitBtn" type="Button" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/LoginContainer"]
+custom_minimum_size = Vector2(240, 44)
 layout_mode = 2
 size_flags_horizontal = 4
-text = "CONTINUE OFFLINE"
+text = "✦  SIGN IN"
+
+[node name="SwitchToRegisterBtn" type="Button" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/LoginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+flat = true
+text = "Don't have an account? Tap here to Register"
+
+[node name="RegisterContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="Grid" type="GridContainer" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/RegisterContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 6
+columns = 2
+
+[node name="EmailCol" type="VBoxContainer" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/RegisterContainer/Grid"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+
+[node name="EmailLbl" type="Label" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/RegisterContainer/Grid/EmailCol"]
+layout_mode = 2
+text = "Email Address *"
+
+[node name="EmailEdit" type="LineEdit" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/RegisterContainer/Grid/EmailCol"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "player@example.com"
+
+[node name="UserCol" type="VBoxContainer" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/RegisterContainer/Grid"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+
+[node name="UserLbl" type="Label" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/RegisterContainer/Grid/UserCol"]
+layout_mode = 2
+text = "Username (min 3 chars) *"
+
+[node name="UserEdit" type="LineEdit" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/RegisterContainer/Grid/UserCol"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "e.g. GiriamaHero"
+
+[node name="PassCol" type="VBoxContainer" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/RegisterContainer/Grid"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+
+[node name="PassLbl" type="Label" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/RegisterContainer/Grid/PassCol"]
+layout_mode = 2
+text = "Password (min 6 chars) *"
+
+[node name="PassEdit" type="LineEdit" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/RegisterContainer/Grid/PassCol"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+size_flags_horizontal = 3
+secret = true
+placeholder_text = "••••••••"
+
+[node name="NameCol" type="VBoxContainer" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/RegisterContainer/Grid"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+
+[node name="NameLbl" type="Label" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/RegisterContainer/Grid/NameCol"]
+layout_mode = 2
+text = "Display Name (optional)"
+
+[node name="NameEdit" type="LineEdit" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/RegisterContainer/Grid/NameCol"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Mekatilili"
+
+[node name="StatusLbl" type="Label" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/RegisterContainer"]
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="SubmitBtn" type="Button" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/RegisterContainer"]
+custom_minimum_size = Vector2(260, 44)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "✦  REGISTER ACCOUNT"
+
+[node name="SwitchToLoginBtn" type="Button" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/RegisterContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+flat = true
+text = "Already have an account? Tap here to Sign In"
+
+[node name="GuestContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="GuestTitle" type="Label" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/GuestContainer"]
+layout_mode = 2
+text = "✦ OFFLINE EXPEDITION"
+horizontal_alignment = 1
+
+[node name="GuestNotice" type="Label" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/GuestContainer"]
+layout_mode = 2
+text = "Play without an online account. All story decisions, sacred oaths, community unity points, and historical journal entries remain 100% saved locally on this device."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="ContinueGuestBtn" type="Button" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/GuestContainer"]
+custom_minimum_size = Vector2(240, 44)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "✦  CONTINUE OFFLINE"
+
+[node name="ProfileContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="ProfileTitle" type="Label" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/ProfileContainer"]
+layout_mode = 2
+text = "✦ CONNECTED PLAYER PROFILE"
+horizontal_alignment = 1
+
+[node name="ProfileInfo" type="Label" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/ProfileContainer"]
+layout_mode = 2
+text = "Signed in as: Explorer"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="ProfileStatus" type="Label" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/ProfileContainer"]
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="ProfileBtnHBox" type="HBoxContainer" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/ProfileContainer"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 16
+
+[node name="SyncBtn" type="Button" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/ProfileContainer/ProfileBtnHBox"]
+custom_minimum_size = Vector2(200, 42)
+layout_mode = 2
+text = "☁  SYNC SAVES NOW"
+
+[node name="LogoutBtn" type="Button" parent="Panel/MarginContainer/VBox/ScrollContainer/FormsContainer/ProfileContainer/ProfileBtnHBox"]
+custom_minimum_size = Vector2(160, 42)
+layout_mode = 2
+text = "LOG OUT"

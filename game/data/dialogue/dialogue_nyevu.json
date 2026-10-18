@@ -46,7 +46,7 @@
     "node_finish": {
       "speaker": "Villager Nyevu",
       "portrait": "res://assets/characters/portraits/nyevu.png",
-      "text": "Thank you, Mekatilili. When you speak, courage returns to our hearths.",
+      "text": "Thank you, Mekatilili. When you speak, courage returns to our hearths. Please, could you also help us harvest the mature cassava roots in the village shamba before the collectors return?",
       "events": [
         { "action": "complete_objective", "target": "quest_chapter_1", "value": 0 },
         { "action": "journal_entry", "target": "Colonial Demands", "value": "Colonial officials have posted hut tax demands in Ulungu, threatening forced plantation recruitment." }

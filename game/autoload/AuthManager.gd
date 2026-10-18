@@ -41,7 +41,7 @@ func login(email_or_username: String, password: String) -> Dictionary:
 	var res: Dictionary = await api_client.post_request("auth/login", payload)
 	if res.get("success", false) and typeof(res.get("data")) == TYPE_DICTIONARY:
 		var data: Dictionary = res["data"]
-		var token: String = data.get("accessToken", "")
+		var token: String = data.get("token", data.get("accessToken", ""))
 		var user: Dictionary = data.get("user", {})
 		
 		save_session(user, token)
@@ -65,17 +65,19 @@ func register(email: String, username: String, password: String, display_name: S
 	if api_client == null:
 		return {"success": false, "error": "API client unavailable"}
 		
+	var chosen_name := display_name if display_name != "" else username
 	var payload := {
 		"email": email,
 		"username": username,
 		"password": password,
-		"display_name": display_name if display_name != "" else username
+		"displayName": chosen_name,
+		"display_name": chosen_name
 	}
 	
 	var res: Dictionary = await api_client.post_request("auth/register", payload)
 	if res.get("success", false) and typeof(res.get("data")) == TYPE_DICTIONARY:
 		var data: Dictionary = res["data"]
-		var token: String = data.get("accessToken", "")
+		var token: String = data.get("token", data.get("accessToken", ""))
 		var user: Dictionary = data.get("user", {})
 		
 		save_session(user, token)
@@ -103,6 +105,10 @@ func save_session(user_data: Dictionary, token: String) -> void:
 	current_user = user_data
 	access_token = token
 	
+	var api_client = get_node_or_null("/root/ApiClient")
+	if api_client != null:
+		api_client.set_auth_token(token)
+	
 	var session_dict := {
 		"user": current_user,
 		"token": access_token,
@@ -129,14 +135,22 @@ func load_session() -> bool:
 	if typeof(parsed) == TYPE_DICTIONARY and parsed.has("token") and parsed.has("user"):
 		access_token = parsed["token"]
 		current_user = parsed["user"]
-		is_guest = false
-		auth_state_changed.emit(true, current_user)
-		return true
+		if access_token != "" and not current_user.is_empty():
+			is_guest = false
+			var api_client = get_node_or_null("/root/ApiClient")
+			if api_client != null:
+				api_client.set_auth_token(access_token)
+			auth_state_changed.emit(true, current_user)
+			return true
 		
 	return false
 
 func clear_session() -> void:
 	current_user = {}
 	access_token = ""
+	is_guest = true
+	var api_client = get_node_or_null("/root/ApiClient")
+	if api_client != null:
+		api_client.clear_auth_token()
 	if FileAccess.file_exists(SESSION_FILE_PATH):
 		DirAccess.remove_absolute(SESSION_FILE_PATH)

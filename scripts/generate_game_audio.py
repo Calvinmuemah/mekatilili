@@ -154,6 +154,50 @@ def gen_music_intro():
                 
     return samples
 
+def gen_drum():
+    samples = []
+    # Two drum hits: low resonant African Kaya drum
+    hits = [0.0, 0.28]
+    total_dur = 0.65
+    n_frames = int(total_dur * SAMPLE_RATE)
+    samples = [0.0] * n_frames
+    for hit_t in hits:
+        hit_start = int(hit_t * SAMPLE_RATE)
+        dur = 0.32
+        for i in range(int(dur * SAMPLE_RATE)):
+            idx = hit_start + i
+            if idx < n_frames:
+                t = i / SAMPLE_RATE
+                env = math.exp(-t * 14)
+                freq = 110 * math.exp(-t * 18) + 55
+                s = math.sin(2 * math.pi * freq * t) * env * 0.6
+                samples[idx] += s
+    return samples
+
+def gen_hen():
+    samples = []
+    total_dur = 0.55
+    n_frames = int(total_dur * SAMPLE_RATE)
+    for i in range(n_frames):
+        t = i / SAMPLE_RATE
+        # Fluttering squawk with frequency modulation
+        cluck_env = (0.5 + 0.5 * math.sin(2 * math.pi * 18 * t)) * math.exp(-t * 4.0)
+        freq = 550 + 200 * math.sin(2 * math.pi * 32 * t)
+        s = math.sin(2 * math.pi * freq * t) * cluck_env * 0.45
+        samples.append(s)
+    return samples
+
+def gen_whistle():
+    samples = []
+    total_dur = 0.4
+    n_frames = int(total_dur * SAMPLE_RATE)
+    for i in range(n_frames):
+        t = i / SAMPLE_RATE
+        env = math.sin(math.pi * (t / total_dur))
+        s = (math.sin(2 * math.pi * 2200 * t) + 0.4 * math.sin(2 * math.pi * 2420 * t)) * env * 0.35
+        samples.append(s)
+    return samples
+
 def main():
     os.makedirs(AUDIO_DIR, exist_ok=True)
     write_wav("sfx_click.wav", gen_click())
@@ -162,6 +206,9 @@ def main():
     write_wav("sfx_quest_complete.wav", gen_quest_complete())
     write_wav("sfx_item_collect.wav", gen_item_collect())
     write_wav("sfx_footstep.wav", gen_footstep())
+    write_wav("sfx_drum.wav", gen_drum())
+    write_wav("sfx_hen.wav", gen_hen())
+    write_wav("sfx_whistle.wav", gen_whistle())
     write_wav("ambient_coastal_loop.wav", gen_ambient_coastal())
     write_wav("music_intro_loop.wav", gen_music_intro())
     print("All audio generated successfully!")

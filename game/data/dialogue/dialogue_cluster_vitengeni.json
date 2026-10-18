@@ -1,0 +1,40 @@
+{
+  "id": "dialogue_cluster_vitengeni",
+  "title": "Vitengeni Council Cluster",
+  "nodes": {
+    "start": {
+      "speaker": "Elder Katsui of Vitengeni",
+      "portrait": "res://assets/characters/portraits/mzee_fondo.png",
+      "text": "Greetings, Mekatilili. Champion has sent armed askaris demanding three rupees for every hut in Vitengeni. If an elder cannot pay, they take his goats.",
+      "choices": [
+        {
+          "text": "A man does not pay rent to sleep in the hut his own hands built on ancestral land.",
+          "next": "node_pledge",
+          "events": [
+            { "action": "add_support", "value": 35 },
+            { "action": "complete_objective", "target": "quest_level_4", "value": 1 },
+            { "action": "set_flag", "target": "vitengeni_rallied", "value": true }
+          ]
+        },
+        {
+          "text": "Drive the livestock into the sacred forest. Refuse the tax collector collectively.",
+          "next": "node_pledge",
+          "events": [
+            { "action": "add_support", "value": 35 },
+            { "action": "complete_objective", "target": "quest_level_4", "value": 1 },
+            { "action": "set_flag", "target": "vitengeni_rallied", "value": true }
+          ]
+        }
+      ]
+    },
+    "node_pledge": {
+      "speaker": "Elder Katsui of Vitengeni",
+      "portrait": "res://assets/characters/portraits/mzee_fondo.png",
+      "text": "It shall be as you say! The council of Vitengeni unreservedly joins the boycott. No tax will leave our gates! Send word to Kaya Fungo!",
+      "events": [
+        { "action": "journal_entry", "target": "Vitengeni Boycott", "value": "The elders of Vitengeni have resolved to withhold all hut tax payments from colonial administrators." }
+      ],
+      "next": ""
+    }
+  }
+}

@@ -7,13 +7,13 @@
   "current_objective_index": 0,
   "objectives": [
     {
-      "id": "talk_nyevu",
-      "description": "Speak with Villager Nyevu about the colonial tax notice.",
+      "id": "walk_and_speak",
+      "description": "Walk around the village, speak with the elders, and help a fellow villager.",
       "completed": false
     },
     {
       "id": "inspect_crops",
-      "description": "Check the village Shamba and harvest cassava for the community.",
+      "description": "Help Villager Nyevu tend and harvest traditional cassava in the village shamba.",
       "completed": false
     },
     {
@@ -23,12 +23,12 @@
     },
     {
       "id": "find_wanje",
-      "description": "Seek out Wanje wa Mwadorikola near the Kaya boundary.",
+      "description": "Unite with Kaya elder Wanje wa Mwadorikola to prepare the community for resistance.",
       "completed": false
     },
     {
       "id": "gather_community",
-      "description": "Address the village gathering at the council fire and pledge resistance.",
+      "description": "Convene the village gathering at the council fire and swear the sacred resistance oath.",
       "completed": false
     }
   ],

@@ -56,28 +56,28 @@ func _load_fallback_quests() -> void:
 		"current_objective_index": 0,
 		"objectives": [
 			{
-				"id": "talk_nyevu",
-				"description": "Speak with Villager Nyevu about the colonial tax notice.",
+				"id": "walk_and_speak",
+				"description": "Walk around the village, speak with the elders, and help a fellow villager.",
 				"completed": false
 			},
 			{
 				"id": "inspect_crops",
-				"description": "Check the village Shamba and harvest traditional cassava.",
+				"description": "Help Villager Nyevu tend and harvest traditional cassava in the village shamba.",
 				"completed": false
 			},
 			{
 				"id": "consult_mzee_fondo",
-				"description": "Consult Elder Mzee Fondo at the Council Baobab.",
+				"description": "Consult Elder Mzee Fondo at the Sacred Council Baobab.",
 				"completed": false
 			},
 			{
 				"id": "find_wanje",
-				"description": "Seek out Wanje wa Mwadorikola near the Kaya border.",
+				"description": "Unite with Kaya elder Wanje wa Mwadorikola to prepare the community for resistance.",
 				"completed": false
 			},
 			{
 				"id": "gather_community",
-				"description": "Convene the village gathering at the council fire.",
+				"description": "Convene the village gathering at the council fire and swear the sacred resistance oath.",
 				"completed": false
 			}
 		],
@@ -145,6 +145,9 @@ func complete_objective(quest_id: String, objective_index: int) -> void:
 			else:
 				complete_quest(quest_id)
 
+			if SaveManager != null:
+				SaveManager.save_game()
+
 func advance_active_objective() -> void:
 	if active_quest_id != "":
 		var q: Dictionary = quests_db[active_quest_id]
@@ -168,6 +171,9 @@ func complete_quest(quest_id: String) -> void:
 		
 	if active_quest_id == quest_id:
 		active_quest_id = ""
+
+	if SaveManager != null:
+		SaveManager.save_game()
 
 func serialize_state() -> Dictionary:
 	return {

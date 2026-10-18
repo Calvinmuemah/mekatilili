@@ -1,0 +1,76 @@
+{
+  "id": "dialogue_arthur_champion",
+  "title": "Confrontation at Kwa Junda",
+  "nodes": {
+    "start": {
+      "speaker": "Arthur Champion",
+      "portrait": "res://assets/characters/portraits/champion.png",
+      "text": "So. You are Mekatilili wa Menza. My spies told me an old woman was wandering through the palms inciting rebellion against His Majesty's government. You are causing immense inconvenience, woman.",
+      "choices": [
+        {
+          "text": "Inconvenience? You bring chains to our homes and call our defiance an inconvenience?",
+          "next": "node_champion_threat",
+          "events": [
+            { "action": "complete_objective", "target": "quest_level_6", "value": 0 }
+          ]
+        },
+        {
+          "text": "We did not invite you or your taxes to Giriama soil, Arthur Champion.",
+          "next": "node_champion_threat",
+          "events": [
+            { "action": "complete_objective", "target": "quest_level_6", "value": 0 }
+          ]
+        }
+      ]
+    },
+    "node_champion_threat": {
+      "speaker": "Arthur Champion",
+      "portrait": "res://assets/characters/portraits/champion.png",
+      "text": "Watch your tongue! The British Empire built the railway from the sea to Victoria Nyanza. We require five hundred laborers immediately. If you refuse, I will dispatch the King's African Rifles to burn every village from here to the Galana River!",
+      "next": "node_hen_reveal"
+    },
+    "node_hen_reveal": {
+      "speaker": "Mekatilili wa Menza",
+      "portrait": "res://assets/characters/portraits/mekatilili.png",
+      "text": "You boast of your guns and armies. But tell me, Commissioner... do you see this basket in my hands?",
+      "next": "node_hen_parable"
+    },
+    "node_hen_parable": {
+      "speaker": "Mekatilili wa Menza",
+      "portrait": "res://assets/characters/portraits/mekatilili.png",
+      "text": "Inside is a mother hen and her newly hatched chicks. Try to take one of her little ones from her! Reach your hand out and touch her chick!",
+      "choices": [
+        {
+          "text": "Release the hen and chicks into Champion's veranda!",
+          "next": "node_hen_attack",
+          "events": [
+            { "action": "complete_objective", "target": "quest_level_6", "value": 1 },
+            { "action": "set_flag", "target": "hen_released", "value": true }
+          ]
+        }
+      ]
+    },
+    "node_hen_attack": {
+      "speaker": "Arthur Champion",
+      "portrait": "res://assets/characters/portraits/champion.png",
+      "text": "What is this madness?! Keep that foul bird away from me! OUCH! It pecked my boots! What kind of insolence is this?!",
+      "next": "node_mekatilili_proclamation"
+    },
+    "node_mekatilili_proclamation": {
+      "speaker": "Mekatilili wa Menza",
+      "portrait": "res://assets/characters/portraits/mekatilili.png",
+      "text": "See how she fights with beak and spur for her chicks? Even a humble bird defends her children to the death against any predator! Are the Giriama people less than a mother hen?! We will fight for our children to the last breath!",
+      "next": "node_champion_arrest"
+    },
+    "node_champion_arrest": {
+      "speaker": "Arthur Champion",
+      "portrait": "res://assets/characters/portraits/champion.png",
+      "text": "Insolent savage! Guards! Askari! Seize this woman! Sound the alarm! Do not let her escape the compound gates!",
+      "events": [
+        { "action": "set_flag", "target": "chase_active", "value": true },
+        { "action": "journal_entry", "target": "Parable of the Hen", "value": "Mekatilili released the mother hen before Arthur Champion at Kwa Junda, proclaiming the Giriama would defend their children just as fiercely." }
+      ],
+      "next": ""
+    }
+  }
+}

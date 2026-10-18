@@ -4,7 +4,7 @@ extends Node
 signal request_started(endpoint: String)
 signal request_completed_event(endpoint: String, success: bool, status_code: int)
 
-const DEFAULT_BASE_URL := "http://localhost:5000/api/v1"
+const DEFAULT_BASE_URL := "https://mekatilili.vercel.app/api/v1"
 const CONFIG_PATH := "user://api_config.json"
 const DEFAULT_TIMEOUT := 8.0
 
@@ -137,10 +137,17 @@ func _execute_request(method: int, endpoint: String, body: Dictionary, custom_he
 	if not is_success:
 		if typeof(parsed_data) == TYPE_DICTIONARY and parsed_data.has("error"):
 			var err_obj = parsed_data["error"]
-			if typeof(err_obj) == TYPE_DICTIONARY and err_obj.has("message"):
-				error_msg = str(err_obj["message"])
+			if typeof(err_obj) == TYPE_DICTIONARY:
+				if err_obj.has("details") and typeof(err_obj["details"]) == TYPE_ARRAY and err_obj["details"].size() > 0:
+					var first_detail = err_obj["details"][0]
+					if typeof(first_detail) == TYPE_DICTIONARY and first_detail.has("message"):
+						error_msg = str(first_detail["message"])
+				if error_msg == "" and err_obj.has("message"):
+					error_msg = str(err_obj["message"])
 			else:
 				error_msg = str(err_obj)
+		elif typeof(parsed_data) == TYPE_DICTIONARY and parsed_data.has("message"):
+			error_msg = str(parsed_data["message"])
 		else:
 			error_msg = "HTTP " + str(response_code)
 			

@@ -1,0 +1,55 @@
+{
+  "id": "dialogue_kifudu_speech",
+  "title": "The Kifudu Assembly at Kaya Fungo",
+  "nodes": {
+    "start": {
+      "speaker": "Wanje wa Mwadorikola",
+      "portrait": "res://assets/characters/portraits/wanje.png",
+      "text": "Silence for our mother and prophetess, Mekatilili wa Menza! The ancestors watch over this clearing. Listen to her counsel!",
+      "next": "node_mekatilili_speech_1"
+    },
+    "node_mekatilili_speech_1": {
+      "speaker": "Mekatilili wa Menza",
+      "portrait": "res://assets/characters/portraits/mekatilili.png",
+      "text": "People of the Giriama! Hear me! For centuries our ancestors tended these coastal ridges in peace. Now, the British administrator Arthur Champion demands our sons for his plantations and taxes on our own thatched roofs!",
+      "next": "node_mekatilili_speech_2"
+    },
+    "node_mekatilili_speech_2": {
+      "speaker": "Mekatilili wa Menza",
+      "portrait": "res://assets/characters/portraits/mekatilili.png",
+      "text": "We are not powerless! If we pay with our sweat today, tomorrow he takes our land! We will not build his empire with our blood! Swear by the sacred Kaya that no youth will board their wagons, and no rupee will touch their collector's hands!",
+      "choices": [
+        {
+          "text": "Raise the staff of leadership: \"We will confront Champion at Kwa Junda itself!\"",
+          "next": "node_crowd_roar",
+          "events": [
+            { "action": "set_flag", "target": "kifudu_speech_given", "value": true }
+          ]
+        },
+        {
+          "text": "Unfurl the sacred vow: \"Let the Kifudu drums carry our defiance to every hill!\"",
+          "next": "node_crowd_roar",
+          "events": [
+            { "action": "set_flag", "target": "kifudu_speech_given", "value": true }
+          ]
+        }
+      ]
+    },
+    "node_crowd_roar": {
+      "speaker": "The Assembly",
+      "portrait": "res://assets/characters/portraits/charo.png",
+      "text": "\"HODEE! We swear by the Kayas! Not one rupee! Not one youth! Lead us, Mekatilili!\"",
+      "next": "node_wanje_conclusion"
+    },
+    "node_wanje_conclusion": {
+      "speaker": "Wanje wa Mwadorikola",
+      "portrait": "res://assets/characters/portraits/wanje.png",
+      "text": "The covenant is sealed. Tomorrow, we travel to Arthur Champion's administrative station at Kwa Junda. Mekatilili, bring the mother hen and her brood—it is time Champion learned who truly commands this land!",
+      "events": [
+        { "action": "start_quest", "target": "quest_level_6" },
+        { "action": "journal_entry", "target": "The Kifudu Assembly", "value": "Mekatilili addressed thousands of Giriama at Kaya Fungo. The assembly pledged absolute solidarity against colonial demands." }
+      ],
+      "next": ""
+    }
+  }
+}

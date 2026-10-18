@@ -1,0 +1,330 @@
+[gd_scene load_steps=18 format=3]
+
+[ext_resource type="Script" path="res://scripts/levels/VillageLevel.gd" id="1_lvl"]
+[ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/npcs/NPC.tscn" id="3_npc"]
+[ext_resource type="PackedScene" path="res://scenes/ui/HUD.tscn" id="4_hud"]
+[ext_resource type="Texture2D" path="res://assets/environments/hut_large.png" id="5_hut"]
+[ext_resource type="Texture2D" path="res://assets/environments/baobab_tree.png" id="6_baobab"]
+[ext_resource type="Texture2D" path="res://assets/environments/palm_tree.png" id="7_palm"]
+[ext_resource type="Texture2D" path="res://assets/characters/villager_nyevu.png" id="8_nyevu"]
+[ext_resource type="Texture2D" path="res://assets/characters/warrior_charo.png" id="9_charo"]
+[ext_resource type="Texture2D" path="res://assets/characters/wanje.png" id="10_wanje"]
+[ext_resource type="PackedScene" path="res://scenes/environments/ShambaCrop.tscn" id="11_crop"]
+[ext_resource type="PackedScene" path="res://scenes/environments/CouncilFire.tscn" id="12_fire"]
+[ext_resource type="PackedScene" path="res://scenes/environments/CollectibleItem.tscn" id="13_col"]
+[ext_resource type="Texture2D" path="res://assets/icons/calabash.png" id="14_calabash"]
+[ext_resource type="Texture2D" path="res://assets/icons/colonial_decree.png" id="15_decree"]
+[ext_resource type="Texture2D" path="res://assets/icons/herb_pouch.png" id="16_herb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hut"]
+size = Vector2(80, 50)
+
+[node name="VillageLevel" type="Node2D"]
+script = ExtResource("1_lvl")
+
+[node name="GroundBase" type="ColorRect" parent="."]
+offset_right = 1600.0
+offset_bottom = 1200.0
+color = Color(0.85, 0.72, 0.52, 1)
+
+[node name="GrassHomestead" type="ColorRect" parent="."]
+offset_left = 180.0
+offset_top = 180.0
+offset_right = 480.0
+offset_bottom = 440.0
+color = Color(0.55, 0.62, 0.35, 0.28)
+
+[node name="GrassBaobab" type="ColorRect" parent="."]
+offset_left = 780.0
+offset_top = 260.0
+offset_right = 1180.0
+offset_bottom = 460.0
+color = Color(0.55, 0.62, 0.35, 0.28)
+
+[node name="GrassKayaGrove" type="ColorRect" parent="."]
+offset_left = 1160.0
+offset_top = 400.0
+offset_right = 1520.0
+offset_bottom = 720.0
+color = Color(0.48, 0.58, 0.32, 0.35)
+
+[node name="GrassNyevu" type="ColorRect" parent="."]
+offset_left = 180.0
+offset_top = 640.0
+offset_right = 460.0
+offset_bottom = 860.0
+color = Color(0.55, 0.62, 0.35, 0.28)
+
+[node name="ShambaSoil" type="ColorRect" parent="."]
+offset_left = 440.0
+offset_top = 780.0
+offset_right = 680.0
+offset_bottom = 960.0
+color = Color(0.52, 0.33, 0.20, 0.5)
+
+[node name="DirtPaths" type="ColorRect" parent="."]
+offset_left = 320.0
+offset_top = 480.0
+offset_right = 1380.0
+offset_bottom = 580.0
+color = Color(0.72, 0.45, 0.28, 0.6)
+
+[node name="DirtPathVertical" type="ColorRect" parent="."]
+offset_left = 680.0
+offset_top = 260.0
+offset_right = 780.0
+offset_bottom = 980.0
+color = Color(0.72, 0.45, 0.28, 0.6)
+
+[node name="Huts" type="Node2D" parent="."]
+
+[node name="HutMekatilili" type="StaticBody2D" parent="Huts"]
+position = Vector2(340, 300)
+
+[node name="Sprite2D" type="Sprite2D" parent="Huts/HutMekatilili"]
+texture = ExtResource("5_hut")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Huts/HutMekatilili"]
+position = Vector2(0, 30)
+shape = SubResource("RectangleShape2D_hut")
+
+[node name="HutFondo" type="StaticBody2D" parent="Huts"]
+position = Vector2(1050, 320)
+
+[node name="Sprite2D" type="Sprite2D" parent="Huts/HutFondo"]
+texture = ExtResource("5_hut")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Huts/HutFondo"]
+position = Vector2(0, 30)
+shape = SubResource("RectangleShape2D_hut")
+
+[node name="HutNyevu" type="StaticBody2D" parent="Huts"]
+position = Vector2(300, 720)
+
+[node name="Sprite2D" type="Sprite2D" parent="Huts/HutNyevu"]
+texture = ExtResource("5_hut")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Huts/HutNyevu"]
+position = Vector2(0, 30)
+shape = SubResource("RectangleShape2D_hut")
+
+[node name="Trees" type="Node2D" parent="."]
+
+[node name="BaobabTree" type="Sprite2D" parent="Trees"]
+position = Vector2(900, 380)
+texture = ExtResource("6_baobab")
+
+[node name="BaobabKaya" type="Sprite2D" parent="Trees"]
+position = Vector2(1250, 460)
+texture = ExtResource("6_baobab")
+
+[node name="BaobabNorth" type="Sprite2D" parent="Trees"]
+position = Vector2(620, 110)
+texture = ExtResource("6_baobab")
+
+[node name="Palm1" type="Sprite2D" parent="Trees"]
+position = Vector2(120, 160)
+texture = ExtResource("7_palm")
+
+[node name="Palm2" type="Sprite2D" parent="Trees"]
+position = Vector2(180, 840)
+texture = ExtResource("7_palm")
+
+[node name="Palm3" type="Sprite2D" parent="Trees"]
+position = Vector2(1420, 240)
+texture = ExtResource("7_palm")
+
+[node name="Palm4" type="Sprite2D" parent="Trees"]
+position = Vector2(1480, 880)
+texture = ExtResource("7_palm")
+
+[node name="PalmTop1" type="Sprite2D" parent="Trees"]
+position = Vector2(240, 90)
+texture = ExtResource("7_palm")
+
+[node name="PalmTop2" type="Sprite2D" parent="Trees"]
+position = Vector2(440, 100)
+texture = ExtResource("7_palm")
+
+[node name="PalmTop3" type="Sprite2D" parent="Trees"]
+position = Vector2(840, 80)
+texture = ExtResource("7_palm")
+
+[node name="PalmTop4" type="Sprite2D" parent="Trees"]
+position = Vector2(1060, 95)
+texture = ExtResource("7_palm")
+
+[node name="PalmTop5" type="Sprite2D" parent="Trees"]
+position = Vector2(1260, 85)
+texture = ExtResource("7_palm")
+
+[node name="PalmBot1" type="Sprite2D" parent="Trees"]
+position = Vector2(120, 1120)
+texture = ExtResource("7_palm")
+
+[node name="PalmBot2" type="Sprite2D" parent="Trees"]
+position = Vector2(340, 1100)
+texture = ExtResource("7_palm")
+
+[node name="PalmBot3" type="Sprite2D" parent="Trees"]
+position = Vector2(580, 1125)
+texture = ExtResource("7_palm")
+
+[node name="PalmBot4" type="Sprite2D" parent="Trees"]
+position = Vector2(880, 1110)
+texture = ExtResource("7_palm")
+
+[node name="PalmBot5" type="Sprite2D" parent="Trees"]
+position = Vector2(1140, 1115)
+texture = ExtResource("7_palm")
+
+[node name="PalmBot6" type="Sprite2D" parent="Trees"]
+position = Vector2(1400, 1100)
+texture = ExtResource("7_palm")
+
+[node name="PalmLeft1" type="Sprite2D" parent="Trees"]
+position = Vector2(80, 380)
+texture = ExtResource("7_palm")
+
+[node name="PalmLeft2" type="Sprite2D" parent="Trees"]
+position = Vector2(90, 600)
+texture = ExtResource("7_palm")
+
+[node name="PalmRight1" type="Sprite2D" parent="Trees"]
+position = Vector2(1520, 440)
+texture = ExtResource("7_palm")
+
+[node name="PalmRight2" type="Sprite2D" parent="Trees"]
+position = Vector2(1510, 680)
+texture = ExtResource("7_palm")
+
+[node name="PalmGroveWanje1" type="Sprite2D" parent="Trees"]
+position = Vector2(1390, 470)
+texture = ExtResource("7_palm")
+
+[node name="PalmGroveWanje2" type="Sprite2D" parent="Trees"]
+position = Vector2(1360, 640)
+texture = ExtResource("7_palm")
+
+[node name="PalmShamba1" type="Sprite2D" parent="Trees"]
+position = Vector2(430, 930)
+texture = ExtResource("7_palm")
+
+[node name="PalmShamba2" type="Sprite2D" parent="Trees"]
+position = Vector2(690, 940)
+texture = ExtResource("7_palm")
+
+[node name="CouncilFire" parent="." instance=ExtResource("12_fire")]
+position = Vector2(730, 530)
+
+[node name="ShambaCrops" type="Node2D" parent="."]
+
+[node name="ShambaCrop1" parent="ShambaCrops" instance=ExtResource("11_crop")]
+position = Vector2(490, 840)
+
+[node name="ShambaCrop2" parent="ShambaCrops" instance=ExtResource("11_crop")]
+position = Vector2(570, 830)
+
+[node name="ShambaCrop3" parent="ShambaCrops" instance=ExtResource("11_crop")]
+position = Vector2(630, 860)
+
+[node name="ShambaCrop4" parent="ShambaCrops" instance=ExtResource("11_crop")]
+position = Vector2(510, 900)
+
+[node name="ShambaCrop5" parent="ShambaCrops" instance=ExtResource("11_crop")]
+position = Vector2(590, 910)
+
+[node name="Collectibles" type="Node2D" parent="."]
+
+[node name="CalabashItem" parent="Collectibles" instance=ExtResource("13_col")]
+position = Vector2(420, 330)
+item_id = "calabash_palm"
+item_name = "Traditional Palm Calabash (Kibuyu)"
+item_description = "A dried gourd used for water and palm sap."
+historical_note = "Central to Giriama community hospitality."
+item_icon = ExtResource("14_calabash")
+
+[node name="DecreeItem" parent="Collectibles" instance=ExtResource("13_col")]
+position = Vector2(490, 680)
+item_id = "colonial_notice"
+item_name = "British Colonial Labor Decree"
+item_description = "A proclamation demanding poll taxes and male forced laborers."
+historical_note = "Enacted by Arthur Champion in 1913, sparking resistance."
+item_icon = ExtResource("15_decree")
+
+[node name="HerbItem" parent="Collectibles" instance=ExtResource("13_col")]
+position = Vector2(1380, 510)
+item_id = "kaya_herbs"
+item_name = "Kaya Medicinal Pouch"
+item_description = "Sacred botanical roots gathered from Kaya Fungo."
+historical_note = "Used by medicine elders to purify and unite the community."
+item_icon = ExtResource("16_herb")
+
+[node name="NPCs" type="Node2D" parent="."]
+
+[node name="NPCNyevu" parent="NPCs" instance=ExtResource("3_npc")]
+position = Vector2(400, 750)
+npc_name = "Villager Nyevu"
+dialogue_id = "dialogue_nyevu"
+sprite_sheet = ExtResource("8_nyevu")
+
+[node name="NPCCharo" parent="NPCs" instance=ExtResource("3_npc")]
+position = Vector2(640, 460)
+npc_name = "Warrior Charo"
+dialogue_id = "dialogue_charo"
+sprite_sheet = ExtResource("9_charo")
+
+[node name="NPCMzeeFondo" parent="NPCs" instance=ExtResource("3_npc")]
+position = Vector2(880, 460)
+npc_name = "Elder Mzee Fondo"
+dialogue_id = "dialogue_mzee_fondo"
+
+[node name="NPCWanje" parent="NPCs" instance=ExtResource("3_npc")]
+position = Vector2(1300, 540)
+npc_name = "Wanje wa Mwadorikola"
+dialogue_id = "dialogue_wanje"
+sprite_sheet = ExtResource("10_wanje")
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(430, 400)
+
+[node name="WorldBounds" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WorldBounds"]
+polygon = PackedVector2Array(0, 0, 1600, 0, 1600, 1200, 0, 1200, 0, 0, -50, -50, -50, 1250, 1650, 1250, 1650, -50, -50, -50)
+
+[node name="HUD" parent="." instance=ExtResource("4_hud")]
+
+[node name="ChapterIntroPanel" type="Panel" parent="HUD"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -80.0
+offset_right = 300.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="HUD/ChapterIntroPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Title" type="Label" parent="HUD/ChapterIntroPanel/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+text = "CHAPTER I"
+
+[node name="Subtitle" type="Label" parent="HUD/ChapterIntroPanel/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+text = "Whispers in the Palms"

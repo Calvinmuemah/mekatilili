@@ -1,0 +1,40 @@
+{
+  "id": "dialogue_cluster_bungale",
+  "title": "Bungale Farming Cluster",
+  "nodes": {
+    "start": {
+      "speaker": "Elder Mwaringa of Bungale",
+      "portrait": "res://assets/characters/portraits/nyevu.png",
+      "text": "Mekatilili! Wanje! The colonial recruiters came to Bungale demanding two sacks of grain from every granary and three young men from every shamba.",
+      "choices": [
+        {
+          "text": "Hide your harvest in the hill granaries. Do not give a single grain or youth to Champion.",
+          "next": "node_pledge",
+          "events": [
+            { "action": "add_support", "value": 35 },
+            { "action": "complete_objective", "target": "quest_level_4", "value": 0 },
+            { "action": "set_flag", "target": "bungale_rallied", "value": true }
+          ]
+        },
+        {
+          "text": "Tell them the land gave this food to your children, not to British officers.",
+          "next": "node_pledge",
+          "events": [
+            { "action": "add_support", "value": 35 },
+            { "action": "complete_objective", "target": "quest_level_4", "value": 0 },
+            { "action": "set_flag", "target": "bungale_rallied", "value": true }
+          ]
+        }
+      ]
+    },
+    "node_pledge": {
+      "speaker": "Elder Mwaringa of Bungale",
+      "portrait": "res://assets/characters/portraits/nyevu.png",
+      "text": "You speak the truth of our ancestors! Bungale stands with you! Not one youth from our ridge will board the colonial labor wagons. Community Support is rising!",
+      "events": [
+        { "action": "journal_entry", "target": "Bungale Pledged", "value": "The farming settlement of Bungale has united with Mekatilili, refusing food seizures and forced recruitment." }
+      ],
+      "next": ""
+    }
+  }
+}

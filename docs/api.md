@@ -1,6 +1,6 @@
 # Mekatilili wa Menza — REST API Documentation (v1)
 
-Base URL: `http://localhost:5000/api/v1`
+Base URL: `https://mekatilili.vercel.app/api/v1` (or `http://localhost:5000/api/v1` for local development)
 
 ---
 

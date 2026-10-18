@@ -129,5 +129,5 @@ npm run dev
 # Build production bundle
 npm run build
 ```
-The dashboard will run at `http://localhost:5173` and connect to the backend at `http://localhost:5000/api/v1`.
+The dashboard will run at `http://localhost:5173` and connect to the backend at `https://mekatilili.vercel.app/api/v1` (configured via `VITE_API_URL` in `admin/.env`).
 

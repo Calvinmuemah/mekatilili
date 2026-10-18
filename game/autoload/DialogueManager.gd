@@ -133,6 +133,10 @@ func _process_event(ev: Dictionary) -> void:
 		"add_support":
 			if StoryManager != null and value is int:
 				StoryManager.add_community_support(value)
+		"set_support":
+			if StoryManager != null and value is int:
+				StoryManager.community_support = clampi(value, 0, 100)
+				StoryManager.community_support_changed.emit(StoryManager.community_support)
 		"journal_entry":
 			if StoryManager != null and target is String and value is String:
 				StoryManager.add_journal_entry("story", target, value)

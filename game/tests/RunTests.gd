@@ -58,7 +58,10 @@ func _run_all_tests() -> void:
 		"res://scenes/environments/CollectibleItem.tscn",
 		"res://scenes/environments/ShambaCrop.tscn",
 		"res://scenes/environments/CouncilFire.tscn",
-		"res://scenes/environments/VillageLevel.tscn"
+		"res://scenes/environments/VillageLevel.tscn",
+		"res://scenes/characters/ColonialSentry.tscn",
+		"res://scenes/environments/KifuduGathering.tscn",
+		"res://scenes/environments/ColonialStation.tscn"
 	]
 	var all_scenes_ok := true
 	for sc_path in scenes_to_test:
@@ -227,6 +230,77 @@ func _run_all_tests() -> void:
 			failed += 1
 	else:
 		push_error("  -> FAIL: Save backup creation failed.")
+		failed += 1
+
+	# TEST 12: Accessibility and Voiceover System
+	print("\n[TEST 12] Verifying Accessibility & Voiceover System...")
+	if save_manager.current_settings.get("voiceover_enabled", false) == true and \
+	   audio_manager.has_method("speak_text") and audio_manager.has_method("stop_voiceover"):
+		audio_manager.speak_text("Testing voiceover output", "Elder Mzee Fondo")
+		audio_manager.stop_voiceover()
+		print("  -> PASS: Voiceover enabled by default and TTS invocation validated.")
+		passed += 1
+	else:
+		push_error("  -> FAIL: Voiceover not configured or default is not ON.")
+		failed += 1
+
+	# TEST 13: Levels 2-7 Quests and Dialogues Pipeline
+	print("\n[TEST 13] Verifying Levels 2-7 Quests & Dialogues Pipeline...")
+	quest_manager.load_all_quests()
+	dialogue_manager.load_all_dialogues()
+	var quests_ok: bool = quest_manager.quests_db.has("quest_level_2") and \
+	                      quest_manager.quests_db.has("quest_level_4") and \
+	                      quest_manager.quests_db.has("quest_level_6")
+	var dialogues_ok: bool = dialogue_manager.dialogues_db.has("dialogue_colonial_notice") and \
+	                         dialogue_manager.dialogues_db.has("dialogue_colonial_runner") and \
+	                         dialogue_manager.dialogues_db.has("dialogue_wanje_level2") and \
+	                         dialogue_manager.dialogues_db.has("dialogue_cluster_bungale") and \
+	                         dialogue_manager.dialogues_db.has("dialogue_cluster_vitengeni") and \
+	                         dialogue_manager.dialogues_db.has("dialogue_cluster_kayafungo") and \
+	                         dialogue_manager.dialogues_db.has("dialogue_kifudu_speech") and \
+	                         dialogue_manager.dialogues_db.has("dialogue_arthur_champion")
+	if quests_ok and dialogues_ok:
+		print("  -> PASS: All Sprint 5 quests and branching dialogue trees verified.")
+		passed += 1
+	else:
+		push_error("  -> FAIL: Missing Sprint 5 quest or dialogue definitions.")
+		failed += 1
+
+	# TEST 14: Community Support Counter & Circuit Progression
+	print("\n[TEST 14] Verifying Community Support Counter & Circuit Progression...")
+	story_manager.community_support = 0
+	story_manager.add_community_support(35)
+	var sup1_ok: bool = (int(story_manager.community_support) == 35)
+	story_manager.add_community_support(35)
+	var sup2_ok: bool = (int(story_manager.community_support) == 70)
+	story_manager.add_community_support(30)
+	var sup3_ok: bool = (int(story_manager.community_support) == 100)
+	quest_manager.start_quest("quest_level_4")
+	quest_manager.advance_active_objective() # obj 0
+	quest_manager.advance_active_objective() # obj 1
+	quest_manager.advance_active_objective() # obj 2 (completes quest)
+	var q4_state = quest_manager.quests_db["quest_level_4"]["state"]
+	if sup1_ok and sup2_ok and sup3_ok and q4_state == quest_manager.QuestState.COMPLETED:
+		print("  -> PASS: Community support counter (0-100%) and circuit quests validated.")
+		passed += 1
+	else:
+		push_error("  -> FAIL: Community support calculation or quest advancement failed.")
+		failed += 1
+
+	# TEST 15: Colonial Station & Hen Chase Progression
+	print("\n[TEST 15] Verifying Colonial Station & Hen Chase Progression...")
+	quest_manager.start_quest("quest_level_6")
+	quest_manager.complete_objective("quest_level_6", 0) # approach Champion
+	quest_manager.complete_objective("quest_level_6", 1) # release hen
+	quest_manager.complete_objective("quest_level_6", 2) # escape south gate
+	var q6_state = quest_manager.quests_db["quest_level_6"]["state"]
+	var champion_pitch_ok: bool = audio_manager._get_character_pitch("Arthur Champion") == 0.78
+	var sentry_pitch_ok: bool = audio_manager._get_character_pitch("Colonial Sentry") == 0.82
+	if q6_state == quest_manager.QuestState.COMPLETED and champion_pitch_ok and sentry_pitch_ok:
+		print("  -> PASS: Hen release, compound chase, and colonial audio profiles verified.")
+		passed += 1
+	else:
+		push_error("  -> FAIL: Colonial station chase or audio validation failed.")
 		failed += 1
 
 	# Clean up test save and backup

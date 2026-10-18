@@ -1,0 +1,26 @@
+{
+  "id": "quest_level_6",
+  "title": "The Kwa Junda Confrontation",
+  "chapter": 2,
+  "description": "Enter Arthur Champion's administrative station at Kwa Junda, present the legendary parable of the Hen and Chicks, and evade the guards to escape back to the hinterland.",
+  "state": 1,
+  "current_objective_index": 0,
+  "objectives": [
+    {
+      "id": "approach_champion",
+      "description": "Approach Administrator Arthur Champion at the administrative veranda.",
+      "completed": false
+    },
+    {
+      "id": "release_hen",
+      "description": "Deliver the challenge and release the mother hen and chicks into the compound.",
+      "completed": false
+    },
+    {
+      "id": "escape_guards",
+      "description": "Sprint through the administrative compound and escape through the South Exit Gate!",
+      "completed": false
+    }
+  ],
+  "reward_text": "Mekatilili and Wanje have openly defied Arthur Champion and escaped into the sacred hills! Chapter 2 completed."
+}

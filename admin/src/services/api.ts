@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://mekatilili.vercel.app/api/v1';
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,

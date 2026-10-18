@@ -12,9 +12,11 @@ signal game_state_changed(new_state: GameState)
 signal pause_toggled(is_paused: bool)
 signal chapter_started(chapter_num: int, chapter_title: String)
 signal chapter_completed(chapter_num: int)
+signal level_changed(level_num: int)
 
 var current_state: GameState = GameState.BOOT
 var current_chapter: int = 1
+var current_level: int = 1
 var current_scene_path: String = ""
 var player_node: Node2D = null
 var saved_player_position: Vector2 = Vector2.ZERO
@@ -53,6 +55,7 @@ func set_game_state(new_state: GameState) -> void:
 
 func start_new_game() -> void:
 	current_chapter = 1
+	current_level = 1
 	saved_player_position = Vector2.ZERO
 	if StoryManager != null:
 		StoryManager.reset_state()

@@ -1,0 +1,40 @@
+{
+  "id": "dialogue_cluster_kayafungo",
+  "title": "Kaya Fungo Gate Delegates",
+  "nodes": {
+    "start": {
+      "speaker": "Delegate Mwatsuma of Kaya Fungo",
+      "portrait": "res://assets/characters/portraits/charo.png",
+      "text": "Mekatilili, the delegates from all nine Giriama clans have arrived at the forest gateway! The sacred clearing is prepared.",
+      "choices": [
+        {
+          "text": "Sound the sacred Kifudu drums! Let every soul gather before the council stones.",
+          "next": "node_gather",
+          "events": [
+            { "action": "add_support", "value": 30 },
+            { "action": "complete_objective", "target": "quest_level_4", "value": 2 },
+            { "action": "set_flag", "target": "kifudu_unlocked", "value": true }
+          ]
+        },
+        {
+          "text": "Tell them the time of whispering is over. Today, the Agiriama speak as one.",
+          "next": "node_gather",
+          "events": [
+            { "action": "add_support", "value": 30 },
+            { "action": "complete_objective", "target": "quest_level_4", "value": 2 },
+            { "action": "set_flag", "target": "kifudu_unlocked", "value": true }
+          ]
+        }
+      ]
+    },
+    "node_gather": {
+      "speaker": "Delegate Mwatsuma of Kaya Fungo",
+      "portrait": "res://assets/characters/portraits/charo.png",
+      "text": "Community Support is 100%! The whole assembly is in place. Ascend the council platform, Mekatilili; the Kifudu gathering awaits your words!",
+      "events": [
+        { "action": "journal_entry", "target": "100% Community Support", "value": "All three settlement clusters have pledged total solidarity. The entire community is assembled at Kaya Fungo for the sacred gathering." }
+      ],
+      "next": ""
+    }
+  }
+}

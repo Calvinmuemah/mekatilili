@@ -17,27 +17,51 @@ var type_timer: float = 0.0
 func _ready() -> void:
 	visible = false
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	mouse_filter = Control.MOUSE_FILTER_STOP
 	
 	if panel != null:
+		panel.mouse_filter = Control.MOUSE_FILTER_STOP
 		var style := GamePalette.create_panel_style(GamePalette.COLOR_SAND, GamePalette.COLOR_WARM_GOLD, 10, 3)
 		panel.add_theme_stylebox_override("panel", style)
 		
-	if speaker_label != null:
-		speaker_label.add_theme_color_override("font_color", GamePalette.COLOR_DEEP_EARTH)
-		speaker_label.add_theme_font_size_override("font_size", GamePalette.FONT_SIZE_H2)
-		
-	if text_label != null:
-		text_label.add_theme_color_override("default_color", GamePalette.COLOR_CHARCOAL)
-		text_label.add_theme_font_size_override("normal_font_size", GamePalette.FONT_SIZE_DIALOGUE)
+	_apply_typography()
 		
 	if next_btn != null:
-		GamePalette.apply_button_theme(next_btn, GamePalette.COLOR_TERRACOTTA)
+		GamePalette.apply_button_theme(next_btn, GamePalette.COLOR_TERRACOTTA, GamePalette.FONT_SIZE_BUTTON)
 		next_btn.pressed.connect(_on_next_pressed)
 		
 	if DialogueManager != null:
 		DialogueManager.dialogue_started.connect(_on_dialogue_started)
 		DialogueManager.dialogue_node_reached.connect(_on_dialogue_node_reached)
 		DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
+		
+	if SaveManager != null and SaveManager.has_signal("settings_changed"):
+		SaveManager.settings_changed.connect(_apply_typography)
+
+func _apply_typography() -> void:
+	if speaker_label != null:
+		speaker_label.add_theme_color_override("font_color", GamePalette.COLOR_DEEP_EARTH)
+		speaker_label.add_theme_font_size_override("font_size", GamePalette.get_scaled_font_size(GamePalette.FONT_SIZE_H2))
+		
+	if text_label != null:
+		text_label.add_theme_color_override("default_color", GamePalette.COLOR_CHARCOAL)
+		text_label.add_theme_font_size_override("normal_font_size", GamePalette.get_scaled_font_size(GamePalette.FONT_SIZE_DIALOGUE))
+		
+	if next_btn != null:
+		GamePalette.apply_button_theme(next_btn, GamePalette.COLOR_TERRACOTTA, GamePalette.FONT_SIZE_BUTTON)
+
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton or event is InputEventScreenTouch:
+		if event.is_pressed():
+			_on_box_clicked()
+
+func _on_box_clicked() -> void:
+	if choices_container != null and choices_container.visible and choices_container.get_child_count() > 0:
+		return
+	if is_typing:
+		_finish_typing()
+	else:
+		_on_next_pressed()
 
 func _process(delta: float) -> void:
 	if is_typing:
@@ -72,12 +96,24 @@ func _on_dialogue_node_reached(node_data: Dictionary) -> void:
 	choices_container.visible = false
 	next_btn.visible = true
 	
-	# Start typewriter
+	# Start typewriter or display instantly based on accessibility settings
 	text_label.text = full_text
-	text_label.visible_characters = 0
-	char_index = 0
-	type_timer = 0.0
-	is_typing = true
+	var instant: bool = false
+	if SaveManager != null:
+		instant = SaveManager.current_settings.get("instant_dialogue", false)
+		
+	if instant:
+		text_label.visible_characters = -1
+		is_typing = false
+	else:
+		text_label.visible_characters = 0
+		char_index = 0
+		type_timer = 0.0
+		is_typing = true
+		
+	# Play accessibility Voiceover / TTS
+	if AudioManager != null and AudioManager.has_method("speak_text"):
+		AudioManager.speak_text(full_text, speaker_label.text)
 	
 	# Setup choices if any
 	var choices: Array = node_data.get("choices", [])
@@ -90,12 +126,17 @@ func _setup_choices(choices: Array) -> void:
 	for i in range(choices.size()):
 		var choice_data: Dictionary = choices[i]
 		var btn := Button.new()
-		btn.text = choice_data.get("text", "...")
-		GamePalette.apply_button_theme(btn, GamePalette.COLOR_TERRACOTTA)
+		var choice_text: String = choice_data.get("text", "...")
+		btn.text = "◆ " + choice_text if not choice_text.begins_with("◆") else choice_text
+		btn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		btn.custom_minimum_size = Vector2(0, 56)
+		GamePalette.apply_button_theme(btn, GamePalette.COLOR_TERRACOTTA, GamePalette.FONT_SIZE_BUTTON)
 		var choice_idx := i
 		btn.pressed.connect(func():
 			if AudioManager != null:
 				AudioManager.play_sfx("sfx_click")
+				if AudioManager.has_method("stop_voiceover"):
+					AudioManager.stop_voiceover()
 			DialogueManager.select_choice(choice_idx)
 		)
 		choices_container.add_child(btn)
@@ -110,8 +151,12 @@ func _on_next_pressed() -> void:
 	else:
 		if AudioManager != null:
 			AudioManager.play_sfx("sfx_click")
+			if AudioManager.has_method("stop_voiceover"):
+				AudioManager.stop_voiceover()
 		DialogueManager.next_line()
 
 func _on_dialogue_ended(_dialogue_id: String) -> void:
 	visible = false
 	is_typing = false
+	if AudioManager != null and AudioManager.has_method("stop_voiceover"):
+		AudioManager.stop_voiceover()
