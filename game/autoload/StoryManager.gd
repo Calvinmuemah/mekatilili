@@ -78,6 +78,10 @@ func add_community_support(amount: int) -> void:
 	community_support = clampi(community_support + amount, 0, 100)
 	community_support_changed.emit(community_support)
 
+func set_community_support(amount: int) -> void:
+	community_support = clampi(amount, 0, 100)
+	community_support_changed.emit(community_support)
+
 func serialize_journal() -> Dictionary:
 	return journal_data.duplicate(true)
 

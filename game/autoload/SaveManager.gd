@@ -122,6 +122,23 @@ func save_game(custom_data: Dictionary = {}) -> bool:
 	
 	var now_iso := Time.get_datetime_string_from_system()
 	
+	var target_scene := GameManager.current_scene_path
+	if target_scene == "" or target_scene.ends_with("ChapterComplete.tscn") or target_scene.ends_with("MainMenu.tscn"):
+		var lvl := GameManager.current_level
+		if lvl >= 11:
+			target_scene = "res://scenes/environments/WildernessTrek.tscn"
+		elif lvl >= 9:
+			target_scene = "res://scenes/environments/KisiiPrison.tscn"
+		elif lvl == 8:
+			target_scene = "res://scenes/cinematics/ArrestSequence.tscn"
+		elif lvl >= 6:
+			target_scene = "res://scenes/environments/ColonialStation.tscn"
+		elif lvl == 5:
+			target_scene = "res://scenes/environments/KifuduGathering.tscn"
+		else:
+			target_scene = "res://scenes/environments/VillageLevel.tscn"
+
+
 	var save_dict: Dictionary = {
 		"version": SAVE_VERSION,
 		"timestamp": now_iso,
@@ -131,7 +148,7 @@ func save_game(custom_data: Dictionary = {}) -> bool:
 		"device_id": get_device_id(),
 		"chapter": GameManager.current_chapter,
 		"level": GameManager.current_level,
-		"scene": GameManager.current_scene_path,
+		"scene": target_scene,
 		"player_position": {
 			"x": player_pos.x,
 			"y": player_pos.y
@@ -224,6 +241,22 @@ func load_game() -> bool:
 		QuestManager.deserialize_state(data["quests"])
 		
 	var target_scene: String = data.get("scene", "res://scenes/environments/VillageLevel.tscn")
+	if target_scene.ends_with("ChapterComplete.tscn") or target_scene.ends_with("MainMenu.tscn"):
+		var saved_lvl: int = data.get("level", 1)
+		if saved_lvl >= 11:
+			target_scene = "res://scenes/environments/WildernessTrek.tscn"
+		elif saved_lvl >= 9:
+			target_scene = "res://scenes/environments/KisiiPrison.tscn"
+		elif saved_lvl == 8:
+			target_scene = "res://scenes/cinematics/ArrestSequence.tscn"
+		elif saved_lvl >= 6:
+			target_scene = "res://scenes/environments/ColonialStation.tscn"
+		elif saved_lvl == 5:
+			target_scene = "res://scenes/environments/KifuduGathering.tscn"
+		else:
+			target_scene = "res://scenes/environments/VillageLevel.tscn"
+
+
 	var target_pos := Vector2(
 		data.get("player_position", {}).get("x", 400.0),
 		data.get("player_position", {}).get("y", 350.0)

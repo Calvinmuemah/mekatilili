@@ -208,11 +208,27 @@ func _check_save_state() -> void:
 		var chapter: int = summary.get("chapter", 1)
 		var level: int = summary.get("level", 1)
 		var unity: int = summary.get("community_support", 0)
-		continue_btn.text = "▶  CONTINUE JOURNEY"
-		if save_info_label != null:
-			save_info_label.visible = true
-			save_info_label.text = "✦ Chapter %d (Level %d)  •  Community Unity: %d%%" % [chapter, level, unity]
-			save_info_label.add_theme_color_override("font_color", GamePalette.COLOR_WARM_GOLD)
+		var ch3_done: bool = summary.get("chapter_3_completed", false) or level >= 12
+		var ch2_done: bool = summary.get("chapter_2_completed", false) or level >= 8
+		
+		if ch3_done:
+			continue_btn.text = "▶  REPLAY FULL SAGA (LEVELS 1–11)"
+			if save_info_label != null:
+				save_info_label.visible = true
+				save_info_label.text = "✦ Chapters I, II & III Complete  •  All 11 Levels Conquered!"
+				save_info_label.add_theme_color_override("font_color", GamePalette.COLOR_WARM_GOLD)
+		elif ch2_done and level >= 8:
+			continue_btn.text = "▶  CONTINUE CHAPTER III (LEVEL %d)" % level
+			if save_info_label != null:
+				save_info_label.visible = true
+				save_info_label.text = "✦ Chapter 3 (Level %d)  •  Banishment & Trek" % level
+				save_info_label.add_theme_color_override("font_color", GamePalette.COLOR_WARM_GOLD)
+		else:
+			continue_btn.text = "▶  CONTINUE JOURNEY"
+			if save_info_label != null:
+				save_info_label.visible = true
+				save_info_label.text = "✦ Chapter %d (Level %d)  •  Community Unity: %d%%" % [chapter, level, unity]
+				save_info_label.add_theme_color_override("font_color", GamePalette.COLOR_WARM_GOLD)
 	else:
 		continue_btn.text = "▶  CONTINUE JOURNEY"
 		if save_info_label != null:
@@ -260,9 +276,16 @@ func _on_continue_pressed() -> void:
 		AudioManager.play_sfx("sfx_click")
 	if GameManager != null:
 		if SaveManager != null and SaveManager.has_save_file():
-			GameManager.continue_game()
+			var summary := SaveManager.get_save_data_summary()
+			var ch3_done: bool = summary.get("chapter_3_completed", false) or summary.get("level", 1) >= 12
+			if ch3_done:
+				GameManager.start_new_game()
+			else:
+				GameManager.continue_game()
 		else:
 			GameManager.start_new_game()
+
+
 
 func _on_new_game_pressed() -> void:
 	if AudioManager != null:

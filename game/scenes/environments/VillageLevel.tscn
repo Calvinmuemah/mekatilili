@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene load_steps=20 format=3]
 
 [ext_resource type="Script" path="res://scripts/levels/VillageLevel.gd" id="1_lvl"]
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="2_player"]
@@ -16,6 +16,8 @@
 [ext_resource type="Texture2D" path="res://assets/icons/calabash.png" id="14_calabash"]
 [ext_resource type="Texture2D" path="res://assets/icons/colonial_decree.png" id="15_decree"]
 [ext_resource type="Texture2D" path="res://assets/icons/herb_pouch.png" id="16_herb"]
+[ext_resource type="Texture2D" path="res://assets/environments/vigango_totem.png" id="17_vigango"]
+[ext_resource type="Texture2D" path="res://assets/environments/giriama_textile_banner.png" id="18_banner"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hut"]
 size = Vector2(80, 50)
@@ -218,6 +220,32 @@ texture = ExtResource("7_palm")
 [node name="CouncilFire" parent="." instance=ExtResource("12_fire")]
 position = Vector2(730, 530)
 
+[node name="CulturalEmblems" type="Node2D" parent="."]
+
+[node name="VigangoVillageEntry" type="Sprite2D" parent="CulturalEmblems"]
+position = Vector2(160, 780)
+texture = ExtResource("17_vigango")
+
+[node name="VigangoBaobabGrove" type="Sprite2D" parent="CulturalEmblems"]
+position = Vector2(210, 360)
+texture = ExtResource("17_vigango")
+
+[node name="VigangoKayaTrail" type="Sprite2D" parent="CulturalEmblems"]
+position = Vector2(1440, 520)
+texture = ExtResource("17_vigango")
+
+[node name="BannerCouncilNorth" type="Sprite2D" parent="CulturalEmblems"]
+position = Vector2(730, 460)
+texture = ExtResource("18_banner")
+
+[node name="BannerShambaEntry" type="Sprite2D" parent="CulturalEmblems"]
+position = Vector2(440, 810)
+texture = ExtResource("18_banner")
+
+[node name="BannerPlaza" type="Sprite2D" parent="CulturalEmblems"]
+position = Vector2(850, 600)
+texture = ExtResource("18_banner")
+
 [node name="ShambaCrops" type="Node2D" parent="."]
 
 [node name="ShambaCrop1" parent="ShambaCrops" instance=ExtResource("11_crop")]
@@ -308,6 +336,7 @@ offset_right = 300.0
 offset_bottom = 80.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="VBox" type="VBoxContainer" parent="HUD/ChapterIntroPanel"]
 layout_mode = 1

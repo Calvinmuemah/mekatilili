@@ -1,0 +1,31 @@
+{
+  "id": "quest_level_11",
+  "title": "The Thousand-Kilometer Walk Home",
+  "chapter": 3,
+  "description": "Traverse the vast Kenyan wilderness from Kisii across the Rift Valley and eastern savannah to return to sacred Kaya Fungo.",
+  "state": 1,
+  "current_objective_index": 0,
+  "objectives": [
+    {
+      "id": "replenish_water",
+      "description": "Replenish fresh water supplies at the wilderness spring oasis (+35% Endurance).",
+      "completed": false
+    },
+    {
+      "id": "gather_herbs",
+      "description": "Forage healing medicinal herbs along the Rift Valley escarpment trail (+35% Endurance).",
+      "completed": false
+    },
+    {
+      "id": "evade_border_scouts",
+      "description": "Evade the colonial railway telegraph scouts monitoring the eastern plains (+30% Endurance).",
+      "completed": false
+    },
+    {
+      "id": "return_kaya_fungo",
+      "description": "Reunite in triumph with the elders at the Sacred Baobab in Kaya Fungo!",
+      "completed": false
+    }
+  ],
+  "reward_text": "Mekatilili wa Menza and Wanje have miraculously returned home! The Giriama resistance is reignited."
+}

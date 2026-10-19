@@ -1,0 +1,26 @@
+{
+  "id": "quest_level_9",
+  "title": "The Shadows of Kisii",
+  "chapter": 3,
+  "description": "Exiled in the fortified stockade of Kisii Prison near Lake Victoria, Mekatilili must search the compound at night and locate Wanje.",
+  "state": 1,
+  "current_objective_index": 0,
+  "objectives": [
+    {
+      "id": "locate_wanje_cell",
+      "description": "Sneak through the stockade shadows and locate Wanje's detention cell.",
+      "completed": false
+    },
+    {
+      "id": "retrieve_warden_key",
+      "description": "Infiltrate the colonial warden's office to seize the iron stockade keys.",
+      "completed": false
+    },
+    {
+      "id": "unlock_wanje",
+      "description": "Unlock Wanje's cell door and coordinate the night breakout.",
+      "completed": false
+    }
+  ],
+  "reward_text": "Wanje is freed from his cell! The path to the outer gate is open."
+}

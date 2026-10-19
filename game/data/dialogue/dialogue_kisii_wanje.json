@@ -1,0 +1,47 @@
+{
+  "id": "dialogue_kisii_wanje",
+  "title": "Reunion in the Shadows of Kisii",
+  "nodes": {
+    "start": {
+      "speaker": "Wanje wa Mwadorikola",
+      "portrait": "res://assets/characters/portraits/wanje.png",
+      "text": "Mekatilili! Psst! Over here by the stockade wall! I heard the guards speaking of an escape attempt. You slipped out of the women's compound?",
+      "choices": [
+        {
+          "text": "The British guards are careless at night, Wanje. We are leaving tonight.",
+          "next": "node_wanje_keys",
+          "events": [
+            { "action": "complete_objective", "target": "quest_level_9", "value": 0 }
+          ]
+        },
+        {
+          "text": "I promised the council we would not abandon our people. Where are the keys?",
+          "next": "node_wanje_keys",
+          "events": [
+            { "action": "complete_objective", "target": "quest_level_9", "value": 0 }
+          ]
+        }
+      ]
+    },
+    "node_wanje_keys": {
+      "speaker": "Wanje wa Mwadorikola",
+      "portrait": "res://assets/characters/portraits/wanje.png",
+      "text": "The sergeant left the iron gate key hanging inside the stone guardhouse on the western veranda. Evade the perimeter lanterns, seize the keys, and unlock this iron bar!",
+      "choices": [
+        {
+          "text": "Stay ready, Wanje. I will retrieve the key.",
+          "next": "node_finish_wanje",
+          "events": [
+            { "action": "set_flag", "target": "wanje_found", "value": true }
+          ]
+        }
+      ]
+    },
+    "node_finish_wanje": {
+      "speaker": "Mekatilili wa Menza",
+      "portrait": "res://assets/characters/portraits/mekatilili.png",
+      "text": "Move silently. The shadow of the night belongs to us.",
+      "next": ""
+    }
+  }
+}

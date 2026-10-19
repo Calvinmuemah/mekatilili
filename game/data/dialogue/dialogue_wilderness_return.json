@@ -1,0 +1,44 @@
+{
+  "id": "dialogue_wilderness_return",
+  "title": "Return to the Sacred Kaya",
+  "nodes": {
+    "start": {
+      "speaker": "Elder Mzee Fondo",
+      "portrait": "res://assets/characters/portraits/mzee_fondo.png",
+      "text": "By the spirits of our ancestors... can my eyes be trusted?! Mekatilili! Wanje! The British told us you were dead in the western lake lands!",
+      "choices": [
+        {
+          "text": "We told you we would return, Mzee Fondo! The chains of the British could not hold us.",
+          "next": "node_nyevu_rejoice",
+          "events": [
+            { "action": "complete_objective", "target": "quest_level_11", "value": 3 }
+          ]
+        },
+        {
+          "text": "One thousand kilometers on foot, over mountains and plains, guided by the sacred Kaya.",
+          "next": "node_nyevu_rejoice",
+          "events": [
+            { "action": "complete_objective", "target": "quest_level_11", "value": 3 }
+          ]
+        }
+      ]
+    },
+    "node_nyevu_rejoice": {
+      "speaker": "Villager Nyevu",
+      "portrait": "res://assets/characters/portraits/nyevu.png",
+      "text": "The entire Giriama nation is singing! When word reached the villages that Mekatilili walked back on foot, the young men threw down their colonial labor passes! The resistance has awakened tenfold!",
+      "next": "node_mekatilili_proclaim"
+    },
+    "node_mekatilili_proclaim": {
+      "speaker": "Mekatilili wa Menza",
+      "portrait": "res://assets/characters/portraits/mekatilili.png",
+      "text": "Let Arthur Champion and the Governor hear our voices: we are the Giriama people. This soil was given to our children by the Almighty and our ancestors. We shall never be slaves in our own land!",
+      "events": [
+        { "action": "set_flag", "target": "chapter_3_complete", "value": true },
+        { "action": "set_support", "value": 100 },
+        { "action": "journal_entry", "target": "The Thousand-Kilometer Walk", "value": "Mekatilili and Wanje walked over 1,000 km from Kisii to Kilifi on foot through dense wilderness, an unmatched feat of endurance that sparked the 1914 Giriama Uprising." }
+      ],
+      "next": ""
+    }
+  }
+}

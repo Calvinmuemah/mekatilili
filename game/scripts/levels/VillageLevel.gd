@@ -38,7 +38,10 @@ func _ready() -> void:
 	_check_and_apply_level_state()
 	
 	if SaveManager != null:
-		SaveManager.save_game({"chapter": 1, "level": GameManager.current_level if GameManager != null else 1})
+		SaveManager.save_game({
+			"chapter": GameManager.current_chapter if GameManager != null else 1,
+			"level": GameManager.current_level if GameManager != null else 1
+		})
 
 func _setup_camera_limits() -> void:
 	if player != null:
@@ -67,7 +70,7 @@ func _setup_level_1_state() -> void:
 			QuestManager.start_quest("quest_chapter_1")
 
 func _setup_level_2_state() -> void:
-	_show_intro_banner("LEVEL 2 & 3", "Colonial Shift & The Wanje Alliance")
+	_show_intro_banner("CHAPTER II: LEVEL 2 & 3", "Colonial Shift & The Wanje Alliance")
 	
 	# Spawn colonial notices and runner near entry path
 	_spawn_colonial_shift_elements()
@@ -86,9 +89,21 @@ func _setup_level_2_state() -> void:
 		if q.is_empty() or q.get("id", "") == "quest_chapter_1":
 			QuestManager.start_quest("quest_level_2")
 			
+	# Relocate player to entry path facing colonial notices if at default spawn
+	if player != null and player.global_position.distance_to(Vector2(430, 400)) < 40.0:
+		player.global_position = Vector2(250, 470)
+		
+	# Update Council Fire status in Level 2+
+	var council_fire := get_node_or_null("CouncilFire")
+	if council_fire != null:
+		var cf_interact: Interactable = council_fire.get_node_or_null("Interactable")
+		if cf_interact != null:
+			cf_interact.prompt_message = "Reflect at Council Fire"
+			
 	# Check if circuit is already active
 	if StoryManager != null and StoryManager.has_flag("circuit_active"):
 		_spawn_circuit_clusters()
+
 
 func _spawn_colonial_shift_elements() -> void:
 	if colonial_notice_node == null:

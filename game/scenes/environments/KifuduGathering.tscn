@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3]
+[gd_scene load_steps=17 format=3]
 
 [ext_resource type="Script" path="res://scripts/levels/KifuduGathering.gd" id="1_kg"]
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="2_player"]
@@ -11,6 +11,8 @@
 [ext_resource type="Texture2D" path="res://assets/characters/wanje.png" id="9_wanje"]
 [ext_resource type="Texture2D" path="res://assets/characters/mzee_fondo.png" id="10_fondo"]
 [ext_resource type="Script" path="res://scripts/core/Interactable.gd" id="11_interact"]
+[ext_resource type="Texture2D" path="res://assets/environments/vigango_totem.png" id="12_vigango"]
+[ext_resource type="Texture2D" path="res://assets/environments/giriama_textile_banner.png" id="13_banner"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_stone"]
 radius = 32.0
@@ -86,6 +88,32 @@ texture = ExtResource("7_drum")
 position = Vector2(720, 360)
 texture = ExtResource("7_drum")
 
+[node name="CulturalEmblems" type="Node2D" parent="."]
+
+[node name="VigangoLeft" type="Sprite2D" parent="CulturalEmblems"]
+position = Vector2(520, 360)
+texture = ExtResource("12_vigango")
+
+[node name="VigangoRight" type="Sprite2D" parent="CulturalEmblems"]
+position = Vector2(760, 360)
+texture = ExtResource("12_vigango")
+
+[node name="GiriamaBannerNorthLeft" type="Sprite2D" parent="CulturalEmblems"]
+position = Vector2(460, 200)
+texture = ExtResource("13_banner")
+
+[node name="GiriamaBannerNorthRight" type="Sprite2D" parent="CulturalEmblems"]
+position = Vector2(820, 200)
+texture = ExtResource("13_banner")
+
+[node name="GiriamaBannerSouthWest" type="Sprite2D" parent="CulturalEmblems"]
+position = Vector2(320, 480)
+texture = ExtResource("13_banner")
+
+[node name="GiriamaBannerSouthEast" type="Sprite2D" parent="CulturalEmblems"]
+position = Vector2(960, 480)
+texture = ExtResource("13_banner")
+
 [node name="CouncilStone" type="StaticBody2D" parent="."]
 position = Vector2(640, 360)
 
@@ -158,6 +186,7 @@ offset_right = 320.0
 offset_bottom = 80.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="VBox" type="VBoxContainer" parent="HUD/ChapterIntroPanel"]
 layout_mode = 1

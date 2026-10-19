@@ -1,0 +1,58 @@
+{
+  "id": "dialogue_arrest",
+  "title": "The Arrest at the Coastal Ridge",
+  "nodes": {
+    "start": {
+      "speaker": "Captain Phillips",
+      "portrait": "res://assets/characters/portraits/champion.png",
+      "text": "Mekatilili wa Menza! By order of District Commissioner Champion and the Governor of the East Africa Protectorate, you and Wanje wa Mwadorikola are under arrest for sedition and incitement against the Crown.",
+      "choices": [
+        {
+          "text": "You come with rifles because you fear words of truth spoken by an old woman.",
+          "next": "node_phillips_threat",
+          "events": [
+            { "action": "complete_objective", "target": "quest_level_8", "value": 0 }
+          ]
+        },
+        {
+          "text": "The Giriama people will not yield, whether we stand in freedom or in chains.",
+          "next": "node_phillips_threat",
+          "events": [
+            { "action": "complete_objective", "target": "quest_level_8", "value": 0 }
+          ]
+        }
+      ]
+    },
+    "node_phillips_threat": {
+      "speaker": "Captain Phillips",
+      "portrait": "res://assets/characters/portraits/champion.png",
+      "text": "Silence! You will not be jailed in Mombasa where your followers can riot. You are being deported to Kisii—over one thousand kilometers into the western interior. You will never see the Indian Ocean or the Kaya forests again!",
+      "next": "node_wanje_defiance"
+    },
+    "node_wanje_defiance": {
+      "speaker": "Wanje wa Mwadorikola",
+      "portrait": "res://assets/characters/portraits/wanje.png",
+      "text": "Mekatilili, look at them. They tremble behind their bayonets. Distance means nothing to those whose ancestors walked these lands before their empire existed.",
+      "choices": [
+        {
+          "text": "Let them march us to the western lake, Wanje. We will find our way home.",
+          "next": "node_conclude_arrest",
+          "events": [
+            { "action": "complete_objective", "target": "quest_level_8", "value": 1 },
+            { "action": "complete_objective", "target": "quest_level_8", "value": 2 },
+            { "action": "journal_entry", "target": "Arrest and Banishment", "value": "Mekatilili and Wanje were arrested in October 1913 and exiled to Kisii Prison, 1,000 km away across Kenya." }
+          ]
+        }
+      ]
+    },
+    "node_conclude_arrest": {
+      "speaker": "Mekatilili wa Menza",
+      "portrait": "res://assets/characters/portraits/mekatilili.png",
+      "text": "Take your chains, Captain. But remember: the wind blows where it wills, and no prison in Kenya can hold the call of freedom.",
+      "events": [
+        { "action": "set_flag", "target": "arrest_complete", "value": true }
+      ],
+      "next": ""
+    }
+  }
+}

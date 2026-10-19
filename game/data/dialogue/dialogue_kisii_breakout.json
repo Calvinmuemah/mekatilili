@@ -1,0 +1,32 @@
+{
+  "id": "dialogue_kisii_breakout",
+  "title": "Breaching the Kisii Stockade",
+  "nodes": {
+    "start": {
+      "speaker": "Wanje wa Mwadorikola",
+      "portrait": "res://assets/characters/portraits/wanje.png",
+      "text": "The iron latch turned! I am free! The sentry at the watchtower has turned his back toward the lake.",
+      "choices": [
+        {
+          "text": "The Northern Gate is ahead. Once through, we run into the highland forests!",
+          "next": "node_breakout_success",
+          "events": [
+            { "action": "complete_objective", "target": "quest_level_9", "value": 2 },
+            { "action": "complete_objective", "target": "quest_level_10", "value": 0 },
+            { "action": "complete_objective", "target": "quest_level_10", "value": 1 }
+          ]
+        }
+      ]
+    },
+    "node_breakout_success": {
+      "speaker": "Mekatilili wa Menza",
+      "portrait": "res://assets/characters/portraits/mekatilili.png",
+      "text": "One thousand kilometers lie between us and the coast. We will walk every footstep until we stand once more in sacred Kaya Fungo!",
+      "events": [
+        { "action": "set_flag", "target": "prison_escaped", "value": true },
+        { "action": "journal_entry", "target": "Escape from Kisii", "value": "Mekatilili and Wanje broke out of Kisii Prison on a moonlit night, vanishing into the Nyanza hills to begin their 1,000 km trek home." }
+      ],
+      "next": ""
+    }
+  }
+}

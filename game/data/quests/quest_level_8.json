@@ -1,0 +1,26 @@
+{
+  "id": "quest_level_8",
+  "title": "The Betrayal & The Long Chains",
+  "chapter": 3,
+  "description": "Colonial patrols and British askari intercept Mekatilili and Wanje in the coastal hills. Refusing to yield, they are sentenced to deportation over 1,000 kilometers away.",
+  "state": 1,
+  "current_objective_index": 0,
+  "objectives": [
+    {
+      "id": "confront_patrol",
+      "description": "Confront the colonial detachment under Captain Phillips.",
+      "completed": false
+    },
+    {
+      "id": "reaffirm_oath",
+      "description": "Reaffirm the sacred covenant with Wanje wa Mwadorikola before deportation.",
+      "completed": false
+    },
+    {
+      "id": "depart_chains",
+      "description": "Begin the forced deportation march toward the western highlands.",
+      "completed": false
+    }
+  ],
+  "reward_text": "Mekatilili and Wanje stand unbroken even as they are led away into exile."
+}

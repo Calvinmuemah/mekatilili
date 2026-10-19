@@ -168,6 +168,7 @@ offset_right = 340.0
 offset_bottom = 80.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="VBox" type="VBoxContainer" parent="HUD/ChapterIntroPanel"]
 layout_mode = 1

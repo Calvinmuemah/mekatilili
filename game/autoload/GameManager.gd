@@ -16,7 +16,16 @@ signal level_changed(level_num: int)
 
 var current_state: GameState = GameState.BOOT
 var current_chapter: int = 1
-var current_level: int = 1
+var current_level: int = 1:
+	set(val):
+		current_level = val
+		if current_level >= 2 and current_level <= 7:
+			current_chapter = 2
+		elif current_level >= 8:
+			current_chapter = 3
+		level_changed.emit(current_level)
+
+
 var current_scene_path: String = ""
 var player_node: Node2D = null
 var saved_player_position: Vector2 = Vector2.ZERO
@@ -59,6 +68,8 @@ func start_new_game() -> void:
 	saved_player_position = Vector2.ZERO
 	if StoryManager != null:
 		StoryManager.reset_state()
+	if DialogueManager != null and DialogueManager.has_method("reset_state"):
+		DialogueManager.reset_state()
 	if QuestManager != null:
 		QuestManager.load_all_quests()
 	

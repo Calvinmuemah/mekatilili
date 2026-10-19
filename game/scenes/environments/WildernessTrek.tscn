@@ -1,0 +1,199 @@
+[gd_scene load_steps=14 format=3]
+
+[ext_resource type="Script" path="res://scripts/levels/WildernessTrek.gd" id="1_wt"]
+[ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/ui/HUD.tscn" id="3_hud"]
+[ext_resource type="Texture2D" path="res://assets/environments/baobab_tree.png" id="4_baobab"]
+[ext_resource type="Texture2D" path="res://assets/environments/palm_tree.png" id="5_palm"]
+[ext_resource type="Texture2D" path="res://assets/characters/mzee_fondo.png" id="6_fondo"]
+[ext_resource type="Texture2D" path="res://assets/characters/villager_nyevu.png" id="7_nyevu"]
+[ext_resource type="Texture2D" path="res://assets/icons/calabash.png" id="8_calabash"]
+[ext_resource type="Texture2D" path="res://assets/icons/herb_pouch.png" id="9_herb"]
+[ext_resource type="Texture2D" path="res://assets/characters/colonial_guard.png" id="10_guard"]
+[ext_resource type="Script" path="res://scripts/core/Interactable.gd" id="11_interact"]
+[ext_resource type="Texture2D" path="res://assets/environments/vigango_totem.png" id="12_vigango"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_circle"]
+radius = 48.0
+
+[node name="WildernessTrek" type="Node2D"]
+script = ExtResource("1_wt")
+
+[node name="TerrainBase" type="ColorRect" parent="."]
+offset_right = 2100.0
+offset_bottom = 900.0
+color = Color(0.72, 0.58, 0.42, 1)
+
+[node name="HighlandGrass" type="ColorRect" parent="."]
+offset_right = 650.0
+offset_bottom = 900.0
+color = Color(0.48, 0.55, 0.35, 0.45)
+
+[node name="RiftValleyRock" type="ColorRect" parent="."]
+offset_left = 650.0
+offset_right = 1300.0
+offset_bottom = 900.0
+color = Color(0.62, 0.48, 0.35, 0.5)
+
+[node name="CoastalPlains" type="ColorRect" parent="."]
+offset_left = 1300.0
+offset_right = 2100.0
+offset_bottom = 900.0
+color = Color(0.52, 0.62, 0.36, 0.5)
+
+[node name="WaterSpring" type="Node2D" parent="."]
+position = Vector2(420, 480)
+
+[node name="SpringPool" type="ColorRect" parent="WaterSpring"]
+offset_left = -30.0
+offset_top = -20.0
+offset_right = 30.0
+offset_bottom = 20.0
+color = Color(0.28, 0.52, 0.68, 0.85)
+
+[node name="CalabashIcon" type="Sprite2D" parent="WaterSpring"]
+position = Vector2(0, -10)
+texture = ExtResource("8_calabash")
+
+[node name="Interactable" type="Area2D" parent="WaterSpring"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("11_interact")
+prompt_message = "Replenish Calabash at Spring"
+marker_type = "quest"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WaterSpring/Interactable"]
+shape = SubResource("CircleShape2D_circle")
+
+[node name="HerbPatch" type="Node2D" parent="."]
+position = Vector2(960, 420)
+
+[node name="HerbIcon" type="Sprite2D" parent="HerbPatch"]
+position = Vector2(0, -10)
+texture = ExtResource("9_herb")
+
+[node name="Interactable" type="Area2D" parent="HerbPatch"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("11_interact")
+prompt_message = "Forage Rift Valley Herbs"
+marker_type = "quest"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HerbPatch/Interactable"]
+shape = SubResource("CircleShape2D_circle")
+
+[node name="ScoutPost" type="Node2D" parent="."]
+position = Vector2(1480, 520)
+
+[node name="ScoutSprite" type="Sprite2D" parent="ScoutPost"]
+position = Vector2(0, -15)
+texture = ExtResource("10_guard")
+hframes = 4
+vframes = 4
+frame = 0
+
+[node name="Interactable" type="Area2D" parent="ScoutPost"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("11_interact")
+prompt_message = "Slip Past Railway Scouts"
+marker_type = "quest"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScoutPost/Interactable"]
+shape = SubResource("CircleShape2D_circle")
+
+[node name="KayaReunion" type="Node2D" parent="."]
+position = Vector2(1880, 480)
+
+[node name="BaobabTree" type="Sprite2D" parent="KayaReunion"]
+position = Vector2(20, -50)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("4_baobab")
+
+[node name="VigangoTotem" type="Sprite2D" parent="KayaReunion"]
+position = Vector2(-70, 0)
+texture = ExtResource("12_vigango")
+
+[node name="MzeeFondo" type="Sprite2D" parent="KayaReunion"]
+position = Vector2(-30, 20)
+texture = ExtResource("6_fondo")
+hframes = 4
+vframes = 4
+frame = 0
+
+[node name="Nyevu" type="Sprite2D" parent="KayaReunion"]
+position = Vector2(40, 25)
+texture = ExtResource("7_nyevu")
+hframes = 4
+vframes = 4
+frame = 0
+
+[node name="Interactable" type="Area2D" parent="KayaReunion"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("11_interact")
+prompt_message = "Reunite with Kaya Elders"
+marker_type = "talk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KayaReunion/Interactable"]
+shape = SubResource("CircleShape2D_circle")
+
+[node name="EnvironmentProps" type="Node2D" parent="."]
+
+[node name="Palm1" type="Sprite2D" parent="EnvironmentProps"]
+position = Vector2(250, 300)
+texture = ExtResource("5_palm")
+
+[node name="Palm2" type="Sprite2D" parent="EnvironmentProps"]
+position = Vector2(780, 620)
+texture = ExtResource("5_palm")
+
+[node name="Palm3" type="Sprite2D" parent="EnvironmentProps"]
+position = Vector2(1650, 320)
+texture = ExtResource("5_palm")
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(180, 490)
+
+[node name="WorldBounds" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WorldBounds"]
+polygon = PackedVector2Array(0, 0, 2100, 0, 2100, 900, 0, 900, 0, 0, -50, -50, -50, 950, 2150, 950, 2150, -50, -50, -50)
+
+[node name="HUD" parent="." instance=ExtResource("3_hud")]
+
+[node name="ChapterIntroPanel" type="Panel" parent="HUD"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -80.0
+offset_right = 300.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBox" type="VBoxContainer" parent="HUD/ChapterIntroPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 15.0
+offset_right = -20.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="HUD/ChapterIntroPanel/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="HUD/ChapterIntroPanel/VBox"]
+layout_mode = 2
+horizontal_alignment = 1

@@ -1,0 +1,192 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scripts/levels/KisiiPrison.gd" id="1_kp"]
+[ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/ui/HUD.tscn" id="3_hud"]
+[ext_resource type="Texture2D" path="res://assets/environments/stockade_fence.png" id="4_fence"]
+[ext_resource type="Texture2D" path="res://assets/environments/station_building.png" id="5_station"]
+[ext_resource type="Texture2D" path="res://assets/characters/colonial_guard.png" id="6_guard"]
+[ext_resource type="Texture2D" path="res://assets/characters/wanje.png" id="7_wanje"]
+[ext_resource type="Texture2D" path="res://assets/icons/colonial_decree.png" id="8_key"]
+[ext_resource type="Script" path="res://scripts/core/Interactable.gd" id="9_interact"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_int"]
+radius = 48.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gate"]
+size = Vector2(80, 60)
+
+[node name="KisiiPrison" type="Node2D"]
+script = ExtResource("1_kp")
+
+[node name="GroundNight" type="ColorRect" parent="."]
+offset_right = 1600.0
+offset_bottom = 1100.0
+color = Color(0.12, 0.11, 0.14, 1)
+
+[node name="CompoundMud" type="ColorRect" parent="."]
+offset_left = 150.0
+offset_top = 150.0
+offset_right = 1450.0
+offset_bottom = 950.0
+color = Color(0.16, 0.14, 0.18, 0.85)
+
+[node name="StockadeNorth" type="Sprite2D" parent="."]
+position = Vector2(800, 140)
+scale = Vector2(10, 1.2)
+texture = ExtResource("4_fence")
+
+[node name="StockadeSouth" type="Sprite2D" parent="."]
+position = Vector2(800, 960)
+scale = Vector2(10, 1.2)
+texture = ExtResource("4_fence")
+
+[node name="StockadeWest" type="Sprite2D" parent="."]
+position = Vector2(140, 550)
+rotation = 1.5708
+scale = Vector2(8, 1.2)
+texture = ExtResource("4_fence")
+
+[node name="StockadeEast" type="Sprite2D" parent="."]
+position = Vector2(1460, 550)
+rotation = 1.5708
+scale = Vector2(8, 1.2)
+texture = ExtResource("4_fence")
+
+[node name="WardenBarracks" type="Sprite2D" parent="."]
+position = Vector2(450, 360)
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("5_station")
+
+[node name="WardenPost" type="Node2D" parent="."]
+position = Vector2(450, 430)
+
+[node name="KeySprite" type="Sprite2D" parent="WardenPost"]
+position = Vector2(0, -10)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("8_key")
+
+[node name="Interactable" type="Area2D" parent="WardenPost"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("9_interact")
+prompt_message = "Seize Warden's Keys"
+marker_type = "quest"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WardenPost/Interactable"]
+shape = SubResource("CircleShape2D_int")
+
+[node name="WanjeCell" type="Node2D" parent="."]
+position = Vector2(1150, 380)
+
+[node name="CellBacking" type="ColorRect" parent="WanjeCell"]
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.08, 0.07, 0.09, 0.9)
+
+[node name="WanjeSprite" type="Sprite2D" parent="WanjeCell"]
+texture = ExtResource("7_wanje")
+hframes = 4
+vframes = 4
+frame = 0
+
+[node name="CellDoor" type="ColorRect" parent="WanjeCell"]
+offset_left = -25.0
+offset_top = -35.0
+offset_right = 25.0
+offset_bottom = 35.0
+color = Color(0.35, 0.28, 0.22, 0.9)
+
+[node name="Interactable" type="Area2D" parent="WanjeCell"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("9_interact")
+prompt_message = "Whisper to Wanje"
+marker_type = "talk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WanjeCell/Interactable"]
+shape = SubResource("CircleShape2D_int")
+
+[node name="NorthGate" type="Node2D" parent="."]
+position = Vector2(800, 140)
+
+[node name="GateVisual" type="ColorRect" parent="NorthGate"]
+offset_left = -40.0
+offset_top = -25.0
+offset_right = 40.0
+offset_bottom = 25.0
+color = Color(0.25, 0.35, 0.22, 0.9)
+
+[node name="Interactable" type="Area2D" parent="NorthGate"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("9_interact")
+prompt_message = "Inspect North Gate"
+marker_type = "quest"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NorthGate/Interactable"]
+shape = SubResource("RectangleShape2D_gate")
+
+[node name="Sentries" type="Node2D" parent="."]
+
+[node name="Sentry1" type="Sprite2D" parent="Sentries"]
+position = Vector2(700, 480)
+texture = ExtResource("6_guard")
+hframes = 4
+vframes = 4
+frame = 0
+
+[node name="Sentry2" type="Sprite2D" parent="Sentries"]
+position = Vector2(950, 600)
+texture = ExtResource("6_guard")
+hframes = 4
+vframes = 4
+frame = 0
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(260, 780)
+
+[node name="WorldBounds" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WorldBounds"]
+polygon = PackedVector2Array(0, 0, 1600, 0, 1600, 1100, 0, 1100, 0, 0, -50, -50, -50, 1150, 1650, 1150, 1650, -50, -50, -50)
+
+[node name="HUD" parent="." instance=ExtResource("3_hud")]
+
+[node name="ChapterIntroPanel" type="Panel" parent="HUD"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -80.0
+offset_right = 300.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBox" type="VBoxContainer" parent="HUD/ChapterIntroPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 15.0
+offset_right = -20.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="HUD/ChapterIntroPanel/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="HUD/ChapterIntroPanel/VBox"]
+layout_mode = 2
+horizontal_alignment = 1

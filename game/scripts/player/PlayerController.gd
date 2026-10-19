@@ -203,6 +203,8 @@ func _update_active_interactable() -> void:
 		if active_interactable != null:
 			active_interactable.set_focused(true)
 			_notify_hud_interaction(active_interactable.prompt_message)
+		else:
+			_notify_hud_interaction("")
 
 func _notify_hud_interaction(prompt_text: String) -> void:
 	# Send to in-game HUD prompt if present

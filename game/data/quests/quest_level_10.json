@@ -1,0 +1,21 @@
+{
+  "id": "quest_level_10",
+  "title": "Breakout into the Wilderness",
+  "chapter": 3,
+  "description": "Evade the night sentries patrolling the outer yard, unlock the Northern Stockade Gate, and break free into the western wilderness.",
+  "state": 1,
+  "current_objective_index": 0,
+  "objectives": [
+    {
+      "id": "evade_night_sentries",
+      "description": "Slip past the colonial askari sentries patrolling the perimeter fence.",
+      "completed": false
+    },
+    {
+      "id": "breach_north_gate",
+      "description": "Unlock and breach the Northern Stockade Gate into the western wilderness.",
+      "completed": false
+    }
+  ],
+  "reward_text": "Mekatilili and Wanje have escaped from Kisii Prison! The thousand-kilometer walk begins."
+}

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/HUD.gd" id="1_hud"]
 [ext_resource type="PackedScene" path="res://scenes/ui/TouchControls.tscn" id="2_touch"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/ui/JournalUI.gd" id="4_jrn"]
 [ext_resource type="Script" path="res://scripts/ui/PauseMenu.gd" id="5_pause"]
 [ext_resource type="Script" path="res://scripts/ui/SettingsMenu.gd" id="6_sett"]
+[ext_resource type="Texture2D" path="res://assets/ui/resistance_shield.png" id="7_shield"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_hud")
@@ -14,9 +15,9 @@ script = ExtResource("1_hud")
 layout_mode = 3
 anchors_preset = 0
 offset_left = 24.0
-offset_top = 20.0
-offset_right = 320.0
-offset_bottom = 110.0
+offset_top = 18.0
+offset_right = 340.0
+offset_bottom = 108.0
 mouse_filter = 2
 
 [node name="Panel" type="Panel" parent="TopLeft"]
@@ -27,30 +28,44 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBox" type="VBoxContainer" parent="TopLeft/Panel"]
+[node name="HBox" type="HBoxContainer" parent="TopLeft/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 12.0
+offset_left = 10.0
 offset_top = 8.0
-offset_right = -12.0
+offset_right = -10.0
 offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 10
 
-[node name="CharLabel" type="Label" parent="TopLeft/Panel/VBox"]
+[node name="ShieldIcon" type="TextureRect" parent="TopLeft/Panel/HBox"]
+custom_minimum_size = Vector2(38, 38)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("7_shield")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBox" type="VBoxContainer" parent="TopLeft/Panel/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="CharLabel" type="Label" parent="TopLeft/Panel/HBox/VBox"]
 layout_mode = 2
 text = "MEKATILILI WA MENZA"
 
-[node name="SupportBar" type="ProgressBar" parent="TopLeft/Panel/VBox"]
+[node name="SupportBar" type="ProgressBar" parent="TopLeft/Panel/HBox/VBox"]
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 max_value = 100.0
 step = 1.0
 show_percentage = false
 
-[node name="SupportLabel" type="Label" parent="TopLeft/Panel/VBox"]
+[node name="SupportLabel" type="Label" parent="TopLeft/Panel/HBox/VBox"]
 layout_mode = 2
 text = "Community Unity: 0%"
 
@@ -59,62 +74,58 @@ layout_mode = 3
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -390.0
-offset_top = 20.0
+offset_left = -344.0
+offset_top = 18.0
 offset_right = -24.0
-offset_bottom = 200.0
+offset_bottom = 280.0
 grow_horizontal = 0
 mouse_filter = 2
 
 [node name="VBox" type="VBoxContainer" parent="TopRight"]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
 grow_horizontal = 2
-grow_vertical = 2
 theme_override_constants/separation = 8
 
 [node name="ButtonsHBox" type="HBoxContainer" parent="TopRight/VBox"]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 10
 alignment = 2
 
 [node name="JournalBtn" type="Button" parent="TopRight/VBox/ButtonsHBox"]
-custom_minimum_size = Vector2(130, 44)
+custom_minimum_size = Vector2(120, 42)
 layout_mode = 2
 text = "📖 JOURNAL"
 
 [node name="PauseBtn" type="Button" parent="TopRight/VBox/ButtonsHBox"]
-custom_minimum_size = Vector2(110, 44)
+custom_minimum_size = Vector2(100, 42)
 layout_mode = 2
 text = "⏸ PAUSE"
 
-[node name="ObjectivePanel" type="Panel" parent="TopRight/VBox"]
-custom_minimum_size = Vector2(0, 92)
+[node name="ObjectivePanel" type="PanelContainer" parent="TopRight/VBox"]
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_vertical = 1
 
-[node name="VBox" type="VBoxContainer" parent="TopRight/VBox/ObjectivePanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 14.0
-offset_top = 8.0
-offset_right = -14.0
-offset_bottom = -8.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Margin" type="MarginContainer" parent="TopRight/VBox/ObjectivePanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="VBox" type="VBoxContainer" parent="TopRight/VBox/ObjectivePanel/Margin"]
+layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="TitleLabel" type="Label" parent="TopRight/VBox/ObjectivePanel/VBox"]
+[node name="TitleLabel" type="Label" parent="TopRight/VBox/ObjectivePanel/Margin/VBox"]
 layout_mode = 2
 text = "✦ CURRENT OBJECTIVE"
 
-[node name="DescLabel" type="Label" parent="TopRight/VBox/ObjectivePanel/VBox"]
+[node name="DescLabel" type="Label" parent="TopRight/VBox/ObjectivePanel/Margin/VBox"]
 layout_mode = 2
-autowrap_mode = 2
+size_flags_vertical = 1
+autowrap_mode = 3
 text = "Walk around the village, speak with the elders, and help a fellow villager."
 
 [node name="TopCenter" type="Control" parent="."]
@@ -122,10 +133,10 @@ layout_mode = 3
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -230.0
-offset_top = -90.0
-offset_right = 230.0
-offset_bottom = -10.0
+offset_left = -280.0
+offset_top = 18.0
+offset_right = 280.0
+offset_bottom = 104.0
 grow_horizontal = 2
 mouse_filter = 2
 
@@ -142,22 +153,25 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = 8.0
-offset_right = -16.0
-offset_bottom = -8.0
+offset_left = 24.0
+offset_top = 10.0
+offset_right = -24.0
+offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 4
 alignment = 1
 
 [node name="BannerTitle" type="Label" parent="TopCenter/BannerPanel/VBox"]
 layout_mode = 2
 horizontal_alignment = 1
+autowrap_mode = 3
 text = "OBJECTIVE UPDATED"
 
 [node name="BannerDesc" type="Label" parent="TopCenter/BannerPanel/VBox"]
 layout_mode = 2
 horizontal_alignment = 1
+autowrap_mode = 3
 text = "Walk around the village, speak with the elders, and help a fellow villager."
 
 [node name="BottomCenter" type="Control" parent="."]
@@ -188,11 +202,16 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 4.0
+offset_right = -16.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 horizontal_alignment = 1
 vertical_alignment = 1
-text = "[E / TAP] Interact"
+text = "Interact"
+
 
 [node name="TouchControls" parent="." instance=ExtResource("2_touch")]
 

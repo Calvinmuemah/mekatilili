@@ -13,16 +13,17 @@ mouse_filter = 1
 script = ExtResource("1_dlg")
 
 [node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(0, 180)
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -460.0
-offset_top = -230.0
-offset_right = 460.0
-offset_bottom = -20.0
+offset_left = -500.0
+offset_top = -240.0
+offset_right = 500.0
+offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 0
 
@@ -31,60 +32,51 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = 16.0
-offset_right = -20.0
-offset_bottom = -60.0
+offset_left = 18.0
+offset_top = 14.0
+offset_right = -18.0
+offset_bottom = -14.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 16
 
 [node name="Portrait" type="TextureRect" parent="Panel/HBox"]
-custom_minimum_size = Vector2(110, 110)
+custom_minimum_size = Vector2(96, 96)
 layout_mode = 2
+size_flags_vertical = 0
 expand_mode = 1
 stretch_mode = 5
 
-[node name="VBox" type="VBoxContainer" parent="Panel/HBox"]
+[node name="ContentVBox" type="VBoxContainer" parent="Panel/HBox"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 8
+size_flags_vertical = 3
+theme_override_constants/separation = 6
 
-[node name="SpeakerLabel" type="Label" parent="Panel/HBox/VBox"]
+[node name="SpeakerLabel" type="Label" parent="Panel/HBox/ContentVBox"]
 layout_mode = 2
 text = "Speaker"
 
-[node name="TextLabel" type="RichTextLabel" parent="Panel/HBox/VBox"]
+[node name="TextLabel" type="RichTextLabel" parent="Panel/HBox/ContentVBox"]
+custom_minimum_size = Vector2(0, 68)
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 bbcode_enabled = true
+scroll_active = true
+autowrap_mode = 3
 text = "Dialogue text..."
 
-[node name="NextBtn" type="Button" parent="Panel"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -140.0
-offset_top = -52.0
-offset_right = -20.0
-offset_bottom = -12.0
-grow_horizontal = 0
-grow_vertical = 0
-text = "NEXT ▶"
-
-[node name="ChoicesContainer" type="VBoxContainer" parent="Panel"]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 150.0
-offset_top = -90.0
-offset_right = -20.0
-offset_bottom = -12.0
-grow_horizontal = 2
-grow_vertical = 0
+[node name="ChoicesContainer" type="VBoxContainer" parent="Panel/HBox/ContentVBox"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 6
+
+[node name="ActionHBox" type="HBoxContainer" parent="Panel/HBox/ContentVBox"]
+layout_mode = 2
+alignment = 2
+
+[node name="NextBtn" type="Button" parent="Panel/HBox/ContentVBox/ActionHBox"]
+custom_minimum_size = Vector2(120, 38)
+layout_mode = 2
+text = "NEXT ▶"

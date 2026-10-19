@@ -137,12 +137,19 @@ func complete_objective(quest_id: String, objective_index: int) -> void:
 			if AudioManager != null:
 				AudioManager.play_sfx("sfx_quest_complete")
 				
-			var next_idx := objective_index + 1
-			q["current_objective_index"] = next_idx
-			if next_idx < objs.size():
+			# Find the first incomplete objective
+			var next_idx := -1
+			for i in range(objs.size()):
+				if not objs[i].get("completed", false):
+					next_idx = i
+					break
+			
+			if next_idx != -1:
+				q["current_objective_index"] = next_idx
 				var next_desc: String = objs[next_idx].get("description", "")
 				objective_updated.emit(quest_id, next_idx, next_desc)
 			else:
+				q["current_objective_index"] = objs.size()
 				complete_quest(quest_id)
 
 			if SaveManager != null:

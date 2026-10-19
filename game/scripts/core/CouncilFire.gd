@@ -10,11 +10,31 @@ func _ready() -> void:
 		interactable.interacted.connect(_on_interacted)
 
 func _on_interacted(_interactor: Node2D) -> void:
+	var lvl := GameManager.current_level if GameManager != null else 1
+	if lvl >= 2:
+		var hud := get_tree().get_first_node_in_group("hud")
+		if hud != null and hud.has_method("show_collectible_banner"):
+			hud.show_collectible_banner(
+				"Council Fire",
+				"The fire burns with the sacred vows sworn during Chapter 1. Proceed with the Chapter 2 resistance circuit."
+			)
+		return
+
 	var q := QuestManager.get_active_quest() if QuestManager != null else {}
-	var current_idx: int = q.get("current_objective_index", 0)
+	var objs: Array = q.get("objectives", [])
+	
+	var prior_complete := true
+	if objs.size() >= 5:
+		for i in range(4):
+			if not objs[i].get("completed", false):
+				prior_complete = false
+				break
+	else:
+		var current_idx: int = q.get("current_objective_index", 0)
+		prior_complete = current_idx >= 4
 	
 	# If prior objectives not complete, give hint
-	if current_idx < 4:
+	if not prior_complete:
 		var hud := get_tree().get_first_node_in_group("hud")
 		if hud != null and hud.has_method("show_collectible_banner"):
 			hud.show_collectible_banner(
@@ -39,5 +59,7 @@ func _on_interacted(_interactor: Node2D) -> void:
 	
 	# Complete Chapter 1 and transition to Chapter Complete Screen!
 	if GameManager != null:
+		GameManager.current_chapter = 2
 		GameManager.current_level = 2
 		GameManager.complete_current_chapter()
+

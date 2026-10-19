@@ -110,6 +110,20 @@ func end_dialogue() -> void:
 	current_node_id = ""
 	dialogue_ended.emit(ended_id)
 
+var awarded_support_events: Dictionary = {}
+
+func reset_state() -> void:
+	awarded_support_events.clear()
+
+func _to_int(val: Variant, default_val: int = 0) -> int:
+	if val is int:
+		return val
+	elif val is float:
+		return int(val)
+	elif val is String and val.is_valid_int():
+		return val.to_int()
+	return default_val
+
 func _process_event(ev: Dictionary) -> void:
 	var action: String = ev.get("action", "")
 	var target: Variant = ev.get("target", null)
@@ -122,8 +136,8 @@ func _process_event(ev: Dictionary) -> void:
 			if StoryManager != null and target is String:
 				StoryManager.set_flag(target, value)
 		"complete_objective":
-			if QuestManager != null and target is String and value is int:
-				QuestManager.complete_objective(target, value)
+			if QuestManager != null and target is String and (value is int or value is float or (value is String and value.is_valid_int())):
+				QuestManager.complete_objective(target, _to_int(value))
 		"advance_objective":
 			if QuestManager != null:
 				QuestManager.advance_active_objective()
@@ -131,11 +145,14 @@ func _process_event(ev: Dictionary) -> void:
 			if QuestManager != null and target is String:
 				QuestManager.start_quest(target)
 		"add_support":
-			if StoryManager != null and value is int:
-				StoryManager.add_community_support(value)
+			var key := current_dialogue_id + ":" + current_node_id
+			if not awarded_support_events.has(key):
+				awarded_support_events[key] = true
+				if StoryManager != null and (value is int or value is float or (value is String and value.is_valid_int())):
+					StoryManager.add_community_support(_to_int(value))
 		"set_support":
-			if StoryManager != null and value is int:
-				StoryManager.community_support = clampi(value, 0, 100)
+			if StoryManager != null and (value is int or value is float or (value is String and value.is_valid_int())):
+				StoryManager.community_support = clampi(_to_int(value), 0, 100)
 				StoryManager.community_support_changed.emit(StoryManager.community_support)
 		"journal_entry":
 			if StoryManager != null and target is String and value is String:

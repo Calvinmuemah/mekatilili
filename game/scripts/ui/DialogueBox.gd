@@ -3,10 +3,10 @@ extends Control
 
 @onready var panel: Panel = $Panel
 @onready var portrait: TextureRect = $Panel/HBox/Portrait
-@onready var speaker_label: Label = $Panel/HBox/VBox/SpeakerLabel
-@onready var text_label: RichTextLabel = $Panel/HBox/VBox/TextLabel
-@onready var next_btn: Button = $Panel/NextBtn
-@onready var choices_container: VBoxContainer = $Panel/ChoicesContainer
+@onready var speaker_label: Label = $Panel/HBox/ContentVBox/SpeakerLabel if has_node("Panel/HBox/ContentVBox/SpeakerLabel") else $Panel/HBox/VBox/SpeakerLabel
+@onready var text_label: RichTextLabel = $Panel/HBox/ContentVBox/TextLabel if has_node("Panel/HBox/ContentVBox/TextLabel") else $Panel/HBox/VBox/TextLabel
+@onready var next_btn: Button = $Panel/HBox/ContentVBox/ActionHBox/NextBtn if has_node("Panel/HBox/ContentVBox/ActionHBox/NextBtn") else $Panel/NextBtn
+@onready var choices_container: VBoxContainer = $Panel/HBox/ContentVBox/ChoicesContainer if has_node("Panel/HBox/ContentVBox/ChoicesContainer") else $Panel/ChoicesContainer
 
 var full_text: String = ""
 var is_typing: bool = false
@@ -78,6 +78,16 @@ func _process(delta: float) -> void:
 func _on_dialogue_started(_dialogue_id: String) -> void:
 	visible = true
 
+func _adjust_panel_for_choices(has_choices: bool) -> void:
+	if panel == null:
+		return
+	if has_choices:
+		panel.offset_top = -330.0
+		panel.offset_bottom = -16.0
+	else:
+		panel.offset_top = -240.0
+		panel.offset_bottom = -16.0
+
 func _on_dialogue_node_reached(node_data: Dictionary) -> void:
 	visible = true
 	speaker_label.text = node_data.get("speaker", "...")
@@ -120,17 +130,44 @@ func _on_dialogue_node_reached(node_data: Dictionary) -> void:
 	if not choices.is_empty():
 		next_btn.visible = false
 		_setup_choices(choices)
+		# When choices are present, display dialogue text immediately so player can read speaker text
+		text_label.visible_characters = -1
+		is_typing = false
+	else:
+		_adjust_panel_for_choices(false)
 
 func _setup_choices(choices: Array) -> void:
 	choices_container.visible = true
+	_adjust_panel_for_choices(true)
 	for i in range(choices.size()):
 		var choice_data: Dictionary = choices[i]
 		var btn := Button.new()
 		var choice_text: String = choice_data.get("text", "...")
 		btn.text = "◆ " + choice_text if not choice_text.begins_with("◆") else choice_text
 		btn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		btn.custom_minimum_size = Vector2(0, 56)
-		GamePalette.apply_button_theme(btn, GamePalette.COLOR_TERRACOTTA, GamePalette.FONT_SIZE_BUTTON)
+		btn.custom_minimum_size = Vector2(0, 42)
+		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		
+		# Compact choice style with sleek margins
+		var normal_box := GamePalette.create_button_style(GamePalette.COLOR_TERRACOTTA, GamePalette.COLOR_WARM_GOLD, 6)
+		normal_box.content_margin_top = 8
+		normal_box.content_margin_bottom = 8
+		normal_box.content_margin_left = 14
+		normal_box.content_margin_right = 14
+		
+		var hover_box := GamePalette.create_button_style(GamePalette.COLOR_TERRACOTTA.lightened(0.15), GamePalette.COLOR_IVORY, 6)
+		hover_box.content_margin_top = 8
+		hover_box.content_margin_bottom = 8
+		hover_box.content_margin_left = 14
+		hover_box.content_margin_right = 14
+		
+		btn.add_theme_stylebox_override("normal", normal_box)
+		btn.add_theme_stylebox_override("hover", hover_box)
+		btn.add_theme_stylebox_override("pressed", hover_box)
+		btn.add_theme_stylebox_override("focus", hover_box)
+		btn.add_theme_color_override("font_color", GamePalette.COLOR_IVORY)
+		btn.add_theme_font_size_override("font_size", GamePalette.get_scaled_font_size(GamePalette.FONT_SIZE_BODY))
+		
 		var choice_idx := i
 		btn.pressed.connect(func():
 			if AudioManager != null:
@@ -158,5 +195,6 @@ func _on_next_pressed() -> void:
 func _on_dialogue_ended(_dialogue_id: String) -> void:
 	visible = false
 	is_typing = false
+	_adjust_panel_for_choices(false)
 	if AudioManager != null and AudioManager.has_method("stop_voiceover"):
 		AudioManager.stop_voiceover()

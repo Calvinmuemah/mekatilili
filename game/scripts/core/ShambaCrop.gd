@@ -21,21 +21,29 @@ func _on_interacted(_interactor: Node2D) -> void:
 	if AudioManager != null:
 		AudioManager.play_sfx("sfx_item_collect")
 		
+	var is_first_harvest := false
+	if StoryManager != null:
+		if not StoryManager.has_flag("cassava_first_harvested"):
+			StoryManager.set_flag("cassava_first_harvested", true)
+			is_first_harvest = true
+			StoryManager.add_community_support(15)
+			StoryManager.add_journal_entry(
+				"story",
+				"Tending the Shamba",
+				"Mekatilili inspected the village cassava fields. The harvest belongs to the Giriama people, not foreign colonial taxation."
+			)
+		else:
+			# Additional crops offer a small food reserve bonus
+			StoryManager.add_community_support(5)
+		
 	# Complete quest objective 1 ("inspect_crops")
 	if QuestManager != null:
 		QuestManager.complete_objective("quest_chapter_1", 1)
 		
-	if StoryManager != null:
-		StoryManager.add_community_support(15)
-		StoryManager.add_journal_entry(
-			"story",
-			"Tending the Shamba",
-			"Mekatilili inspected the village cassava fields. The harvest belongs to the Giriama people, not foreign colonial taxation."
-		)
-		
 	var hud := get_tree().get_first_node_in_group("hud")
 	if hud != null and hud.has_method("show_collectible_banner"):
-		hud.show_collectible_banner("Cassava Harvested", "Traditional food stores replenished for the community.")
+		var bonus_msg := "+15 Community Support" if is_first_harvest else "+5 Food Reserve"
+		hud.show_collectible_banner("Cassava Harvested (" + bonus_msg + ")", "Traditional food stores replenished for the community.")
 		
 	var tween := create_tween()
 	tween.tween_property(sprite, "modulate", Color(0.7, 0.6, 0.4), 0.4)
